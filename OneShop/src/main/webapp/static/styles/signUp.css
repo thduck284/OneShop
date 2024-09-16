@@ -1,0 +1,107 @@
+body {
+	font-family: Calibri, Helvetica, sans-serif;
+	background-color: pink;
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	margin-left: 35px;	
+}
+
+.container {
+	width: 55%;
+	margin-left: 22%;
+	border: 3px solid black;
+	padding: 20px 0;
+	border-radius: 20px;
+}
+
+.customer-name, .infor label{
+	margin-left: 95px;
+}
+
+.account label {
+	margin-left: 80px;
+}
+
+label {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.customer-name .name-field {
+	width: 180px;
+	height: 5px;
+	display: inline;
+	margin-right: 45px;
+	margin-left: 10px;
+}
+
+.infor .email-field, .infor .phnumber-field, .infor .address-field {
+	width: 483px;
+	height: 5px;
+	display: inline-block;
+}
+
+.account .user-account-field, .account .pw-field {
+	width: 467px;
+	height: 5px;
+	display: inline-block;
+}
+
+input[type=text], input[type=password], textarea {
+	width: 80%;
+	padding: 15px;
+	margin: 5px 0 22px 0;
+	display: block;
+	border: none;
+	background: #f1f1f1;
+	font-size: 15px;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+	background-color: #90EE90;
+	outline: none;
+}
+
+div {
+	padding: 10px 0;
+}
+
+hr {
+	border: 1px solid #f1f1f1;
+	margin-bottom: 25px;
+}
+
+.registerbtn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
+}
+
+.registerbtn:hover {
+	opacity: 1;
+}
+
+.submit {
+	font-size: 20px;
+	border-radius: 5px;
+	background-color: blue;
+	color: white;
+	margin-left: 45%;
+	padding: 5px 10px;
+}
+
+.infor span{
+	display: block;
+	margin: -10px 0 10px 220px;
+	
+}
