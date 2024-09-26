@@ -1,3 +1,0 @@
-<Listener
-	className="org.apache.catalina.core.JreMemoryLeakPreventionListener"
-	classesToInitialize="com.mysql.jdbc.NonRegisteringDriver" />

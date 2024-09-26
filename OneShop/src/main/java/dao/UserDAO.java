@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import models.User;
+
 public class UserDAO {
 	
 	public void addUser(String fullName, String email, String numberPhone, String address, String accountName, String password, String role) throws SQLException {
@@ -37,6 +39,30 @@ public class UserDAO {
 			 e.printStackTrace(); throw new SQLException("Error! Cant add user"); 	 
         }
     }
+	
+	public void updateUser(String email, String password) throws SQLException
+	{
+		 String sql = "UPDATE [dbo].[user] SET password = ? WHERE email = ?";
+
+		    try (Connection connection = ConnectDB.getConnection();
+		         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+		        statement.setString(1, password); 
+		        statement.setString(2, email);  
+
+		        int rowsUpdated = statement.executeUpdate();
+
+		        if (rowsUpdated > 0) {
+		            System.out.println("Cập nhật mật khẩu thành công.");
+		        } else {
+		            throw new SQLException("Không tìm thấy người dùng với email: " + email);
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw new SQLException("Error! Unable to update user password.");
+		    }
+	}
 	
 	public int countUsers() {
 	    int count = 0;
@@ -69,4 +95,31 @@ public class UserDAO {
 	    }
 	    return false;
 	}
+	
+	public User getInforUser(String username) {
+        String sql = "SELECT userID, fullName, email, phone, address, username, password, createdDate FROM [dbo].[user] WHERE username = ?";
+        User user = null;
+
+        try (Connection connection = ConnectDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String userID = resultSet.getString("userID");
+                String fullName = resultSet.getString("fullName");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String userName = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                Timestamp createdDate = resultSet.getTimestamp("createdDate");
+
+                user = new User(userID, userName, email, password, fullName, phone, address, "customer", createdDate);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }
