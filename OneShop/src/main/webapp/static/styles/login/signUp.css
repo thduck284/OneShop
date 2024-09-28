@@ -1,6 +1,9 @@
 body {
 	font-family: Calibri, Helvetica, sans-serif;
-	background-color: pink;
+	background: url("../../images/pic11.webp");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 }
 
 h1 {
@@ -17,6 +20,7 @@ h2 {
 	border: 3px solid black;
 	padding: 20px 0;
 	border-radius: 20px;
+	background-color:pink;
 }
 
 .customer-name, .infor label{
@@ -100,8 +104,8 @@ hr {
 	padding: 5px 10px;
 }
 
-.infor span{
-	display: block;
+.container span{
+	display: flex;
 	margin: -10px 0 10px 220px;
 	
 }

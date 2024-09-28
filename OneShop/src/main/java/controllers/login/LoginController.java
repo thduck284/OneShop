@@ -36,11 +36,13 @@ public class LoginController extends HttpServlet{
         if (isValidUser) {
         	User user = new User();
         	user = userDAO.getInforUser(username);
+        	request.getSession().setAttribute("userInfor", user);
         	
+        	System.out.println(user.getRole());
         	if ("customer".equals(user.getRole())) {
         	    response.sendRedirect(request.getContextPath() + "/comestics.com");
         	} else if ("manager".equals(user.getRole())) {
-        	    response.sendRedirect(request.getContextPath() + ("/" + user.getAccountName() + "-manager.com"));
+        	    response.sendRedirect(request.getContextPath() + ("/@manager@.com"));
         	} else {
         	    response.sendRedirect(request.getContextPath() + "/@admin@.com");
         	}

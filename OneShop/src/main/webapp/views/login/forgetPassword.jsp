@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="static/styles/forgetPassword.css">
+<link rel="stylesheet" type="text/css" href="static/styles/login/forgetPassword.css">
 <script type="text/javascript" src="static/scripts/forgetPassword.js"></script>
 <title>Forget Password</title>
 </head>

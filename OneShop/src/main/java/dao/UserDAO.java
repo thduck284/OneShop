@@ -14,7 +14,7 @@ public class UserDAO {
 	public void addUser(String fullName, String email, String numberPhone, String address, String accountName, String password, String role) throws SQLException {
 		String sql = "INSERT INTO [dbo].[user] (userId, fullName, email, phone, address, userName, password, role, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String userId = "KH" + (countUsers() + 1);
+        String userId = "KH" + countUsers();
         
         LocalDateTime now = LocalDateTime.now();
         
@@ -97,7 +97,7 @@ public class UserDAO {
 	}
 	
 	public User getInforUser(String username) {
-        String sql = "SELECT userID, fullName, email, phone, address, username, password, createdDate FROM [dbo].[user] WHERE username = ?";
+        String sql = "SELECT userID, fullName, email, phone, address, username, password, role, createdDate FROM [dbo].[user] WHERE username = ?";
         User user = null;
 
         try (Connection connection = ConnectDB.getConnection();
@@ -113,9 +113,10 @@ public class UserDAO {
                 String address = resultSet.getString("address");
                 String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
+                String role = resultSet.getString("role");
                 Timestamp createdDate = resultSet.getTimestamp("createdDate");
 
-                user = new User(userID, userName, email, password, fullName, phone, address, "customer", createdDate);
+                user = new User(userID, userName, email, password, fullName, phone, address, role, createdDate);
             }
         } catch (SQLException e) {
             e.printStackTrace();

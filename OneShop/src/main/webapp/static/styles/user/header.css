@@ -1,0 +1,153 @@
+body {
+	background-color: black;
+}
+
+.contact {
+	position: absolute;
+	background-color: red;
+	width: 1491px;
+	height: 40px;
+	margin: -7px 0 0 -7px;
+}
+
+.contact svg {
+	margin-top: 10px;
+	margin-left: 60px;
+	color: white;
+}
+
+.contact p{
+	display: inline;
+	position: absolute;
+	margin: 8px 0 0 10px;
+	font-weight: bold;
+	color: white;
+}
+
+.contact .title {
+	margin-left: 400px;
+}
+
+.header {
+	display: flex;
+    align-items: center;
+}
+
+.header-image {
+	margin: 50px 250px 0 50px;
+}
+
+.search_input {
+	display: flex;
+	align-items: center;
+	background-color: black;
+	border: 1px solid red;
+	border-radius: 20px;
+	width: 500px;
+	height: 40px;
+	padding: 0 15px;
+	box-shadow: 0 0 4px rgba(231, 76, 60, 0.8);
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 30px;
+	color: white;
+}
+
+.header .bi-search {
+	display: inline;
+	color: white;
+	margin: 30px 140px 0 -30px;
+	cursor: pointer;
+}
+
+.box-cart {
+	padding: 0 10px;
+	margin: 45px 0 0 20px;
+}
+
+.box-cart .bi-cart {
+	color: white;
+}
+
+.box-cart .cart {
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.login {
+	display: grid;
+    text-decoration: none;
+    color: #66BB6A;
+    margin: 60px 40px 20px 0;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.login-content {
+	padding: 10px;
+}
+
+.under-header a{
+	display: inline-block;
+	border: 2px solid gray; 
+	border-radius: 10px;
+	padding: 10px 15px;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 30px;
+	margin-bottom: 15px;
+	text-decoration: none;
+}
+
+.home-page {
+	margin-left: 50px;
+    cursor: pointer;
+}
+
+.login, .review, .product, .trademark, .promotion {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.home-page:hover, .review:hover, .product:hover, .trademark:hover, .promotion:hover {
+    border: 2px solid red;
+    box-shadow: 0 0 20px 5px red;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: black;
+	min-width: 200px;
+	z-index: 1;
+	margin-left: 22px;
+}
+
+.dropdown-content a {
+	color: black;
+	text-decoration: none;
+	display: block;
+	color: white;
+	border-radius: 0px;
+	border: 0 1px gray;
+	margin: 0 0 0 0;
+}
+
+.dropdown-content a:hover {
+	background-color: black;
+	border: 2px solid gray;
+    box-shadow: 0 0 20px 5px gray;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}

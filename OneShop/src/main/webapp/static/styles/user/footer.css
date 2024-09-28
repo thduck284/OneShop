@@ -1,0 +1,33 @@
+.footer-container {
+	background-color: #2c3e50;
+    color: white;
+    display: flex;
+    margin: 100px 0 20px 0;
+}
+
+.footer-section {
+	width: 300px;
+	margin: 0 0 20px 50px;
+}
+
+.footer-section a {
+	text-decoration: none;
+	color: white;
+	display: grid;
+	margin-top: 20px; 
+}
+
+.footer-section a:hover {
+    color: #f39c12;
+}
+
+.fas {
+	margin-right: 10px;
+}
+
+.footer-bottom {
+	color: white;
+	justify-content: center;
+	display: grid;
+	align-items: center;
+}
