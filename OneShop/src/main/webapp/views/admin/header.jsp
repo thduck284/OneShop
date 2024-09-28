@@ -1,12 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Header</title> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  
 </head>
 <body>
-	<h1>Đây là header</h1>
-</body>
+	<header style="position: sticky; z-index: 1000; top: 0;">
+		<nav class="navbar navbar-light bg-light p-3">
+			<div
+				class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
+				<a class="navbar-brand" href="#"> One Shop Dashboard </a>
+				<button class="navbar-toggler d-md-none collapsed mb-3"
+					type="button" data-toggle="collapse" data-target="#sidebar"
+					aria-controls="sidebar" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+			<div class="col-12 col-md-4 col-lg-2">
+				<input class="form-control form-control-dark" type="text"
+					placeholder="Search" aria-label="Search" style="width: 600px; margin-left: 200px;">
+			</div>
+			<div
+				class="col-12 col-md-5 col-lg-8 d-flex align-items-center justify-content-md-end mt-3 mt-md-0">
+				<div class="mr-3 mt-1">
+					<a class="github-button"
+						href="https://github.com/themesberg/simple-bootstrap-5-dashboard"
+						data-color-scheme="no-preference: dark; light: light; dark: light;"
+						data-icon="octicon-star" data-size="large" data-show-count="true"
+						aria-label="Star /themesberg/simple-bootstrap-5-dashboard">Star</a>
+				</div>
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-toggle="dropdown"
+						aria-expanded="false">Hello, Admin</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li><a class="dropdown-item" href="#">Settings</a></li>
+						<li><a class="dropdown-item" href="#">Messages</a></li>
+						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/logout">Sign out</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	</body>
 </html>

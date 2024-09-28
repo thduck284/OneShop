@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Sign Up</title>
-<link rel="stylesheet" type="text/css" href="static/styles/signUp.css">
+<link rel="stylesheet" type="text/css" href="static/styles/login/signUp.css">
 <link rel="icon" type="image/png" href="static/images/pic10.jpg">
 <script type="text/javascript" src="static/scripts/signUp.js"></script>
 </head>
@@ -43,7 +43,7 @@
             </div>
 			<div class="account">
 				<label class="pw"> Mật khẩu: </label> 
-				<input type="text" style="margin-left: 46px;" name="pw" placeholder="Nhập mật khẩu" class="pw-field" required /> 
+				<input type="password" style="margin-left: 46px;" name="pw" placeholder="Nhập mật khẩu" class="pw-field" required /> 
 			</div>	
 			<button type="submit" class="submit">Xác nhận</button>
 		</div>

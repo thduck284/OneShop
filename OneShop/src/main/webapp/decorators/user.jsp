@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="static/styles/user/user.css">
+<title>Trang chủ</title>
 </head>
 <body>
 	<%@ include file = "/views/user/header.jsp" %>

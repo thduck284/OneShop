@@ -11,6 +11,16 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector("input[name='phone']").addEventListener("blur", function() {
         checkField("phone", this.value);
     });
+	
+	document.querySelector("form").addEventListener("submit", function(event) {
+		        const emailError = document.getElementById("email-error").innerText;
+		        const usernameError = document.getElementById("username-error").innerText;
+				const phoneError = document.getElementById("phone-error").innerText;
+		        
+		        if (emailError || usernameError || phoneError) {
+		            event.preventDefault(); 
+		        }
+		    });
 });
 
 function checkField(field, value) {

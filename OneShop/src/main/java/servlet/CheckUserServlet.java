@@ -5,10 +5,12 @@ import java.io.PrintWriter;
 
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@WebServlet(urlPatterns = {"/check-user"})
 public class CheckUserServlet extends HttpServlet {
    
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,8 @@ public class CheckUserServlet extends HttpServlet {
     	String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
+        
+        System.out.println(username);
 
         boolean isUsernameTaken = false;
         boolean isEmailTaken = false;

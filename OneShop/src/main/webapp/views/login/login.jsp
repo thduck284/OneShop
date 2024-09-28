@@ -5,12 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" type="text/css" href="static/styles/login.css">
+<link rel="stylesheet" type="text/css" href="static/styles/login/login.css">
+<link rel="icon" type="image/png" href="static/images/pic9.png">
 <link href="static/scripts/login.js">
 </head>
 <body>
 	<div class="loginBox">
-		<a class="sign-in-here" href="http://localhost:8080/LoginProject/login">Sign in here</a>
+		<img class="user" src="static/images/pic5.jpg" height="100px" width="100px">
+		<a class="sign-in-here" href="http://localhost:8080/OneShop/login">Sign in here</a>
 		<form method="post">
 			<div class="inputBox">
 				<input id="uname" type="text" name="username" placeholder="Username" required/>
