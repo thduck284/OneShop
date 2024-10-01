@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = {"/comestics.com"})
+@WebServlet(urlPatterns = {"/user/home"})
 public class UserController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -17,7 +17,7 @@ public class UserController extends HttpServlet{
 	protected void doGet (HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 	    
-		request.getRequestDispatcher("/decorators/user.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/user/home.jsp").forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
