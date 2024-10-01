@@ -1,0 +1,4 @@
+td.text-truncate {
+    word-wrap: break-word;
+    white-space: normal;
+}
