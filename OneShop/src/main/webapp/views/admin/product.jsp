@@ -17,7 +17,7 @@
 						<div class="card card-transparent">
 							<div class="card-header card-header-transparent py-20">
 								<div class="btn-group dropdown">
-									<h3 style="margin-top: -20px;">Home -> Sản phẩm</h3>
+									<h4 style="margin-top: -20px;">Home -> Sản phẩm</h4>
 								</div>
 							</div>
 						</div>
@@ -27,7 +27,9 @@
 							<h6 class="my-2">Các sản phẩm</h6>
 							<div style="margin: -40px 0 20px 900px;">
 								<div class="btn-group me-2">
-									<button class="btn btn-primary btn-sm" style="font-size: 15px; padding: 8px 16px;">Thêm</button>
+									<a class="btn btn-primary btn-sm"
+										href="http://localhost:8080/OneShop/admin/add-product"
+										style="font-size: 15px; padding: 8px 16px;">Thêm</a>
 								</div>
 								<div class="btn-group">
 									<button class="btn btn-warning btn-sm" style="font-size: 15px; padding: 8px 22px;">Lọc</button>
