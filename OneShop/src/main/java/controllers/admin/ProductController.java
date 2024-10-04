@@ -22,10 +22,6 @@ public class ProductController extends HttpServlet{
 	        throws ServletException, IOException {
 	    
 		List<Product> products = productDAO.getAllProducts();
-		
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
 
 		request.setAttribute("products", products);	
 		request.getRequestDispatcher("/views/admin/product.jsp").forward(request, response);

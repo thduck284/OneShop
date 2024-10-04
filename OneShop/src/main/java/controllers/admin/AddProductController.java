@@ -42,7 +42,8 @@ public class AddProductController extends HttpServlet{
 			try (InputStream inputStream = imagePart.getInputStream()) { 
 				
 				imageData = new byte[(int)
-				imagePart.getSize()]; inputStream.read(imageData); 
+				imagePart.getSize()]; 
+				inputStream.read(imageData); 
 			} 
 			catch (IOException e) {
 			    e.printStackTrace(); 

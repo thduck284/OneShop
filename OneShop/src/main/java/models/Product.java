@@ -1,6 +1,6 @@
 package models;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Product {
 	private String productId;
@@ -10,11 +10,15 @@ public class Product {
 	private int quantity;
 	private String categoryId;
 	private byte[] image;
-	private LocalDateTime createdDate;
+	private Date createdDate;
+	
+	public Product() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Product(String productId, String productName, String description,
 				double price, int quantity, String categoryId,
-				byte[] image, LocalDateTime createdDate) {
+				byte[] image, Date createdDate) {
 		
 		// TODO Auto-generated constructor stub
 		this.productId = productId;
@@ -83,11 +87,11 @@ public class Product {
 		this.image = image;
 	}
 
-	public LocalDateTime getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(LocalDateTime createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}	
 }
