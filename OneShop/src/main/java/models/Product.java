@@ -9,12 +9,12 @@ public class Product {
 	private double price;
 	private int quantity;
 	private String categoryId;
-	private String imageUrl;
+	private byte[] image;
 	private LocalDateTime createdDate;
 	
 	public Product(String productId, String productName, String description,
 				double price, int quantity, String categoryId,
-				String imageUrl, LocalDateTime createdDate) {
+				byte[] image, LocalDateTime createdDate) {
 		
 		// TODO Auto-generated constructor stub
 		this.productId = productId;
@@ -23,7 +23,7 @@ public class Product {
 		this.price = price;
 		this.quantity = quantity;
 		this.categoryId = categoryId;
-		this.imageUrl = imageUrl;
+		this.image = image;
 		this.createdDate = createdDate;
 	}
 
@@ -75,12 +75,12 @@ public class Product {
 		this.categoryId = categoryId;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public LocalDateTime getCreatedDate() {

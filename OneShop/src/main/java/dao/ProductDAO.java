@@ -1,11 +1,10 @@
 package dao;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,31 +12,35 @@ import models.Product;
 
 public class ProductDAO {
 	
-	public void addProduct(Product product, String imagePath) throws SQLException {
-        String sql = "INSERT INTO product (productId, productName, description, price, quantity, categoryId, image, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	public void addProduct(String productName, String description, Float price, int quantity, String category, byte[] image, Date created) throws SQLException {
+	    String sql = "INSERT INTO product (productId, productName, description, price, quantity, categoryId, image, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             FileInputStream inputStream = new FileInputStream(imagePath)) {
+	    String id = "SP" + (countProduct() + 1);
+	    
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) { 
 
-            statement.setString(1, product.getProductId());
-            statement.setString(2, product.getProductName());
-            statement.setString(3, product.getDescription());
-            statement.setDouble(4, product.getPrice());
-            statement.setInt(5, product.getQuantity());
-            statement.setString(6, product.getCategoryId());
+	        statement.setString(1, id);
+	        statement.setString(2, productName);
+	        statement.setString(3, description);
+	        statement.setFloat(4, price); 
+	        statement.setInt(5, quantity);
+	        statement.setString(6, category);
 
-            byte[] imageData = new byte[inputStream.available()];
-            inputStream.read(imageData);
-            statement.setBytes(7, imageData);
-            
-            statement.setTimestamp(8, Timestamp.valueOf(product.getCreatedDate()));  
+	        if (image != null) {
+	            statement.setBytes(7, image);
+	        } else {
+	            statement.setNull(7, java.sql.Types.BLOB);
+	        }
+	        
+	        statement.setDate(8, new java.sql.Date(created.getTime()));
 
-            statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	        statement.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
 	
 	public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
@@ -55,7 +58,7 @@ public class ProductDAO {
                     resultSet.getDouble("price"),
                     resultSet.getInt("quantity"),
                     resultSet.getString("categoryId"),
-                    resultSet.getString("image"),
+                    null,
                     resultSet.getTimestamp("createdDate").toLocalDateTime()
                 );
                 productList.add(product);
@@ -66,7 +69,7 @@ public class ProductDAO {
         return productList;
     }
 	
-	public int countProducts() {
+	public int countProduct() {
 	    int count = 0;
 	    String sql = "SELECT COUNT(*) FROM product";
 
@@ -82,4 +85,21 @@ public class ProductDAO {
 	    }
 	    return count;
 	}
+	
+	public byte[] getImageById(String productId) throws SQLException {
+	    String sql = "SELECT image FROM product WHERE productId = ?";
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, productId);
+	        ResultSet resultSet = statement.executeQuery();
+
+	        if (resultSet.next()) {
+	            
+	            return resultSet.getBytes("image");
+	        }
+	    }
+	    return null;  
+	}
+
 }
