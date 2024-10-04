@@ -40,7 +40,33 @@ public class ProductDAO {
 	        e.printStackTrace();
 	    }
 	}
+	
+	public void updateProduct(String productId, String productName, String description, Float price, int quantity, String category, byte[] image, Date updated) throws SQLException {
+	    String sql = "UPDATE product SET productName = ?, description = ?, price = ?, quantity = ?, categoryId = ?, image = ?, createdDate = ? WHERE productId = ?";
 
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, productName);
+	        statement.setString(2, description);
+	        statement.setFloat(3, price);
+	        statement.setInt(4, quantity);
+	        statement.setString(5, category);
+
+	        if (image != null) {
+	            statement.setBytes(6, image);
+	        } else {
+	            statement.setNull(6, java.sql.Types.BLOB);
+	        }
+
+	        statement.setDate(7, new java.sql.Date(updated.getTime()));
+	        statement.setString(8, productId);
+
+	        statement.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 	public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
@@ -59,7 +85,7 @@ public class ProductDAO {
                     resultSet.getInt("quantity"),
                     resultSet.getString("categoryId"),
                     null,
-                    resultSet.getTimestamp("createdDate").toLocalDateTime()
+                    resultSet.getDate("createdDate")
                 );
                 productList.add(product);
             }
@@ -101,5 +127,33 @@ public class ProductDAO {
 	    }
 	    return null;  
 	}
+	
+	public Product getProductById(String productId) {
+	    String sql = "SELECT * FROM product WHERE productId = ?";
+	    Product product = null;
 
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, productId);
+	        ResultSet resultSet = statement.executeQuery();
+
+	        if (resultSet.next()) {
+	            product = new Product(
+	                resultSet.getString("productId"),
+	                resultSet.getString("productName"),
+	                resultSet.getString("description"),
+	                resultSet.getDouble("price"),
+	                resultSet.getInt("quantity"),
+	                resultSet.getString("categoryId"),
+	                resultSet.getBytes("image"),  
+	                resultSet.getDate("createdDate")
+	            );
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return product;
+	}
 }

@@ -25,6 +25,12 @@
 					</div>
 					<div class="row" style="margin: -60px 0 0 20px;">
 						<div id="recent-transactions" class="col-12">
+							<% String message = (String) request.getAttribute("message"); %>
+								<% if (message != null) { %>
+    								<div class="alert alert-info">
+        								<%= message %>
+    								</div>
+							<% } %>		
 							<h6 class="my-2">Các sản phẩm</h6>
 							<div style="margin: -60px 0 20px 1100px;">
 								<div class="btn-group me-2">
@@ -52,7 +58,7 @@
 														<th class="border-top-0">Ảnh</th>
 														<th class="border-top-0">Mô tả</th>
 														<th class="border-top-0">NSX</th>
-														<th class="border-top-1">Hàng động</th>
+														<th class="border-top-0">Hàng động</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -70,8 +76,9 @@
 															</td>
 															<td><a>${product.createdDate}</a></td>
 															<td class="d-flex flex-column gap-0">
-																<button class="btn btn-warning btn-sm"
-																	style="margin: 0 0 5px 0;">Sửa</button>
+																<a href="http://localhost:8080/OneShop/admin/edit-product?productId=${product.productId}"
+																	class="btn btn-warning btn-sm"
+																	style="margin: 15px 0 25px 0;">Sửa</a>
 																<button class="btn btn-danger btn-sm">Xóa</button>
 															</td>
 														</tr>
@@ -84,7 +91,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
