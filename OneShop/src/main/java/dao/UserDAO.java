@@ -1,11 +1,14 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.User;
 
@@ -14,7 +17,7 @@ public class UserDAO {
 	public void addUser(String fullName, String email, String numberPhone, String address, String accountName, String password, String role) throws SQLException {
 		String sql = "INSERT INTO [dbo].[user] (userId, fullName, email, phone, address, userName, password, role, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String userId = "KH" + countUsers();
+        String userId = "KH" + countUsersByRole(role);
         
         LocalDateTime now = LocalDateTime.now();
         
@@ -40,7 +43,7 @@ public class UserDAO {
         }
     }
 	
-	public void updateUser(String email, String password) throws SQLException
+	public void resetPassword(String email, String password) throws SQLException
 	{
 		 String sql = "UPDATE [dbo].[user] SET password = ? WHERE email = ?";
 
@@ -64,19 +67,53 @@ public class UserDAO {
 		    }
 	}
 	
-	public int countUsers() {
-	    int count = 0;
-	    String sql = "SELECT COUNT(*) FROM [dbo].[user]";
+	public List<User> getAllUserByRole(String role) {
+		List<User> userList = new ArrayList<>();
+	    String sql = "SELECT * FROM [dbo].[user] WHERE role = ?";
 
-	    try (Connection connection = ConnectDB.getConnection();	 
-	         PreparedStatement statement = connection.prepareStatement(sql);
-	         ResultSet resultSet = statement.executeQuery()) {
-
-	        if (resultSet.next()) {
-	            count = resultSet.getInt(1); 
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+	    	
+	        statement.setString(1, role);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                User user = new User(
+	                    resultSet.getString("userId"),
+	                    resultSet.getString("userName"),
+	                    resultSet.getString("email"),
+	                    resultSet.getString("password"),
+	                    resultSet.getString("fullName"),
+	                    resultSet.getString("phone"),
+	                    resultSet.getString("address"),
+	                    resultSet.getString("role"),
+	                    resultSet.getDate("createdDate")
+	                );
+	                userList.add(user);
+	            }
 	        }
 	    } catch (SQLException e) {
-			 e.printStackTrace(); 
+	        e.printStackTrace();
+	    }
+	    return userList;
+    }
+	
+	public int countUsersByRole(String role) {
+	    int count = 0;
+	    String sql = "SELECT COUNT(*) FROM [dbo].[user] WHERE role = ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, role);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                count = resultSet.getInt(1);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
 	    }
 	    return count;
 	}
@@ -97,7 +134,7 @@ public class UserDAO {
 	}
 	
 	public User getInforUser(String username) {
-        String sql = "SELECT userID, fullName, email, phone, address, username, password, role, createdDate FROM [dbo].[user] WHERE username = ?";
+        String sql = "SELECT * FROM [dbo].[user] WHERE username = ?";
         User user = null;
 
         try (Connection connection = ConnectDB.getConnection();
@@ -114,7 +151,7 @@ public class UserDAO {
                 String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String role = resultSet.getString("role");
-                Timestamp createdDate = resultSet.getTimestamp("createdDate");
+                Date createdDate = resultSet.getDate("createdDate");
 
                 user = new User(userID, userName, email, password, fullName, phone, address, role, createdDate);
             }

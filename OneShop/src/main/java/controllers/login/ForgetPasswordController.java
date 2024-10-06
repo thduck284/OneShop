@@ -40,7 +40,7 @@ public class ForgetPasswordController extends HttpServlet{
         if(isValidEmail)
         {
         	try {
-				userDAO.updateUser(email, password);
+				userDAO.resetPassword(email, password);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

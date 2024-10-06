@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/image")
-public class uploadImageServlet extends HttpServlet{
+public class UploadImageServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private ProductDAO productDAO = new ProductDAO();

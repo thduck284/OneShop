@@ -27,6 +27,12 @@
 						<div class="row">
 							<div id="recent-transactions" class="col-12">							
 								<form action="${pageContext.request.contextPath}/admin/add-product" method="post" enctype="multipart/form-data">
+									<% String message = (String) request.getAttribute("message"); %>
+									<% if (message != null) { %>
+    								<div class="alert alert-info">
+        								<%= message %>
+    								</div>
+									<% } %>
 									<div class="mb-3">
 										<h6 class="mb-0">Tên sản phẩm:</h6>
 										<input type="text" class="form-control" name="productName"

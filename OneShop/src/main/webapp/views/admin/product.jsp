@@ -39,7 +39,8 @@
 										style="font-size: 15px; padding: 8px 16px;">Thêm</a>
 								</div>
 								<div class="btn-group">
-									<button class="btn btn-warning btn-sm" style="font-size: 15px; padding: 8px 22px;">Lọc</button>
+									<a href="http://localhost:8080/OneShop/admin/product" class="btn btn-warning btn-sm" 
+										style="font-size: 15px; padding: 8px 22px;">Lọc</a>
 								</div>
 							</div>
 							<div class="card">
@@ -69,17 +70,26 @@
 															<td><a>${product.price}đ</a></td>
 															<td><a>${product.quantity}</a></td>
 															<td><a>${product.categoryId}</a></td>
-															<td><img src="../image?id=${product.productId}"
+															<td><img src="${pageContext.request.contextPath}/image?id=${product.productId}"
 																style="width: 100px; height: 100px;"></td>
 															<td style="max-width: 200px; word-wrap: break-word;">
 																<a>${product.description}</a>
 															</td>
 															<td><a>${product.createdDate}</a></td>
 															<td class="d-flex flex-column gap-0">
-																<a href="http://localhost:8080/OneShop/admin/edit-product?productId=${product.productId}"
+																<a href="${pageContext.request.contextPath}/admin/edit-product?productId=${product.productId}"
 																	class="btn btn-warning btn-sm"
 																	style="margin: 15px 0 25px 0;">Sửa</a>
-																<button class="btn btn-danger btn-sm">Xóa</button>
+																<form action="${pageContext.request.contextPath}/admin/delete-product" 
+																	method="POST" style="display: inline;" onsubmit="return confirmDelete();">
+																	<input type="hidden" name="productId" value="${product.productId}">
+																	<button type="submit" class="btn btn-danger btn-sm" style="padding: 10px 30px;">Xóa</button>
+																</form>
+																<script>
+																	function confirmDelete() {
+																		return confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
+																	}
+																</script>
 															</td>
 														</tr>
 													</c:forEach>
