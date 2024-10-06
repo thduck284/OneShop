@@ -41,6 +41,21 @@ public class ProductDAO {
 	    }
 	}
 	
+	public void deleteProductById(String productId) throws SQLException {
+	    String sql = "DELETE FROM product WHERE productId = ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, productId); 
+	        statement.executeUpdate(); 
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e; 
+	    }
+	}
+
+	
 	public void updateProduct(String productId, String productName, String description, Float price, int quantity, String category, byte[] image, Date updated) throws SQLException {
 	    String sql = "UPDATE product SET productName = ?, description = ?, price = ?, quantity = ?, categoryId = ?, image = ?, createdDate = ? WHERE productId = ?";
 

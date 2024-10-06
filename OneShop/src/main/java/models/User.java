@@ -1,6 +1,6 @@
 package models;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class User {
 	private String userId;
@@ -11,7 +11,7 @@ public class User {
 	private String phoneNumber;
 	private String address;
 	private String role;
-	private Timestamp createdDate;
+	private Date createdDate;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -19,7 +19,7 @@ public class User {
 	
 	public User(String userId, String accountName, String email, 
 			String password, String fullName, String phoneNumber, 
-			String address, String role, Timestamp createdDate) {
+			String address, String role, Date createdDate) {
 		
 		// TODO Auto-generated constructor stub
 		this.userId = userId;
@@ -97,11 +97,11 @@ public class User {
 		this.role = role;
 	}
 
-	public Timestamp getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 }
