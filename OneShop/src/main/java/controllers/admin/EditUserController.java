@@ -1,7 +1,6 @@
 package controllers.admin;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 
 import dao.UserDAO;
@@ -40,7 +39,7 @@ public class EditUserController extends HttpServlet{
 		
 		if (action.equals("/admin/edit-customer")) {
             request.getRequestDispatcher("/views/admin/editCustomer.jsp").forward(request, response);
-        } else if (action.equals("/admin/add-manager")) {
+        } else if (action.equals("/admin/edit-manager")) {
             request.getRequestDispatcher("/views/admin/editManager.jsp").forward(request, response);
         }	 
 	}
@@ -63,7 +62,7 @@ public class EditUserController extends HttpServlet{
 			
 			if (action.equals("/admin/edit-customer")) {
 	            request.getRequestDispatcher("/views/admin/customer.jsp").forward(request, response);
-	        } else if (action.equals("/admin/add-manager")) {
+	        } else if (action.equals("/admin/edit-manager")) {
 	            request.getRequestDispatcher("/views/admin/manager.jsp").forward(request, response);
 	        }	 
 			

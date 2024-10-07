@@ -30,7 +30,7 @@
         								<%= message %>
     								</div>
 							<% } %>		
-							<h6 class="my-2">Các khách hàng</h6>
+							<h6 class="my-2">Các quản lý</h6>
 							<div style="margin: -60px 0 20px 1100px;">
 								<div class="btn-group me-2">
 									<a class="btn btn-primary btn-sm"

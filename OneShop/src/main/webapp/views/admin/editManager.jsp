@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Chỉnh sửa khách hàng</title>
+<title>Chỉnh sửa quản lý</title>
 </head>
 <body>
 	<div class="app-content content">
@@ -16,7 +16,7 @@
 						<div class="card card-transparent">
 							<div class="card-header card-header-transparent py-20">
 								<div class="btn-group dropdown">
-									<h4 style="margin-top: -20px;">Home -> Khách hàng -> Cập nhật thông tin khách hàng</h4>
+									<h4 style="margin-top: -20px;">Home -> Quản lý -> Cập nhật thông tin quản lý</h4>
 								</div>
 							</div>
 						</div>
@@ -32,43 +32,43 @@
 								<% } %>
 								<%@ page import="models.User" %>		
 								<%
-    								User customer = (User) request.getAttribute("user");
+    								User manager = (User) request.getAttribute("user");
 								%>						
-								<form action="${pageContext.request.contextPath}/admin/edit-customer" method="post" enctype="multipart/form-data">
+								<form action="${pageContext.request.contextPath}/admin/edit-manager" method="post" enctype="multipart/form-data">
 									<div class="mb-3">
-										<h6 class="mb-0">Tên khách hàng:</h6>
+										<h6 class="mb-0">Tên quản lý:</h6>
 										<input type="text" class="form-control" name="fullName"
-											value="<%= customer.getFullName() %>" placeholder="Nhập tên khách hàng" required />
+											value="<%= manager.getFullName() %>" placeholder="Nhập tên quản lý" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Số điện thoại:</h6>
 										<input type="text" class="form-control" name="phone"
-											value="<%= customer.getPhoneNumber() %>" placeholder="Nhập số điện thoại khách hàng" required />
+											value="<%= manager.getPhoneNumber() %>" placeholder="Nhập số điện thoại quản lý" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Địa chỉ:</h6>
 										<input type="text" class="form-control" name="address"
-											value="<%= customer.getAddress() %>" placeholder="Nhập địa chỉ khách hàng" required />
+											value="<%= manager.getAddress() %>" placeholder="Nhập địa chỉ quản lý" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Email:</h6>
 										<input type="text" class="form-control" name="email"
-											value="<%= customer.getEmail() %>" placeholder="Nhập email khách hàng" required />
+											value="<%= manager.getEmail() %>" placeholder="Nhập email quản lý" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Tên tài khoản:</h6>
 										<input type="text" class="form-control" name="userName"
-											value="<%= customer.getAccountName() %>" placeholder="Nhập tên tài khoản khách hàng" required />
+											value="<%= manager.getAccountName() %>" placeholder="Nhập tên tài khoản quản lý" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Mật khẩu:</h6>
 										<input type="text" class="form-control" name="password"
-											value="<%= customer.getPassword() %>" placeholder="Nhập mật khẩu khách hàng" required />
+											value="<%= manager.getPassword() %>" placeholder="Nhập mật khẩu quản lý" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Xác nhận mật khẩu:</h6>
 										<input type="text" class="form-control" name="confirm-password"
-											value="<%= customer.getPassword() %>" placeholder="Xác nhận mật khẩu" required />
+											value="<%= manager.getPassword() %>" placeholder="Xác nhận mật khẩu" required />
 									</div>
 									<div class="d-flex justify-content-center mb-3">
 										<button type="submit" class="btn btn-primary">Cập nhật</button>
