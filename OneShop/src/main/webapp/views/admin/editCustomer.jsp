@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Thêm quản lý</title>
+<title>Chỉnh sửa khách hàng</title>
 </head>
 <body>
 	<div class="app-content content">
@@ -16,7 +16,7 @@
 						<div class="card card-transparent">
 							<div class="card-header card-header-transparent py-20">
 								<div class="btn-group dropdown">
-									<h4 style="margin-top: -20px;">Home -> Quản lý -> Thêm quản lý</h4>
+									<h4 style="margin-top: -20px;">Home -> Sản phẩm -> Cập nhật sản phẩm</h4>
 								</div>
 							</div>
 						</div>
@@ -24,54 +24,54 @@
 					<div class="container mt-0">
 						<div class="row">
 							<div id="recent-transactions" class="col-12">
-								<form
-									action="${pageContext.request.contextPath}/admin/add-manager"
-									method="post" enctype="multipart/form-data">
-									<% String message = (String) request.getAttribute("message"); %>
-									<% if (message != null) { %>
+								<% String message = (String) request.getAttribute("message"); %>
+								<% if (message != null) { %>
     								<div class="alert alert-info">
         								<%= message %>
     								</div>
-									<% } %>
+								<% } %>
+								<%@ page import="models.User" %>		
+								<%
+    								User customer = (User) request.getAttribute("user");
+								%>						
+								<form action="${pageContext.request.contextPath}/admin/edit-customer" method="post" enctype="multipart/form-data">
 									<div class="mb-3">
-										<h6 class="mb-0">Tên quản lý:</h6>
+										<h6 class="mb-0">Tên khách hàng:</h6>
 										<input type="text" class="form-control" name="fullName"
-											placeholder="Nhập tên quản lý" required />
+											value="<%= customer.getFullName() %>" placeholder="Nhập tên khách hàng" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Số điện thoại:</h6>
 										<input type="text" class="form-control" name="phone"
-											placeholder="Nhập số điện thoại" required />
+											value="<%= customer.getPhoneNumber() %>" placeholder="Nhập số điện thoại khách hàng" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Địa chỉ:</h6>
 										<input type="text" class="form-control" name="address"
-											placeholder="Nhập địa chỉ" required />
+											value="<%= customer.getAddress() %>" placeholder="Nhập địa chỉ khách hàng" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Email:</h6>
 										<input type="text" class="form-control" name="email"
-											placeholder="Nhập email" required />
+											value="<%= customer.getEmail() %>" placeholder="Nhập email khách hàng" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Tên tài khoản:</h6>
 										<input type="text" class="form-control" name="userName"
-											placeholder="Nhập tên tài khoản" required />
+											value="<%= customer.getAccountName() %>" placeholder="Nhập tên tài khoản khách hàng" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Mật khẩu:</h6>
-										<input type="password" class="form-control" name="password"
-											placeholder="Nhập mật khẩu" required />
+										<input type="text" class="form-control" name="password"
+											value="<%= customer.getPassword() %>" placeholder="Nhập mật khẩu khách hàng" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Xác nhận mật khẩu:</h6>
-										<input type="password" class="form-control"
-											name="confirm-password" placeholder="Nhập lại mật khẩu"
-											required />
+										<input type="text" class="form-control" name="confirm-password"
+											value="<%= customer.getPassword() %>" placeholder="Xác nhận mật khẩu" required />
 									</div>
 									<div class="d-flex justify-content-center mb-3">
-										<button type="submit" class="btn btn-primary">Thêm
-											khách hàng</button>
+										<button type="submit" class="btn btn-primary">Cập nhật</button>
 									</div>
 								</form>
 							</div>
