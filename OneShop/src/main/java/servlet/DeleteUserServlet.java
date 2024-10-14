@@ -1,9 +1,8 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-import dao.UserDAO;
+import daoImpl.UserDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class DeleteUserServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
-	UserDAO userDAO = new UserDAO();
+	UserDAOImpl userDAO = new UserDAOImpl();
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
@@ -22,20 +21,12 @@ public class DeleteUserServlet extends HttpServlet{
 		
 		String userId = request.getParameter("userId");
 		  
-		try { 
-			
-			userDAO.deleteUserById(userId); 
-			request.setAttribute("message", "Xóa người dùng thành công!");
-		} 
-		catch (SQLException e) {
-			e.printStackTrace(); 
-			request.setAttribute("message", "Lỗi khi Xóa người dùng!");
-			return;
-		}
+		userDAO.deleteUser(userId); 
+		request.setAttribute("message", "Xóa người dùng thành công!");
 		
-		if (action.equals("/admin/customer")) {
+		if (action.equals("/admin/delete-customer")) {
             request.getRequestDispatcher("/views/admin/customer.jsp").forward(request, response);
-        } else if (action.equals("/admin/manager")) {
+        } else if (action.equals("/admin/delete-manager")) {
             request.getRequestDispatcher("/views/admin/manager.jsp").forward(request, response);
         }	
 	}

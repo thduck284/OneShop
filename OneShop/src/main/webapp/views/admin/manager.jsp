@@ -69,7 +69,7 @@
 															<td><a>${manager.fullName}</a></td>
 															<td><a>${manager.phoneNumber}</a></td>
 															<td><a>${manager.email}</a></td>
-															<td><a>${manager.accountName}</a></td>
+															<td><a>${manager.userName}</a></td>
 															<td><a>${manager.password}</a></td>
 															<td style="max-width: 300px; word-wrap: break-word;">
 																<a>${manager.address}</a>
@@ -83,7 +83,7 @@
 																	action="${pageContext.request.contextPath}/admin/delete-manager"
 																	method="POST" style="display: inline;"
 																	onsubmit="return confirmDelete();">
-																	<input type="hidden" name="managerId"
+																	<input type="hidden" name="userId"
 																		value="${manager.userId}">
 																	<button type="submit" class="btn btn-danger btn-sm"
 																		style="padding: 10px 30px;">Xóa</button>

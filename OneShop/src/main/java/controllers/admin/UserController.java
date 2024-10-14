@@ -3,19 +3,20 @@ package controllers.admin;
 import java.io.IOException;
 import java.util.List;
 
-import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.User;
+import service.UserService;
+import serviceImpl.UserServiceImpl;
 
 @WebServlet(urlPatterns = {"/admin/customer", "/admin/manager"})
 public class UserController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	private UserDAO userDAO = new UserDAO();
+	private UserService userService = new UserServiceImpl();
 	
 	@Override
 	protected void doGet (HttpServletRequest request, HttpServletResponse response)
@@ -24,7 +25,7 @@ public class UserController extends HttpServlet{
 		String action = request.getServletPath();
 		String role = action.equals("/admin/customer") ? "customer" : "manager";
 	    
-		List<User> users = userDAO.getAllUserByRole(role);
+		List<User> users = userService.getAllUserByRole(role);
 		request.setAttribute("users", users);	
 		
         if (action.equals("/admin/customer")) {

@@ -58,7 +58,7 @@
 									<div class="mb-3">
 										<h6 class="mb-0">Tên tài khoản:</h6>
 										<input type="text" class="form-control" name="userName"
-											value="<%= manager.getAccountName() %>" placeholder="Nhập tên tài khoản quản lý" required />
+											value="<%= manager.getUserName() %>" placeholder="Nhập tên tài khoản quản lý" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Mật khẩu:</h6>
