@@ -12,7 +12,6 @@ public class Order {
 	public Order(String orderId, String userId, double totalPrice, String status, 
 			String paymentMethod, String shippingAddress, String createdDate) {
 		
-		// TODO Auto-generated constructor stub
 		this.orderId = orderId;
 		this.userId= userId;
 		this.totalPrice = totalPrice;
@@ -20,13 +19,13 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 		this.shippingAddress = shippingAddress;
 		this.createdDate = createdDate;
-	}
+	}	
 
-	public String getorderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
-	public void setorderId(String orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 

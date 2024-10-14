@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class User {
 	private String userId;
-	private String accountName;
+	private String userName;
 	private String email;
 	private String password;
 	private String fullName;
@@ -17,13 +17,13 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(String userId, String accountName, String email, 
+	public User(String userId, String userName, String email, 
 			String password, String fullName, String phoneNumber, 
 			String address, String role, Date createdDate) {
 		
 		// TODO Auto-generated constructor stub
 		this.userId = userId;
-		this.accountName = accountName;
+		this.userName = userName;
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
@@ -41,12 +41,12 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getAccountName() {
-		return accountName;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getEmail() {

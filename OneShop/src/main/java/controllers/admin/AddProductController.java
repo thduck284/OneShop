@@ -3,9 +3,7 @@ package controllers.admin;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
-import java.sql.SQLException;
 
-import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,13 +11,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import models.Product;
+import service.ProductService;
+import serviceImpl.ProductServiceImpl;
 
 @WebServlet(urlPatterns = {"/admin/add-product"})
 @MultipartConfig
 public class AddProductController extends HttpServlet{
 		
 	private static final long serialVersionUID = 1L;
-	ProductDAO productDAO = new ProductDAO();
+	ProductService productService = new ProductServiceImpl();
+	Product product = new Product();
+	
 	
 	protected void doGet (HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
@@ -29,12 +32,12 @@ public class AddProductController extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-		String productName = request.getParameter("productName");
-		Float price = Float.parseFloat(request.getParameter("price")); 	
-		int quantity = Integer.parseInt(request.getParameter("quantity")); 
-		String categoryId = request.getParameter("categoryId"); 
-		String description = request.getParameter("description"); 
-		Date createdDate = Date.valueOf(request.getParameter("createdDate"));
+		product.setProductName(request.getParameter("productName")) ;
+		product.setPrice(Float.parseFloat(request.getParameter("price"))); 	
+		product.setQuantity(Integer.parseInt(request.getParameter("quantity"))); 
+		product.setCategoryId(request.getParameter("categoryId")); 
+		product.setDescription(request.getParameter("description")); 
+		product.setCreatedDate(Date.valueOf(request.getParameter("createdDate")));
 		  
 		Part imagePart = request.getPart("image"); 
 		byte[] imageData = null; 
@@ -50,17 +53,11 @@ public class AddProductController extends HttpServlet{
 			    return;
 			} 				
 		}
-		  
-		try { 
-			
-			productDAO.addProduct(productName, description, price, quantity, categoryId, imageData, createdDate); 
-			request.setAttribute("message", "Thêm sản phẩm thành công!");
-		} 
-		catch (SQLException e) {
-			e.printStackTrace(); 
-			request.setAttribute("message", "Lỗi khi thêm sản phẩm!");
-			return;
-		}
+		
+		product.setImage(imageData);
+		
+		productService.addProduct(product); 
+		request.setAttribute("message", "Thêm sản phẩm thành công!");
 		
 		request.getRequestDispatcher("/views/admin/addProduct.jsp").forward(request, response);
     }

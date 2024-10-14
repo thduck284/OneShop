@@ -3,9 +3,7 @@ package controllers.admin;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
-import java.sql.SQLException;
 
-import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,13 +12,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import models.Product;
+import service.ProductService;
+import serviceImpl.ProductServiceImpl;
 
 @WebServlet(urlPatterns = {"/admin/edit-product"})
 @MultipartConfig
 public class EditProductController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
-	ProductDAO productDAO = new ProductDAO();
+	ProductService productService = new ProductServiceImpl();
 	Product product = new Product();
 	String productId;
 	
@@ -28,7 +28,7 @@ public class EditProductController extends HttpServlet{
 	        throws ServletException, IOException {
 		
 		productId = request.getParameter("productId");
-		product = productDAO.getProductById(productId);
+		product = productService.getProductById(productId);
 		request.setAttribute("product", product);
 		
 		request.getRequestDispatcher("/views/admin/editProduct.jsp").forward(request, response);
@@ -36,13 +36,12 @@ public class EditProductController extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-		String productName = (request.getParameter("productName") == null) ? product.getProductName() : request.getParameter("productName");
-		Float price = (float) ((request.getParameter("price") == null) ? product.getPrice() : Float.parseFloat(request.getParameter("price"))); 	
-		int quantity = (int) ((request.getParameter("quantity") == null) ? product.getQuantity() : Integer.parseInt(request.getParameter("quantity"))); 
-		String categoryId = (request.getParameter("categoryId") == null) ? product.getCategoryId() : request.getParameter("categoryId"); 
-		String description = (request.getParameter("description") == null) ? product.getDescription() : request.getParameter("description"); 
-		Date createdDate = (request.getParameter("createdDate") == null) ? product.getCreatedDate() : Date.valueOf(request.getParameter("createdDate"));
-
+		product.setProductName((request.getParameter("productName") == null) ? product.getProductName() : request.getParameter("productName")) ;
+		product.setPrice((float) ((request.getParameter("price") == null) ? product.getPrice() : Float.parseFloat(request.getParameter("price")))); 	
+		product.setQuantity((int) ((request.getParameter("quantity") == null) ? product.getQuantity() : Integer.parseInt(request.getParameter("quantity")))); 
+		product.setCategoryId((request.getParameter("categoryId") == null) ? product.getCategoryId() : request.getParameter("categoryId")); 
+		product.setDescription((request.getParameter("description") == null) ? product.getDescription() : request.getParameter("description")); 
+		product.setCreatedDate((request.getParameter("createdDate") == null) ? product.getCreatedDate() : Date.valueOf(request.getParameter("createdDate")));
 		  
 		Part imagePart = request.getPart("image"); 
 		byte[] imageData = null; 
@@ -57,20 +56,15 @@ public class EditProductController extends HttpServlet{
 		        }
 		 } else {
 			 
-		        Product existingProduct = productDAO.getProductById(productId); 
+		        Product existingProduct = productService.getProductById(productId); 
 		        if (existingProduct != null) {
 		            imageData = existingProduct.getImage(); 
 		        }
 		 }
+		 
+		 product.setImage(imageData);
 		  
-		try { 
-			
-			productDAO.updateProduct(productId,productName, description, price, quantity, categoryId, imageData, createdDate); 
-			response.sendRedirect(request.getContextPath() + "/admin/product");
-		} 
-		catch (SQLException e) {
-			e.printStackTrace(); 
-			return;
-		}
+		productService.updateProduct(product); 
+		response.sendRedirect(request.getContextPath() + "/admin/product");
     }
 }

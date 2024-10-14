@@ -5,6 +5,10 @@ public class Category {
 	private String categoryName;
 	private String description;
 	
+	public Category() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Category(String categoryId, String categoryName, String description) {
 		
 		// TODO Auto-generated constructor stub

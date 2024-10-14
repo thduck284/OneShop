@@ -1,20 +1,20 @@
 package controllers.login;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import service.UserService;
+import serviceImpl.UserServiceImpl;
 
 @WebServlet(urlPatterns = {"/forget-password"})
 public class ForgetPasswordController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
-	private UserDAO userDAO = new UserDAO(); 
+	private UserService userService = new UserServiceImpl(); 
 
 	protected void doGet (HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class ForgetPasswordController extends HttpServlet{
         boolean isValidEmail = false;
 
         if (email != null && !email.isEmpty()) {
-            isValidEmail = userDAO.checkDuplicate("email", email); 
+            isValidEmail = userService.checkDuplicate("email", email); 
         }
         
         response.setContentType("application/json");
@@ -39,11 +39,7 @@ public class ForgetPasswordController extends HttpServlet{
         
         if(isValidEmail)
         {
-        	try {
-				userDAO.resetPassword(email, password);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+        	userService.resetPassword(email, password);
         	request.getRequestDispatcher("/views/login/resetPasswordSuccess.jsp").forward(request, response);
         }
     }

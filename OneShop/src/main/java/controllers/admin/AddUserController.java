@@ -1,22 +1,24 @@
 package controllers.admin;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.User;
+import service.UserService;
+import serviceImpl.UserServiceImpl;
 
 @WebServlet(urlPatterns = {"/admin/add-customer", "/admin/add-manager"})
 @MultipartConfig
 public class AddUserController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
-	private UserDAO userDAO = new UserDAO();
+	private UserService userService = new UserServiceImpl();
+	private User user = new User();
 
 	protected void doGet (HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
@@ -33,24 +35,16 @@ public class AddUserController extends HttpServlet{
     	
 		  String action = request.getServletPath();
 		  
-		  String fullName = request.getParameter("fullName"); 
-		  String phone = request.getParameter("phone"); 
-		  String address = request.getParameter("address"); 
-		  String email = request.getParameter("email"); 
-		  String userName = request.getParameter("userName"); 
-		  String password = request.getParameter("password");
-		  String role = action.equals("/admin/add-customer") ? "customer" : "manager";
+		  user.setFullName(request.getParameter("fullName")); 
+		  user.setPhoneNumber(request.getParameter("phone")); 
+		  user.setAddress(request.getParameter("address")); 
+		  user.setEmail(request.getParameter("email")); 
+		  user.setUserName(request.getParameter("userName")); 
+		  user.setPassword(request.getParameter("password"));
+		  user.setRole(action.equals("/admin/add-customer") ? "customer" : "manager");
 		  
-		  try {
-			  
-			  userDAO.addUser(fullName, email, phone, address, userName, password, role); 
-			  request.setAttribute("message", "Thêm người dùng thành công!"); 
-		  } 
-		  catch (SQLException e) { 
-			  e.printStackTrace();
-			  request.setAttribute("message", "Lỗi khi thêm người dùng!"); 
-			  return; 
-		  }
+		  userService.addUser(user); 
+		  request.setAttribute("message", "Thêm người dùng thành công!");
 		  
 	        if (action.equals("/admin/add-customer")) {
 	            request.getRequestDispatcher("/views/admin/addCustomer.jsp").forward(request, response);

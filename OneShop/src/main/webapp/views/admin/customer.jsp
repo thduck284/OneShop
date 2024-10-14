@@ -69,7 +69,7 @@
 															<td><a>${customer.fullName}</a></td>
 															<td><a>${customer.phoneNumber}</a></td>
 															<td><a>${customer.email}</a></td>
-															<td><a>${customer.accountName}</a></td>
+															<td><a>${customer.userName}</a></td>
 															<td><a>${customer.password}</a></td>
 															<td style="max-width: 300px; word-wrap: break-word;">
 																<a>${customer.address}</a>
@@ -83,7 +83,7 @@
 																	action="${pageContext.request.contextPath}/admin/delete-customer"
 																	method="POST" style="display: inline;"
 																	onsubmit="return confirmDelete();">
-																	<input type="hidden" name="customerId"
+																	<input type="hidden" name="userId"
 																		value="${customer.userId}">
 																	<button type="submit" class="btn btn-danger btn-sm"
 																		style="padding: 10px 30px;">Xóa</button>

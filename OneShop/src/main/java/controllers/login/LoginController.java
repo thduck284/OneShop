@@ -2,7 +2,7 @@ package controllers.login;
 
 import java.io.IOException;
 
-import dao.UserDAO;
+import daoImpl.UserDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ import models.User;
 public class LoginController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
-	private UserDAO userDAO = new UserDAO(); 
+	private UserDAOImpl userDAO = new UserDAOImpl(); 
 
 	protected void doGet (HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
