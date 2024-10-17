@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file ="/common/taglib.jsp" %>
+<%@ page import="java.util.Base64" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,8 +71,12 @@
 															<td><a>${product.price}đ</a></td>
 															<td><a>${product.quantity}</a></td>
 															<td><a>${product.categoryId}</a></td>
-															<td><img src="${pageContext.request.contextPath}/image?id=${product.productId}"
-																style="width: 100px; height: 100px;"></td>
+															<td>
+                                                                <c:if test="${not empty product.image}">
+                                                                    <img src="data:image/jpeg;base64,${fn:escapeXml(Base64.getEncoder().encodeToString(product.image))}" 
+                                                                         alt="Product Image" style="width:100px; height:100px;" />
+                                                                </c:if>
+                                                            </td>
 															<td style="max-width: 200px; word-wrap: break-word;">
 																<a>${product.description}</a>
 															</td>

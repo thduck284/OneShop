@@ -1,4 +1,4 @@
-package servlet;
+/*package servlet;
 
 import java.io.IOException;
 
@@ -38,3 +38,5 @@ public class UploadImageServlet extends HttpServlet{
     }
 
 }
+
+*/
