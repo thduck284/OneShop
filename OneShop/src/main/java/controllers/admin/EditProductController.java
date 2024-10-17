@@ -46,25 +46,25 @@ public class EditProductController extends HttpServlet{
 		Part imagePart = request.getPart("image"); 
 		byte[] imageData = null; 
 		
-		 if (imagePart != null && imagePart.getSize() > 0) { 
-		        try (InputStream inputStream = imagePart.getInputStream()) { 
-		            imageData = new byte[(int) imagePart.getSize()]; 
-		            inputStream.read(imageData); 
-		        } catch (IOException e) {
-		            e.printStackTrace(); 
-		            return;
-		        }
+		if (imagePart != null && imagePart.getSize() > 0) { 
+			try (InputStream inputStream = imagePart.getInputStream()) { 
+				imageData = new byte[(int) imagePart.getSize()]; 
+		        inputStream.read(imageData); 
+		    } catch (IOException e) {
+		        e.printStackTrace(); 
+		        return;
+		    }
 		 } else {
 			 
-		        Product existingProduct = productService.getProductById(productId); 
-		        if (existingProduct != null) {
-		            imageData = existingProduct.getImage(); 
-		        }
+		    Product existingProduct = productService.getProductById(productId); 
+		    if (existingProduct != null) {
+		        imageData = existingProduct.getImage(); 
+		    }
 		 }
 		 
-		 product.setImage(imageData);
+	     product.setImage(imageData);
 		  
-		productService.updateProduct(product); 
-		response.sendRedirect(request.getContextPath() + "/admin/product");
+	 	 productService.updateProduct(product); 
+		 response.sendRedirect(request.getContextPath() + "/admin/product");
     }
 }

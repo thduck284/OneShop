@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.OrderDAO;
 import models.Order;
 
-public class OrderDAOImpl {
+public class OrderDAOImpl implements OrderDAO{
 	
-	public void addOrder(String userId, double totalPrice, String status, String paymentMethod, String shippingAddress) throws SQLException {
+	@Override
+	public void addOrder(Order order) {
 	    String sql = "INSERT INTO order (orderId, userId, totalPrice, status, paymentMethod, shippingAddress, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    
 
 
 	    String orderId = "ĐH" + (countOrders() + 1); 
@@ -21,33 +24,33 @@ public class OrderDAOImpl {
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 
 	        statement.setString(1, orderId);
-	        statement.setString(2, userId);
-	        statement.setDouble(3, totalPrice);
-	        statement.setString(4, status);
-	        statement.setString(5, paymentMethod);
-	        statement.setString(6, shippingAddress);
+	        statement.setString(2, order.getUserId());
+	        statement.setDouble(3, order.getTotalPrice());
+	        statement.setString(4, order.getStatus());
+	        statement.setString(5, order.getPaymentMethod());
+	        statement.setString(6, order.getShippingAddress());
 	        
 	        statement.setDate(7, new java.sql.Date(System.currentTimeMillis())); 
 
 	        statement.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        throw new SQLException("Error! Can't add order."); 
 	    }
 	}
 	
-	public void updateOrder(String orderId, String userId, double totalPrice, String status, String paymentMethod, String shippingAddress) throws SQLException {
-	    String sql = "UPDATE orders SET userId = ?, totalPrice = ?, status = ?, paymentMethod = ?, shippingAddress = ? WHERE orderId = ?";
+	@Override
+	public void updateOrder(Order order) {
+	    String sql = "UPDATE order SET userId = ?, totalPrice = ?, status = ?, paymentMethod = ?, shippingAddress = ? WHERE orderId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
-
-	        statement.setString(1, userId);
-	        statement.setDouble(2, totalPrice);
-	        statement.setString(3, status);
-	        statement.setString(4, paymentMethod);
-	        statement.setString(5, shippingAddress);
-	        statement.setString(6, orderId);
+	    	
+	    	statement.setString(1, order.getUserId());
+	        statement.setDouble(2, order.getTotalPrice());
+	        statement.setString(3, order.getStatus());
+	        statement.setString(4, order.getPaymentMethod());
+	        statement.setString(5, order.getShippingAddress());
+	        statement.setString(6, order.getOrderId());
 
 	        int rowsUpdated = statement.executeUpdate();
 	        if (rowsUpdated == 0) {
@@ -55,12 +58,12 @@ public class OrderDAOImpl {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        throw new SQLException("Error! Can't update order."); 
 	    }
 	}
-
-	public void deleteOrder(String orderId) throws SQLException {
-	    String sql = "DELETE FROM orders WHERE orderId = ?";
+	
+	@Override
+	public void deleteOrder(String orderId) {
+	    String sql = "DELETE FROM order WHERE orderId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -73,12 +76,11 @@ public class OrderDAOImpl {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        throw new SQLException("Error! Can't delete order."); 
 	    }
 	}
 
-	
-	public int countOrders() throws SQLException {
+	@Override
+	public int countOrders()  {
 	    String sql = "SELECT COUNT(*) FROM order";
 
 	    try (Connection connection = ConnectDB.getConnection();
@@ -90,13 +92,13 @@ public class OrderDAOImpl {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        throw new SQLException("Error! Can't count orders.");
 	    }
 	    return 0; 
 	}
-
-	public Order getOrderById(String orderId) throws SQLException {
-	    String sql = "SELECT * FROM orders WHERE orderId = ?";
+	
+	@Override
+	public Order getOrderById(String orderId) {
+	    String sql = "SELECT * FROM order WHERE orderId = ?";
 	    Order order = null;
 
 	    try (Connection connection = ConnectDB.getConnection();
@@ -117,14 +119,14 @@ public class OrderDAOImpl {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        throw new SQLException("Error! Can't retrieve order by orderId.");
 	    }
 
 	    return order;
 	}
 
-	public List<Order> getAllOrders() throws SQLException {
-	    String sql = "SELECT * FROM orders";
+	@Override
+	public List<Order> getAllOrders() {
+	    String sql = "SELECT * FROM order";
 	    List<Order> orders = new ArrayList<>();
 
 	    try (Connection connection = ConnectDB.getConnection();
@@ -145,7 +147,6 @@ public class OrderDAOImpl {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        throw new SQLException("Error! Can't retrieve all orders.");
 	    }
 
 	    return orders;

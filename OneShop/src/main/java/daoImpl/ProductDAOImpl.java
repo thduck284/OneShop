@@ -94,6 +94,9 @@ public class ProductDAOImpl implements ProductDAO{
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
+            	
+            	byte[] image = resultSet.getBytes("image");
+            	
                 Product product = new Product(
                     resultSet.getString("productId"),
                     resultSet.getString("productName"),
@@ -101,7 +104,7 @@ public class ProductDAOImpl implements ProductDAO{
                     resultSet.getDouble("price"),
                     resultSet.getInt("quantity"),
                     resultSet.getString("categoryId"),
-                    null,
+                    image,
                     resultSet.getDate("createdDate")
                 );
                 productList.add(product);
