@@ -1,7 +1,7 @@
 package models;
 
-public class Order {
-	private String orderId;
+public class Bill {
+	private String billId;
 	private String userId;
 	private double totalPrice;
 	private String status;
@@ -9,10 +9,10 @@ public class Order {
 	private String shippingAddress;
 	private String createdDate;
 	
-	public Order(String orderId, String userId, double totalPrice, String status, 
+	public Bill(String billId, String userId, double totalPrice, String status, 
 			String paymentMethod, String shippingAddress, String createdDate) {
 		
-		this.orderId = orderId;
+		this.billId = billId;
 		this.userId= userId;
 		this.totalPrice = totalPrice;
 		this.status = status;
@@ -21,12 +21,12 @@ public class Order {
 		this.createdDate = createdDate;
 	}	
 
-	public String getOrderId() {
-		return orderId;
+	public String getBillId() {
+		return billId;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setBillId(String billId) {
+		this.billId = billId;
 	}
 
 	public String getUserId() {
