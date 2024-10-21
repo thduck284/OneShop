@@ -7,28 +7,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.OrderDAO;
-import models.Order;
+import dao.BillDAO;
+import models.Bill;
 
-public class OrderDAOImpl implements OrderDAO{
+public class BillDAOImpl implements BillDAO{
 	
 	@Override
-	public void addOrder(Order order) {
-	    String sql = "INSERT INTO order (orderId, userId, totalPrice, status, paymentMethod, shippingAddress, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public void addBill(Bill bill) {
+	    String sql = "INSERT INTO bill (billId, userId, totalPrice, status, paymentMethod, shippingAddress, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	    
 
 
-	    String orderId = "ĐH" + (countOrders() + 1); 
+	    String billId = "ĐH" + (countBills() + 1); 
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 
-	        statement.setString(1, orderId);
-	        statement.setString(2, order.getUserId());
-	        statement.setDouble(3, order.getTotalPrice());
-	        statement.setString(4, order.getStatus());
-	        statement.setString(5, order.getPaymentMethod());
-	        statement.setString(6, order.getShippingAddress());
+	        statement.setString(1, billId);
+	        statement.setString(2, bill.getUserId());
+	        statement.setDouble(3, bill.getTotalPrice());
+	        statement.setString(4, bill.getStatus());
+	        statement.setString(5, bill.getPaymentMethod());
+	        statement.setString(6, bill.getShippingAddress());
 	        
 	        statement.setDate(7, new java.sql.Date(System.currentTimeMillis())); 
 
@@ -39,22 +39,22 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 	
 	@Override
-	public void updateOrder(Order order) {
-	    String sql = "UPDATE order SET userId = ?, totalPrice = ?, status = ?, paymentMethod = ?, shippingAddress = ? WHERE orderId = ?";
+	public void updateBill(Bill bill) {
+	    String sql = "UPDATE bill SET userId = ?, totalPrice = ?, status = ?, paymentMethod = ?, shippingAddress = ? WHERE billId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 	    	
-	    	statement.setString(1, order.getUserId());
-	        statement.setDouble(2, order.getTotalPrice());
-	        statement.setString(3, order.getStatus());
-	        statement.setString(4, order.getPaymentMethod());
-	        statement.setString(5, order.getShippingAddress());
-	        statement.setString(6, order.getOrderId());
+	    	statement.setString(1, bill.getUserId());
+	        statement.setDouble(2, bill.getTotalPrice());
+	        statement.setString(3, bill.getStatus());
+	        statement.setString(4, bill.getPaymentMethod());
+	        statement.setString(5, bill.getShippingAddress());
+	        statement.setString(6, bill.getBillId());
 
 	        int rowsUpdated = statement.executeUpdate();
 	        if (rowsUpdated == 0) {
-	            throw new SQLException("No order found with the provided orderId."); 
+	            throw new SQLException("No bill found with the provided billId."); 
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -62,17 +62,17 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 	
 	@Override
-	public void deleteOrder(String orderId) {
-	    String sql = "DELETE FROM order WHERE orderId = ?";
+	public void deleteBill(String billId) {
+	    String sql = "DELETE FROM bill WHERE billId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 
-	        statement.setString(1, orderId);
+	        statement.setString(1, billId);
 
 	        int rowsDeleted = statement.executeUpdate();
 	        if (rowsDeleted == 0) {
-	            throw new SQLException("No order found with the provided orderId.");
+	            throw new SQLException("No bill found with the provided billId.");
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -80,8 +80,8 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 
 	@Override
-	public int countOrders()  {
-	    String sql = "SELECT COUNT(*) FROM order";
+	public int countBills()  {
+	    String sql = "SELECT COUNT(*) FROM bill";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql);
@@ -97,14 +97,14 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 	
 	@Override
-	public Order getOrderById(String orderId) {
-	    String sql = "SELECT * FROM order WHERE orderId = ?";
-	    Order order = null;
+	public Bill getBillById(String billId) {
+	    String sql = "SELECT * FROM bill WHERE billId = ?";
+	    Bill bill = null;
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 
-	        statement.setString(1, orderId);
+	        statement.setString(1, billId);
 	        ResultSet resultSet = statement.executeQuery();
 
 	        if (resultSet.next()) {
@@ -115,26 +115,26 @@ public class OrderDAOImpl implements OrderDAO{
 	            String shippingAddress = resultSet.getString("shippingAddress");
 	            String createdDate = resultSet.getString("createdDate");
 
-	            order = new Order(orderId, userId, totalPrice, status, paymentMethod, shippingAddress, createdDate);
+	            bill = new Bill(billId, userId, totalPrice, status, paymentMethod, shippingAddress, createdDate);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 
-	    return order;
+	    return bill;
 	}
 
 	@Override
-	public List<Order> getAllOrders() {
-	    String sql = "SELECT * FROM order";
-	    List<Order> orders = new ArrayList<>();
+	public List<Bill> getAllBills() {
+	    String sql = "SELECT * FROM bill";
+	    List<Bill> bills = new ArrayList<>();
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql);
 	         ResultSet resultSet = statement.executeQuery()) {
 
 	        while (resultSet.next()) {
-	            String orderId = resultSet.getString("orderId");
+	            String billId = resultSet.getString("billId");
 	            String userId = resultSet.getString("userId");
 	            double totalPrice = resultSet.getDouble("totalPrice");
 	            String status = resultSet.getString("status");
@@ -142,14 +142,14 @@ public class OrderDAOImpl implements OrderDAO{
 	            String shippingAddress = resultSet.getString("shippingAddress");
 	            String createdDate = resultSet.getString("createdDate");
 
-	            Order order = new Order(orderId, userId, totalPrice, status, paymentMethod, shippingAddress, createdDate);
-	            orders.add(order);
+	            Bill bill = new Bill(billId, userId, totalPrice, status, paymentMethod, shippingAddress, createdDate);
+	            bills.add(bill);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 
-	    return orders;
+	    return bills;
 	}
 
 }

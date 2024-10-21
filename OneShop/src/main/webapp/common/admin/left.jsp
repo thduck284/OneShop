@@ -30,9 +30,12 @@
 				</li>
 				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/category"><i
 						class="fa-solid fa-box"></i><span class="menu-title" data-i18n="">Doanh mục</span></a></li>
-				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/order"><i
-						class="fa-solid fa-shopping-cart"></i><span class="menu-title" data-i18n="">Đặt hàng</span></a>
+				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/cart"><i
+						class="fa-solid fa-shopping-cart"></i><span class="menu-title" data-i18n="">Giỏ hàng</span></a>
 				</li>
+				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/bill"><i
+						class="fa-solid fa-file-invoice"></i><span class="menu-title" data-i18n="">Hóa đơn</span></a>
+				</li>		
 				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/revenue"><i
 						class="fa-solid fa-chart-line"></i><span class="menu-title" data-i18n="">Doanh thu</span></a>
 				</li>

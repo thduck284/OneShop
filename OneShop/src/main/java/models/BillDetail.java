@@ -1,13 +1,13 @@
 package models;
 
-public class OrderDetail {
+public class BillDetail {
 	private String orderDetailId;
 	private String orderId;
 	private String productId;
 	private int quantity;
 	private double price;
 	
-	public OrderDetail(String orderDetailId, String orderId, String productId,
+	public BillDetail(String orderDetailId, String orderId, String productId,
 			int quantity, double price) {
 		
 		// TODO Auto-generated constructor stub

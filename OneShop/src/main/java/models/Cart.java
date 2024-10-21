@@ -1,15 +1,18 @@
 package models;
 
+import java.time.LocalDateTime;
+
 public class Cart {
 	private String cartId;
 	private String userId;
-	private String createdDate;
+	private String userName;
+	private LocalDateTime createdDate;
 	
-	public Cart(String cartId, String userId, String createdDate) {
+	public Cart(String cartId, String userId, String userName, LocalDateTime createdDate) {
 		
-		// TODO Auto-generated constructor stub
 		this.cartId = cartId;
 		this.userId = userId;
+		this.userName = userName;
 		this.createdDate = createdDate;
 	}
 
@@ -28,12 +31,20 @@ public class Cart {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	
+	public String getUserName() {
+		return userName;
+	}
 
-	public String getCreatedDate() {
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(String createdDate) {
+	public void setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
 	
