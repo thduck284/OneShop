@@ -12,7 +12,7 @@ import models.User;
 import service.UserService;
 import serviceImpl.UserServiceImpl;
 
-@WebServlet(urlPatterns = {"/admin/customer", "/admin/manager"})
+@WebServlet(urlPatterns = {"/admin/customer", "/admin/vendor"})
 public class UserController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -23,15 +23,15 @@ public class UserController extends HttpServlet{
 	        throws ServletException, IOException {
 		
 		String action = request.getServletPath();
-		String role = action.equals("/admin/customer") ? "customer" : "manager";
+		String role = action.equals("/admin/customer") ? "customer" : "vendor";
 	    
 		List<User> users = userService.getAllUserByRole(role);
 		request.setAttribute("users", users);	
 		
         if (action.equals("/admin/customer")) {
             request.getRequestDispatcher("/views/admin/customer.jsp").forward(request, response);
-        } else if (action.equals("/admin/manager")) {
-            request.getRequestDispatcher("/views/admin/manager.jsp").forward(request, response);
+        } else if (action.equals("/admin/vendor")) {
+            request.getRequestDispatcher("/views/admin/vendor.jsp").forward(request, response);
         }	 
 	}
 }

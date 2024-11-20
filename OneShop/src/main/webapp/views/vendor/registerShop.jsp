@@ -15,8 +15,8 @@
 		<div style="width: 90%; max-width: 900px;">
 			<h3 class="mb-4 text-center">Thông tin cửa hàng</h3>
 			<%
-				User user = (User) session.getAttribute("vendorInfor");
-				String userId = user != null ? user.getUserId() : "";
+			User user = (User) session.getAttribute("vendorInfor");
+					String userId = user != null ? user.getUserId() : "";
 			%>
 			<form action="${pageContext.request.contextPath}/vendor/register-shop" method="post" enctype="multipart/form-data">
 				<div class="row mb-5">	

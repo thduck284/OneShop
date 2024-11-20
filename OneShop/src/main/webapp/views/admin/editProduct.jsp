@@ -36,8 +36,18 @@
 								<%@ page import="java.util.Base64" %>	
 								<%
     								Product product = (Product) request.getAttribute("product");
-								%>						
+								%>														
 								<form action="${pageContext.request.contextPath}/admin/edit-product" method="post" enctype="multipart/form-data">
+									<div class="mb-3">
+										<h6 class="mb-0">Mã hãng sản xuất:</h6>
+										<input type="text" class="form-control" name="categoryId"
+											value="<%= product.getCategoryId() %>" placeholder="Nhập mã hãng sản xuất" required />
+									</div>
+									<div class="mb-3">
+										<h6 class="mb-0">Mã cửa hàng:</h6>
+										<input type="text" class="form-control" name="shopId"
+											value="<%= product.getShopId() %>" placeholder="Nhập mã cửa hàng buôn bán sản phẩm" required />
+									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Tên sản phẩm:</h6>
 										<input type="text" class="form-control" name="productName"
@@ -53,18 +63,13 @@
     								</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Giá:</h6>
-										<input type="text" class="form-control" name="price"
+										<input type="number" class="form-control" name="price"
 											value="<%= product.getPrice() %>" placeholder="Nhập giá sản phẩm" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Số lượng:</h6>
 										<input type="number" class="form-control" name="quantity"
 											value="<%= product.getQuantity() %>" placeholder="Nhập số lượng" required />
-									</div>
-									<div class="mb-3">
-										<h6 class="mb-0">Mã hãng sản xuất:</h6>
-										<input type="text" class="form-control" name="categoryId"
-											value="<%= product.getCategoryId() %>" placeholder="Nhập hãng sản xuất" required />
 									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Mô tả:</h6>

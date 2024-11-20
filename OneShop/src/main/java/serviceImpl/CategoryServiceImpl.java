@@ -41,4 +41,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDAO.getAllCategories();
 	}
 
+	@Override
+	public List<String> getAllCategoryIds() {
+		// TODO Auto-generated method stub
+		return categoryDAO.getAllCategoryIds();
+	}
+
 }

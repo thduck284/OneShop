@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import dao.UserDAO;
 import models.User;
@@ -16,15 +17,16 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public void addUser(User user) {
+		// TODO Auto-generated method stub
 	    String sql = "INSERT INTO [dbo].[user] (userId, fullName, email, phone, address, userName, password, role, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	    String userId = null;
 	    
 	    if(user.getRole().equals("customer"))
 	    {
-	    	userId = "KH" + (countUsersByRole(user.getRole()) + 1);
+	    	userId = "KH" + UUID.randomUUID().toString().replace("-", "").substring(0, 7);
 	    } else {
-	    	userId = "M" + (countUsersByRole(user.getRole()) + 1);
+	    	userId = "KH" + UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 	    }
 
 	    LocalDate now = LocalDate.now();
@@ -51,6 +53,7 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public void updateUser(User user) {
+		// TODO Auto-generated method stub
 	    String sql = "UPDATE [dbo].[user] SET fullName = ?, email = ?, phone = ?, address = ?, userName = ?, password = ?, role = ? WHERE userId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
@@ -80,6 +83,7 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public void deleteUser(String userId) {
+		// TODO Auto-generated method stub
 	    String sql = "DELETE FROM [dbo].[user] WHERE userId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
@@ -101,8 +105,8 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	@Override
-	public void resetPassword(String email, String password)
-	{
+	public void resetPassword(String email, String password){
+		// TODO Auto-generated method stub
 		 String sql = "UPDATE [dbo].[user] SET password = ? WHERE email = ?";
 
 		    try (Connection connection = ConnectDB.getConnection();
@@ -124,8 +128,104 @@ public class UserDAOImpl implements UserDAO{
 		    }
 	}
 	
+	
+	
+	@Override
+	public int countUsersByRole(String role) {
+		// TODO Auto-generated method stub
+	    int count = 0;
+	    String sql = "SELECT COUNT(*) FROM [dbo].[user] WHERE role = ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, role);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                count = resultSet.getInt(1);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return count;
+	}
+	
+	@Override
+	public boolean checkDuplicate(String column, String value) {
+		// TODO Auto-generated method stub
+	    String query = "SELECT COUNT(*) FROM [dbo].[user] WHERE " + column + " = ?";
+	    try (Connection conn = ConnectDB.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setString(1, value);
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0; 
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
+	@Override
+	public boolean validUser(String userName, String password) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT COUNT(*) FROM [dbo].[user] WHERE userName = ? AND password = ?";
+	    boolean isValid = false;
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, userName);
+	        statement.setString(2, password);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                isValid = resultSet.getInt(1) > 0; // Nếu có ít nhất một người dùng, isValid sẽ là true
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return isValid;
+	}
+	
+	@Override
+	public User getInforUser(String username) {
+		// TODO Auto-generated method stub
+        String sql = "SELECT * FROM [dbo].[user] WHERE username = ?";
+        User user = null;
+
+        try (Connection connection = ConnectDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String userID = resultSet.getString("userID");
+                String fullName = resultSet.getString("fullName");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String userName = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String role = resultSet.getString("role");
+                Date createdDate = resultSet.getDate("createdDate");
+
+                user = new User(userID, userName, email, password, fullName, phone, address, role, createdDate);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+	
 	@Override
 	public User getUserById(String userId) {
+		// TODO Auto-generated method stub
 	    String sql = "SELECT userId, fullName, email, phone, address, userName, password, role, createdDate FROM [dbo].[user] WHERE userId = ?";
 	    
 	    User user = null;
@@ -162,6 +262,7 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public List<User> getAllUserByRole(String role) {
+		// TODO Auto-generated method stub
 		List<User> userList = new ArrayList<>();
 	    String sql = "SELECT * FROM [dbo].[user] WHERE role = ?";
 
@@ -191,70 +292,28 @@ public class UserDAOImpl implements UserDAO{
 	    }
 	    return userList;
     }
-	
+
 	@Override
-	public int countUsersByRole(String role) {
-	    int count = 0;
-	    String sql = "SELECT COUNT(*) FROM [dbo].[user] WHERE role = ?";
+	public List<String> getAllUserIdsByRole(String role) {
+		// TODO Auto-generated method stub
+		List<String> userIdList = new ArrayList<>();
+	    String sql = "SELECT userId FROM [dbo].[user] WHERE role = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
-
+	        
 	        statement.setString(1, role);
 
 	        try (ResultSet resultSet = statement.executeQuery()) {
-	            if (resultSet.next()) {
-	                count = resultSet.getInt(1);
+	            while (resultSet.next()) {
+	                String userId = resultSet.getString("userId");
+	                userIdList.add(userId);
 	            }
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    return count;
+
+	    return userIdList;
 	}
-	
-	@Override
-	public boolean checkDuplicate(String column, String value) {
-	    String query = "SELECT COUNT(*) FROM [dbo].[user] WHERE " + column + " = ?";
-	    try (Connection conn = ConnectDB.getConnection();
-	         PreparedStatement stmt = conn.prepareStatement(query)) {
-	        stmt.setString(1, value);
-	        ResultSet rs = stmt.executeQuery();
-	        if (rs.next()) {
-	            return rs.getInt(1) > 0; 
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return false;
-	}
-	
-	@Override
-	public User getInforUser(String username) {
-        String sql = "SELECT * FROM [dbo].[user] WHERE username = ?";
-        User user = null;
-
-        try (Connection connection = ConnectDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                String userID = resultSet.getString("userID");
-                String fullName = resultSet.getString("fullName");
-                String email = resultSet.getString("email");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                String userName = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                String role = resultSet.getString("role");
-                Date createdDate = resultSet.getDate("createdDate");
-
-                user = new User(userID, userName, email, password, fullName, phone, address, role, createdDate);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
 }

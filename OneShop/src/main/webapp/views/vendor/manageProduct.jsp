@@ -34,9 +34,9 @@
                     </thead>
                     <tbody>
                     	<%
-							User user = (User) session.getAttribute("vendorInfor");
-							String userId = user != null ? user.getUserId() : "";
-						%>
+                    	User user = (User) session.getAttribute("vendorInfor");
+                    						String userId = user != null ? user.getUserId() : "";
+                    	%>
                         <%
                         List<models.Product> products = (List<models.Product>) request.getAttribute("products");
                         if (products != null) {

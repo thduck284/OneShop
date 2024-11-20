@@ -24,16 +24,22 @@
 					<div class="container mt-0">
 						<div class="row">
 							<div id="recent-transactions" class="col-12">
-								<% String message = (String) request.getAttribute("message"); %>
-								<% if (message != null) { %>
+								<%
+								String message = (String) request.getAttribute("message");
+								%>
+								<%
+								if (message != null) {
+								%>
     								<div class="alert alert-info">
-        								<%= message %>
+        								<%=message%>
     								</div>
-								<% } %>
+								<%
+								}
+								%>
 								<%@ page import="models.User" %>		
 								<%
-    								User customer = (User) request.getAttribute("user");
-								%>						
+										User customer = (User) request.getAttribute("user");
+										%>						
 								<form action="${pageContext.request.contextPath}/admin/edit-customer" method="post" enctype="multipart/form-data">
 									<div class="mb-3">
 										<h6 class="mb-0">Tên khách hàng:</h6>

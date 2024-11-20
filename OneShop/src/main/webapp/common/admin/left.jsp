@@ -10,7 +10,7 @@
 	<div
 		class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow" style="width: 150px;">
 		<div class="main-menu-content">
-			<a class="navigation-brand d-none d-md-block d-lg-block d-xl-block""
+			<a class="navigation-brand d-none d-md-block d-lg-block d-xl-block"
 				href="index.html"><img class="brand-logo"
 				alt="CryptoDash admin logo"
 				src="../static/styles/admin/app-assets/images/logo/icon.jpg" width="200px"></a>
@@ -25,16 +25,16 @@
 				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/customer"><i
 						class="fa-solid fa-user"></i><span class="menu-title" data-i18n="">Khách hàng</span></a>
 				</li>
-				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/manager"><i
-						class="fa-solid fa-briefcase"></i><span class="menu-title" data-i18n="">Quản lý</span></a>
+				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/vendor"><i
+						class="fa-solid fa-briefcase"></i><span class="menu-title" data-i18n="">Người bán</span></a>
 				</li>
 				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/category"><i
 						class="fa-solid fa-box"></i><span class="menu-title" data-i18n="">Doanh mục</span></a></li>
 				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/cart"><i
 						class="fa-solid fa-shopping-cart"></i><span class="menu-title" data-i18n="">Giỏ hàng</span></a>
 				</li>
-				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/bill"><i
-						class="fa-solid fa-file-invoice"></i><span class="menu-title" data-i18n="">Hóa đơn</span></a>
+				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/order"><i
+						class="fa-solid fa-file-invoice"></i><span class="menu-title" data-i18n="">Đơn hàng</span></a>
 				</li>		
 				<li class=" nav-item"><a href="http://localhost:8080/OneShop/admin/revenue"><i
 						class="fa-solid fa-chart-line"></i><span class="menu-title" data-i18n="">Doanh thu</span></a>

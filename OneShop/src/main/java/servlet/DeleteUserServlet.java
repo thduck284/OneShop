@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/admin/delete-customer", "/admin/delete-manager"})
+@WebServlet(urlPatterns = {"/admin/delete-customer", "/admin/delete-vendor"})
 public class DeleteUserServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
@@ -26,8 +26,8 @@ public class DeleteUserServlet extends HttpServlet{
 		
 		if (action.equals("/admin/delete-customer")) {
             request.getRequestDispatcher("/views/admin/customer.jsp").forward(request, response);
-        } else if (action.equals("/admin/delete-manager")) {
-            request.getRequestDispatcher("/views/admin/manager.jsp").forward(request, response);
+        } else if (action.equals("/admin/delete-vendor")) {
+            request.getRequestDispatcher("/views/admin/vendor.jsp").forward(request, response);
         }	
 	}
 }

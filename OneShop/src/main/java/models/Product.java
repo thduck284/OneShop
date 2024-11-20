@@ -4,11 +4,12 @@ import java.sql.Date;
 
 public class Product {
 	private String productId;
+	private String categoryId;
+	private String shopId;
 	private String productName;
 	private String description;
-	private double price;
+	private int price;
 	private int quantity;
-	private String categoryId;
 	private byte[] image;
 	private Date createdDate;
 	
@@ -16,17 +17,18 @@ public class Product {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Product(String productId, String productName, String description,
-				double price, int quantity, String categoryId,
-				byte[] image, Date createdDate) {
+	public Product(String productId, String categoryId, String shopId,
+				String productName, String description, int price, 
+				int quantity, byte[] image, Date createdDate) {
 		
 		// TODO Auto-generated constructor stub
 		this.productId = productId;
+		this.categoryId = categoryId;
+		this.shopId = shopId;
 		this.productName = productName;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
-		this.categoryId = categoryId;
 		this.image = image;
 		this.createdDate = createdDate;
 	}
@@ -38,6 +40,23 @@ public class Product {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
+	
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+	
+	public String getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
+
 
 	public String getProductName() {
 		return productName;
@@ -55,11 +74,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
@@ -69,14 +88,6 @@ public class Product {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
-	}
-
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public byte[] getImage() {

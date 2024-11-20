@@ -31,13 +31,19 @@ public class EditProductController extends HttpServlet{
 		product = productService.getProductById(productId);
 		request.setAttribute("product", product);
 		
-		request.getRequestDispatcher("/views/admin/editProduct.jsp").forward(request, response);
+		String action = request.getServletPath();
+		if (action.equals("/admin/edit-product")) {
+		    request.getRequestDispatcher("/views/admin/editProduct.jsp").forward(request, response);
+		} else if (action.equals("/vendor/edit-product")) {
+		    request.getRequestDispatcher("/views/vendor/editProduct.jsp").forward(request, response);
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
+		product.setShopId((request.getParameter("shopId") == null) ? product.getShopId() : request.getParameter("shopId")) ;
 		product.setProductName((request.getParameter("productName") == null) ? product.getProductName() : request.getParameter("productName")) ;
-		product.setPrice((float) ((request.getParameter("price") == null) ? product.getPrice() : Float.parseFloat(request.getParameter("price")))); 	
+		product.setPrice((int) ((request.getParameter("price") == null) ? product.getPrice() : Integer.parseInt(request.getParameter("price")))); 	
 		product.setQuantity((int) ((request.getParameter("quantity") == null) ? product.getQuantity() : Integer.parseInt(request.getParameter("quantity")))); 
 		product.setCategoryId((request.getParameter("categoryId") == null) ? product.getCategoryId() : request.getParameter("categoryId")); 
 		product.setDescription((request.getParameter("description") == null) ? product.getDescription() : request.getParameter("description")); 
@@ -56,15 +62,20 @@ public class EditProductController extends HttpServlet{
 		    }
 		 } else {
 			 
-		    Product existingProduct = productService.getProductById(productId); 
-		    if (existingProduct != null) {
-		        imageData = existingProduct.getImage(); 
-		    }
+			 imageData = product.getImage();
 		 }
 		 
-	     product.setImage(imageData);
+	    product.setImage(imageData);
 		  
-	 	 productService.updateProduct(product); 
-		 response.sendRedirect(request.getContextPath() + "/admin/product");
+	 	productService.updateProduct(product);
+	 	 
+	 	String action = request.getServletPath();
+		if (action.equals("/admin/edit-product")) {
+			response.sendRedirect(request.getContextPath() + "/admin/product");
+        } else if (action.equals("/vendor/edit-product")) {
+        	response.sendRedirect(request.getContextPath() + "/vendor/edit-product");
+        }
+	 	 
+		 
     }
 }

@@ -16,7 +16,7 @@
 						<div class="card card-transparent">
 							<div class="card-header card-header-transparent py-20">
 								<div class="btn-group dropdown">
-									<h4 style="margin-top: -20px;">Home -> Doanh mục -> Thêm doanh mục sản phẩm</h4>
+									<h4 style="margin-top: -20px;">Home -> Doanh mục -> Thêm doanh mục</h4>
 								</div>
 							</div>
 						</div>
@@ -31,11 +31,6 @@
         								<%= message %>
     								</div>
 									<% } %>
-									<div class="mb-3">
-										<h6 class="mb-0">Mã hãng sản xuất:</h6>
-										<input type="text" class="form-control" name="categoryId"
-											placeholder="Nhập tên hãng sản xuất" required />
-									</div>
 									<div class="mb-3">
 										<h6 class="mb-0">Tên hãng sản xuất:</h6>
 										<input type="text" class="form-control" name="categoryName"

@@ -56,8 +56,9 @@
 														<th class="border-top-0">Tên sản phẩm</th>
 														<th class="border-top-0">Giá</th>
 														<th class="border-top-0">Số lượng</th>
-														<th class="border-top-0">Hãng sản xuất</th>
 														<th class="border-top-0">Ảnh</th>
+														<th class="border-top-0">Hãng sản xuất</th>
+														<th class="border-top-0">Mã cửa hàng </th>
 														<th class="border-top-0">Mô tả</th>
 														<th class="border-top-0">NSX</th>
 														<th class="border-top-0">Hàng động</th>
@@ -68,15 +69,16 @@
 														<tr>
 															<td><a class="border-top-1">${product.productId}</a></td>
 															<td><a>${product.productName}</a></td>
-															<td><a>${product.price}đ</a></td>
+															<td><a><fmt:formatNumber value="${product.price}" type="number" pattern="#,###"/> đ</a></td>
 															<td><a>${product.quantity}</a></td>
-															<td><a>${product.categoryId}</a></td>
 															<td>
                                                                 <c:if test="${not empty product.image}">
                                                                     <img src="data:image/jpeg;base64,${fn:escapeXml(Base64.getEncoder().encodeToString(product.image))}" 
                                                                          alt="Product Image" style="width:100px; height:100px;" />
                                                                 </c:if>
                                                             </td>
+                                                            <td><a>${product.categoryId}</a></td>
+                                                            <td><a>${product.shopId}</a></td>
 															<td style="max-width: 200px; word-wrap: break-word;">
 																<a>${product.description}</a>
 															</td>

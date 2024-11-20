@@ -30,8 +30,7 @@
         								<%= message %>
     								</div>
 								<% } %>
-								<%@ page import="models.Category" %>	
-								<%@ page import="java.util.Base64" %>	
+								<%@ page import="models.Category" %>		
 								<%
     								Category category = (Category) request.getAttribute("category");
 								%>						

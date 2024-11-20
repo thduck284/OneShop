@@ -2,7 +2,7 @@
 
 <sitemesh>
 	<mapping path="/admin/*" name="admin" decorator="admin.jsp" />
-	<mapping path="/manager/*" name="manager" decorator="manager.jsp" />
+	<mapping path="/vendor/*" name="vendor" decorator="vendor.jsp" />
 	<mapping path="/user/*" name="user" decorator="user.jsp" />
 	<mapping path="/api*" exclude="true" />
 </sitemesh>

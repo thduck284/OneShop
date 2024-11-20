@@ -13,4 +13,6 @@ public interface ProductService {
 	int countProducts();
 	byte[] getImageById(String productId);
 	List<Product> getAllProducts();
+	List<Product> getAllProductsByShopId(String shopId);
+	List<Product> getAllProductsByUserId(String userId);
 }

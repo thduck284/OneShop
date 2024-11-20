@@ -12,7 +12,7 @@ import models.User;
 import service.UserService;
 import serviceImpl.UserServiceImpl;
 
-@WebServlet(urlPatterns = {"/admin/edit-customer", "/admin/edit-manager"})
+@WebServlet(urlPatterns = {"/admin/edit-customer", "/admin/edit-vendor", "/vendor/edit-vendor"})
 @MultipartConfig
 public class EditUserController extends HttpServlet{
 
@@ -35,8 +35,8 @@ public class EditUserController extends HttpServlet{
 		
 		if (action.equals("/admin/edit-customer")) {
             request.getRequestDispatcher("/views/admin/editCustomer.jsp").forward(request, response);
-        } else if (action.equals("/admin/edit-manager")) {
-            request.getRequestDispatcher("/views/admin/editManager.jsp").forward(request, response);
+        } else if (action.equals("/admin/edit-vendor")) {
+            request.getRequestDispatcher("/views/admin/editVendor.jsp").forward(request, response);
         }	 
 	}
 	
@@ -51,14 +51,14 @@ public class EditUserController extends HttpServlet{
 		user.setEmail((request.getParameter("email") == null) ? user.getEmail() : request.getParameter("email")); 
 		user.setUserName((request.getParameter("userName") == null) ? user.getUserName() : request.getParameter("userName")); 
 		user.setPassword((request.getParameter("password") == null) ? user.getPassword() : request.getParameter("password"));
-		user.setRole(action.equals("/admin/edit-customer") ? "customer" : "manager");
+		user.setRole(action.equals("/admin/edit-customer") ? "customer" : "vendor");
 		  
 		userService.updateUser(user); 
 		
 		if (action.equals("/admin/edit-customer")) {
 		    request.getRequestDispatcher("/views/admin/customer.jsp").forward(request, response);
-		} else if (action.equals("/admin/edit-manager")) {
-		    request.getRequestDispatcher("/views/admin/manager.jsp").forward(request, response);
+		} else if (action.equals("/admin/edit-vendor")) {
+		    request.getRequestDispatcher("/views/admin/vendor.jsp").forward(request, response);
 		}
     }
 }

@@ -41,4 +41,10 @@ public class CartServiceImpl implements CartService{
 		return cartDAO.getAllCarts();
 	}
 
+	@Override
+	public boolean isCartExistByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return cartDAO.isCartExistByUserId(userId);
+	}
+
 }

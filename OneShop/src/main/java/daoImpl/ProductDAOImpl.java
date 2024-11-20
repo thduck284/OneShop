@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import dao.ProductDAO;
 import models.Product;
@@ -14,9 +15,9 @@ public class ProductDAOImpl implements ProductDAO{
 	
 	@Override
 	public void addProduct(Product product)  {
-	    String sql = "INSERT INTO product (productId, productName, description, price, quantity, categoryId, image, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO product (productId, productName, description, price, quantity, categoryId, shopId, image, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	    String id = "SP" + (countProducts() + 1);
+	    String id = "SP" + UUID.randomUUID().toString().replace("-", "").substring(0, 7);
 	    
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) { 
@@ -24,17 +25,18 @@ public class ProductDAOImpl implements ProductDAO{
 	        statement.setString(1, id);
 	        statement.setString(2, product.getProductName());
 	        statement.setString(3, product.getDescription());
-	        statement.setDouble(4, product.getPrice()); 
+	        statement.setInt(4, product.getPrice()); 
 	        statement.setInt(5, product.getQuantity());
 	        statement.setString(6, product.getCategoryId());
+	        statement.setString(7, product.getShopId());
 
 	        if (product.getImage() != null) {
-	            statement.setBytes(7, product.getImage());
+	            statement.setBytes(8, product.getImage());
 	        } else {
-	            statement.setNull(7, java.sql.Types.BLOB);
+	            statement.setNull(8, java.sql.Types.BLOB);
 	        }
 	        
-	        statement.setDate(8, new java.sql.Date(product.getCreatedDate().getTime()));
+	        statement.setDate(9, new java.sql.Date(product.getCreatedDate().getTime()));
 
 	        statement.executeUpdate();
 	    } catch (Exception e) {
@@ -58,25 +60,26 @@ public class ProductDAOImpl implements ProductDAO{
 
 	@Override
 	public void updateProduct(Product product) {
-	    String sql = "UPDATE product SET productName = ?, description = ?, price = ?, quantity = ?, categoryId = ?, image = ?, createdDate = ? WHERE productId = ?";
+	    String sql = "UPDATE product SET productName = ?, description = ?, price = ?, quantity = ?, categoryId = ?, shopId = ?, image = ?, createdDate = ? WHERE productId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 
 	        statement.setString(1, product.getProductName());
 	        statement.setString(2, product.getDescription());
-	        statement.setDouble(3, product.getPrice());
+	        statement.setInt(3, product.getPrice());
 	        statement.setInt(4, product.getQuantity());
 	        statement.setString(5, product.getCategoryId());
+	        statement.setString(6, product.getShopId());
 
 	        if (product.getImage() != null) {
-	            statement.setBytes(6, product.getImage());
+	            statement.setBytes(7, product.getImage());
 	        } else {
-	            statement.setNull(6, java.sql.Types.BLOB);
+	            statement.setNull(7, java.sql.Types.BLOB);
 	        }
 
-	        statement.setDate(7, new java.sql.Date(product.getCreatedDate().getTime()));
-	        statement.setString(8, product.getProductId());
+	        statement.setDate(8, new java.sql.Date(product.getCreatedDate().getTime()));
+	        statement.setString(9, product.getProductId());
 
 	        statement.executeUpdate();
 	    } catch (SQLException e) {
@@ -99,11 +102,12 @@ public class ProductDAOImpl implements ProductDAO{
             	
                 Product product = new Product(
                     resultSet.getString("productId"),
+                    resultSet.getString("categoryId"),
+                    resultSet.getString("shopId"),
                     resultSet.getString("productName"),
                     resultSet.getString("description"),
-                    resultSet.getDouble("price"),
+                    resultSet.getInt("price"),
                     resultSet.getInt("quantity"),
-                    resultSet.getString("categoryId"),
                     image,
                     resultSet.getDate("createdDate")
                 );
@@ -165,12 +169,13 @@ public class ProductDAOImpl implements ProductDAO{
 
 	        if (resultSet.next()) {
 	            product = new Product(
-	                resultSet.getString("productId"),
-	                resultSet.getString("productName"),
-	                resultSet.getString("description"),
-	                resultSet.getDouble("price"),
-	                resultSet.getInt("quantity"),
-	                resultSet.getString("categoryId"),
+            		resultSet.getString("productId"),
+                    resultSet.getString("categoryId"),
+                    resultSet.getString("shopId"),
+                    resultSet.getString("productName"),
+                    resultSet.getString("description"),
+                    resultSet.getInt("price"),
+                    resultSet.getInt("quantity"),
 	                resultSet.getBytes("image"),  
 	                resultSet.getDate("createdDate")
 	            );
@@ -180,5 +185,69 @@ public class ProductDAOImpl implements ProductDAO{
 	    }
 
 	    return product;
+	}
+
+	@Override
+	public List<Product> getAllProductsByShopId(String shopId) {
+		// TODO Auto-generated method stub
+		List<Product> productList = new ArrayList<>();
+	    String sql = "SELECT * FROM product WHERE shopId = ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, shopId);
+	        ResultSet resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            Product product = new Product(
+	                resultSet.getString("productId"),
+	                resultSet.getString("categoryId"),
+	                resultSet.getString("shopId"),
+	                resultSet.getString("productName"),
+	                resultSet.getString("description"),
+	                resultSet.getInt("price"),
+	                resultSet.getInt("quantity"),
+	                resultSet.getBytes("image"),
+	                resultSet.getDate("createdDate")
+	            );
+	            productList.add(product);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return productList;
+	}
+
+	@Override
+	public List<Product> getAllProductsByUserId(String userId) {
+		// TODO Auto-generated method stub
+		List<Product> productList = new ArrayList<>();
+	    String sql = "SELECT p.* FROM product p JOIN shop s ON p.shopId = s.shopId WHERE s.userId = ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, userId);
+	        ResultSet resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            Product product = new Product(
+	                resultSet.getString("productId"),
+	                resultSet.getString("categoryId"),
+	                resultSet.getString("shopId"),
+	                resultSet.getString("productName"),
+	                resultSet.getString("description"),
+	                resultSet.getInt("price"),
+	                resultSet.getInt("quantity"),
+	                resultSet.getBytes("image"),
+	                resultSet.getDate("createdDate")
+	            );
+	            productList.add(product);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return productList;
 	}
 }

@@ -165,7 +165,7 @@
 									class="dropdown-item" href="transactions.html"><i
 									class="ft-check-square"></i> Transactions </a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="http://localhost:8080/OneShop/login"><i
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/logout?role=admin"><i
 									class="ft-power"></i> Logout</a>
 							</div></li>
 					</ul>

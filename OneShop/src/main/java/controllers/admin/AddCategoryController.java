@@ -28,7 +28,6 @@ public class AddCategoryController extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-		category.setCategoryId(request.getParameter("categoryId")); 
 		category.setCategoryName(request.getParameter("categoryName")); 
 		category.setDescription(request.getParameter("description")); 
 		  

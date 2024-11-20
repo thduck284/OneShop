@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file ="/common/taglib.jsp" %>
+<%@ page import="models.Category" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
 							<h6 class="my-2">Các giỏ hàng</h6>
 							<div style="margin: -60px 0 20px 970px;">
 								<div class="btn-group me-2"> 
-    								<a href="http://localhost:8080/OneShop/admin/cartDetail" class="btn btn-success btn-sm" 
+    								<a href="http://localhost:8080/OneShop/admin/cart-detail" class="btn btn-success btn-sm" 
         								style="font-size: 15px; padding: 8px 16px;">Xem chi tiết</a>
 								</div>
 								<div class="btn-group me-2">
@@ -55,9 +56,10 @@
 												<thead>
 													<tr>
 														<th class="border-top-0" style="width: 15%;">Mã giỏ hàng</th>
-														<th class="border-top-0" style="width: 20%;">Mã khách hàng</th>
-														<th class="border-top-0" style="width: 30%;">Tên khách hàng</th>
-														<th class="border-top-0" style="width: 25%;">Ngày tạo</th>
+														<th class="border-top-0" style="width: 15%;">Mã khách hàng</th>
+														<th class="border-top-0" style="width: 20%;">Tên khách hàng</th>
+														<th class="border-top-0" style="width: 15%;">Tổng giá</th>
+														<th class="border-top-0" style="width: 20%;">Ngày tạo</th>
 														<th class="border-top-0">Hàng động</th>
 													</tr>
 												</thead>
@@ -67,7 +69,8 @@
 															<td><a class="border-top-1">${cart.cartId}</a></td>
 															<td><a>${cart.userId}</a></td>
 															<td><a>${cart.userName}</a></td>
-															<td><a>${category.createdDate}</a></td>
+															<td><a>${cart.totalPrice}</a></td>
+															<td>${cart.formattedCreatedDate}</td>
 															<td class="d-flex flex-column gap-0">
 																<a href="${pageContext.request.contextPath}/admin/edit-cart?cartId=${cart.cartId}"
 																	class="btn btn-warning btn-sm"

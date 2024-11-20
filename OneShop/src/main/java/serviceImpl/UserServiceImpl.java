@@ -36,17 +36,6 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public User getUserById(String userId) {
-		
-		return userDAO.getUserById(userId);
-	}
-	
-	@Override
-	public List<User> getAllUserByRole(String role) {
-		return userDAO.getAllUserByRole(role);
-	}
-	
-	@Override
 	public int countUsersByRole(String role) {
 		return userDAO.countUsersByRole(role);
 	}
@@ -58,7 +47,30 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public boolean validUser(String userName, String password) {
+		// TODO Auto-generated method stub
+		return userDAO.validUser(userName, password);
+	}
+	
+	@Override
 	public User getInforUser(String username) {
 		return userDAO.getInforUser(username);
+	}
+	
+	@Override
+	public User getUserById(String userId) {
+		
+		return userDAO.getUserById(userId);
+	}
+	
+	@Override
+	public List<User> getAllUserByRole(String role) {
+		return userDAO.getAllUserByRole(role);
+	}
+
+	@Override
+	public List<String> getAllUserIdsByRole(String role) {
+		// TODO Auto-generated method stub
+		return userDAO.getAllUserIdsByRole(role);
 	}
 }

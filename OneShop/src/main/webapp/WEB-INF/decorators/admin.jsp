@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Trang chủ</title>
+<title>Trang chủ (admin)</title>
 <link rel="apple-touch-icon" href="../static/styles/admin/app-assets/images/ico/apple-icon-120.png">
 <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i|Comfortaa:300,400,500,700" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../static/styles/admin/app-assets/css/vendors.css">

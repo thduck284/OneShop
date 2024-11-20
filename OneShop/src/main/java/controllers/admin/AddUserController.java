@@ -12,7 +12,7 @@ import models.User;
 import service.UserService;
 import serviceImpl.UserServiceImpl;
 
-@WebServlet(urlPatterns = {"/admin/add-customer", "/admin/add-manager"})
+@WebServlet(urlPatterns = {"/admin/add-customer", "/admin/add-vendor"})
 @MultipartConfig
 public class AddUserController extends HttpServlet{
 	
@@ -26,8 +26,8 @@ public class AddUserController extends HttpServlet{
 		String action = request.getServletPath();
         if (action.equals("/admin/add-customer")) {
             request.getRequestDispatcher("/views/admin/addCustomer.jsp").forward(request, response);
-        } else if (action.equals("/admin/add-manager")) {
-            request.getRequestDispatcher("/views/admin/addManager.jsp").forward(request, response);
+        } else if (action.equals("/admin/add-vendor")) {
+            request.getRequestDispatcher("/views/admin/addVendor.jsp").forward(request, response);
         }	 
 	}
 	
@@ -41,15 +41,15 @@ public class AddUserController extends HttpServlet{
 		  user.setEmail(request.getParameter("email")); 
 		  user.setUserName(request.getParameter("userName")); 
 		  user.setPassword(request.getParameter("password"));
-		  user.setRole(action.equals("/admin/add-customer") ? "customer" : "manager");
+		  user.setRole(action.equals("/admin/add-customer") ? "customer" : "vendor");
 		  
 		  userService.addUser(user); 
 		  request.setAttribute("message", "Thêm người dùng thành công!");
 		  
 	        if (action.equals("/admin/add-customer")) {
 	            request.getRequestDispatcher("/views/admin/addCustomer.jsp").forward(request, response);
-	        } else if (action.equals("/admin/add-manager")) {
-	            request.getRequestDispatcher("/views/admin/addManager.jsp").forward(request, response);
+	        } else if (action.equals("/admin/add-vendor")) {
+	            request.getRequestDispatcher("/views/admin/addVendor.jsp").forward(request, response);
 	        }
     }
 }
