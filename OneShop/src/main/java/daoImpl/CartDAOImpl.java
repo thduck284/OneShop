@@ -13,7 +13,7 @@ public class CartDAOImpl implements CartDAO{
 
 	@Override
 	public void addCart(Cart cart) {
-		String sql = "INSERT INTO cart (cartId, userId, userName, totalPrice, createdDate) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO cart (cartId, userId, fullName, totalPrice, createdDate) VALUES (?, ?, ?, ?, ?)";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	    		
@@ -67,34 +67,6 @@ public class CartDAOImpl implements CartDAO{
 	        e.printStackTrace();
 	    }
 	}
-
-	@Override
-	public Cart getCartById(String cartId) {
-		
-		String sql = "SELECT * FROM cart WHERE cartId = ?";
-	    Cart cart = null;
-
-	    try (Connection connection = ConnectDB.getConnection();
-	         PreparedStatement statement = connection.prepareStatement(sql)) {
-	        
-	        statement.setString(1, cartId);
-	        ResultSet resultSet = statement.executeQuery();
-
-	        if (resultSet.next()) {
-	            cart = new Cart(
-	                resultSet.getString("cartId"),
-	                resultSet.getString("userId"),
-	                resultSet.getString("fullName"),
-	                resultSet.getInt("totalPrice"),
-	                resultSet.getTimestamp("createdDate").toLocalDateTime()
-	            );
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    
-	    return cart;
-	}
 	
 	@Override
 	public boolean isCartExistByUserId(String userId) {
@@ -138,6 +110,62 @@ public class CartDAOImpl implements CartDAO{
 	    }
 	    
 	    return count;
+	}
+	
+	@Override
+	public Cart getCartById(String cartId) {
+		
+		String sql = "SELECT * FROM cart WHERE cartId = ?";
+	    Cart cart = null;
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+	        
+	        statement.setString(1, cartId);
+	        ResultSet resultSet = statement.executeQuery();
+
+	        if (resultSet.next()) {
+	            cart = new Cart(
+	                resultSet.getString("cartId"),
+	                resultSet.getString("userId"),
+	                resultSet.getString("fullName"),
+	                resultSet.getInt("totalPrice"),
+	                resultSet.getTimestamp("createdDate").toLocalDateTime()
+	            );
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return cart;
+	}
+	
+	@Override
+	public Cart getCartByUserId(String userId) {
+		String sql = "SELECT * FROM cart WHERE userId = ?"; 
+	    Cart cart = null;
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, userId);
+	        
+	        ResultSet resultSet = statement.executeQuery();
+
+	        if (resultSet.next()) {
+	            cart = new Cart(
+	                resultSet.getString("cartId"),
+	                resultSet.getString("userId"),
+	                resultSet.getString("fullName"),
+	                resultSet.getInt("totalPrice"),
+	                resultSet.getTimestamp("createdDate").toLocalDateTime()
+	            );
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return cart;
 	}
 
 	@Override

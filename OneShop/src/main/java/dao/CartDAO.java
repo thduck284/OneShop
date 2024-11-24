@@ -9,8 +9,9 @@ public interface CartDAO {
 	void addCart(Cart cart);
 	void updateCart(Cart cart);
 	void deleteCart(String cartId);
-	Cart getCartById(String cartId);
 	public boolean isCartExistByUserId(String userId);
 	int countCarts();
+	Cart getCartById(String cartId);
+	Cart getCartByUserId(String userId);
 	List<Cart> getAllCarts();
 }

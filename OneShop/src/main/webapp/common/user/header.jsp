@@ -77,7 +77,7 @@
 		                        <th>Ảnh</th>
 		                        <th>Tên sản phẩm</th>
 		                        <th>Giá</th>
-		                        <th>Hàng động</th>
+		                        <th></th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -146,7 +146,7 @@
 		                        <th>Ảnh</th>
 		                        <th>Tên sản phẩm</th>
 		                        <th>Giá</th>
-		                        <th>Hàng động</th>
+		                        <th></th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -358,7 +358,7 @@
 	    function togglePopupCart() {
 	        const userId = "<%= loggedInUser != null ? loggedInUser.getUserId() : "" %>"; 
             if (!userId) {
-                alert('Bạn cần đăng nhập để thêm vào danh sách yêu thích');
+                alert('Bạn cần đăng nhập để xem giỏ hàng');
                 return; 
             }
             
@@ -369,7 +369,7 @@
 	            popup.style.display = "none";
 	        }
 			
-		    /* fetch('/OneShop/view-wish-list', {
+		    /* fetch('/OneShop/view-cart', {
 		        method: 'POST',
 		        headers: {
 		            'Content-Type': 'application/x-www-form-urlencoded'
@@ -391,7 +391,7 @@
 	    function togglePopupOrder() {
 	        const userId = "<%= loggedInUser != null ? loggedInUser.getUserId() : "" %>"; 
             if (!userId) {
-                alert('Bạn cần đăng nhập để thêm vào danh sách yêu thích');
+                alert('Bạn cần đăng nhập để xem các sản phẩm đã thanh toán');
                 return; 
             }
             
@@ -402,7 +402,7 @@
 	            popup.style.display = "none";
 	        }
 			
-		    /* fetch('/OneShop/view-wish-list', {
+		    /* fetch('/OneShop/view-order', {
 		        method: 'POST',
 		        headers: {
 		            'Content-Type': 'application/x-www-form-urlencoded'

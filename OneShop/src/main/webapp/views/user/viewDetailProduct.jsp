@@ -63,15 +63,21 @@
                     <p><strong>Mô tả doanh mục:</strong> <%= request.getAttribute("category") != null ? ((Category) request.getAttribute("category")).getDescription() : "" %></p>
                     <p><strong>Tên cửa hàng:</strong> <%= request.getAttribute("shop") != null ? ((Shop) request.getAttribute("shop")).getShopName() : "" %></p>
                     <div class="mt-5">
-                        <strong style="margin-bottom: 20px;" id="quantity">Số lượng:</strong>
-                        <div class="d-flex align-items-center mt-3">
-                            <button class="btn btn-secondary" onclick="decrementQuantity()">-</button>
+                        <strong style="margin-bottom: 20px;">Số lượng:</strong>
+                        <div class="d-flex align-items-center">
+                        	<button class="btn btn-secondary" onclick="decrementQuantity()">-</button>
                             <input type="number" id="quantity" value="1" min="1" class="form-control mx-2" style="width: 70px; text-align: center;" />
                             <button class="btn btn-secondary" onclick="incrementQuantity()">+</button>
                             <div class="ml-5">
-                        		<a href="addToCart?productId=<%= product != null ? product.getProductId() : "" %>&quantity=<%= product != null ? product.getQuantity() : "1" %>" class="btn btn-primary ml-2 mr-5">Thêm vào giỏ</a>
-                        		<a href="buyNow?productId=<%= product != null ? product.getProductId() : "" %>&quantity=<%= product != null ? product.getQuantity() : "1" %>" class="btn btn-success">Mua ngay</a>
-                    		</div>
+							    <button type="button" class="btn btn-primary mr-5" 
+							            onclick="addToCart('<%= product != null ? product.getProductId() : "" %>', document.getElementById('quantity').value, '<%= user != null ? user.getUserId() : "" %>')">
+							        Thêm vào giỏ hàng
+							    </button>
+							    <button type="button" class="btn btn-success"
+							            onclick="buyNow('<%= product != null ? product.getProductId() : "" %>', document.getElementById('quantity').value, '<%= user != null ? user.getUserId() : "" %>')">
+							        Mua ngay
+							    </button>								
+							</div>
                         </div>
                     </div>
                 </div>
@@ -140,25 +146,6 @@
         </div>
     </div>
 	<script>
-		document.getElementById('quantity').addEventListener('input', function () {
-		    const quantity = parseInt(this.value);
-		    if (isNaN(quantity) || quantity < 1) {
-		        this.value = 1; 
-		    }
-		});
-		
-        function incrementQuantity() {
-            var quantityInput = document.getElementById('quantity');
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-        }
-
-        function decrementQuantity() {
-            var quantityInput = document.getElementById('quantity');
-            if (parseInt(quantityInput.value) > 1) {
-                quantityInput.value = parseInt(quantityInput.value) - 1;
-            }
-        }
-        
         function toggleHeart(button, productId) {
             const heartIcon = button.querySelector('.heart-icon');
             const isFilled = heartIcon.getAttribute('fill') === 'red';
@@ -197,6 +184,7 @@
             });
         } 
     </script>
+    <script type="text/javascript" src="../static/scripts/cart-buy-product.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
