@@ -1,0 +1,12 @@
+.layout {
+	margin: -900px 0 250px -640px; 
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+	height: 100vh; 
+	background-color: #7ADAF5;;
+}
+
+.index {
+	margin-top: -150px;
+}
