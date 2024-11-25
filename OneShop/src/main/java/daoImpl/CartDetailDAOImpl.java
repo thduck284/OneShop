@@ -15,7 +15,7 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	@Override
 	public void addCartDetail(CartDetail detailCart) {
 		// TODO Auto-generated method stub
-		String query = "INSERT INTO cartDetail (cartId, productId, productName, quantity, price) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO cartDetail (cartId, productId, productName, quantity, price, status) VALUES (?, ?, ?, ?, ?, ?)";
 	    try (Connection conn = ConnectDB.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(query)) {
 	        ps.setString(1, detailCart.getCartId());
@@ -23,6 +23,7 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	        ps.setString(3, detailCart.getProductName());
 	        ps.setInt(4, detailCart.getQuantity());
 	        ps.setInt(5, detailCart.getPrice());
+	        ps.setBoolean(6, detailCart.getStatus());
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -32,14 +33,16 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	@Override
 	public void updateCartDetail(CartDetail detailCart) {		
 		// TODO Auto-generated method stub
-		String query = "UPDATE cartDetail SET productName = ?, quantity = ?, price = ? WHERE cartId = ? AND productId = ?";
+		String query = "UPDATE cartDetail SET productName = ?, quantity = ?, price = ?, status = ? WHERE cartId = ? AND productId = ?";
 	    try (Connection conn = ConnectDB.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(query)) {
 	    	ps.setString(1, detailCart.getProductName());
 	        ps.setInt(2, detailCart.getQuantity());
 	        ps.setInt(3, detailCart.getPrice());
-	        ps.setString(4, detailCart.getCartId());
-	        ps.setString(5, detailCart.getProductId());
+	        ps.setBoolean(4, detailCart.getStatus());
+	        ps.setString(5, detailCart.getCartId());
+	        ps.setString(6, detailCart.getProductId());
+	        
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -93,7 +96,8 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	                    rs.getString("productId"),
 	                    rs.getString("productName"),
 	                    rs.getInt("quantity"),
-	                    rs.getInt("price")
+	                    rs.getInt("price"),
+	                    rs.getBoolean("status")
 	                );
 	            }
 	        }
@@ -121,7 +125,8 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	                    rs.getString("productId"),
 	                    rs.getString("productName"),
 	                    rs.getInt("quantity"),
-	                    rs.getInt("price")
+	                    rs.getInt("price"),
+	                    rs.getBoolean("status")
 	                );
 	                cartDetails.add(detailCart);
 	            }
@@ -147,7 +152,8 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	                rs.getString("productId"),
 	                rs.getString("productName"),
 	                rs.getInt("quantity"),
-	                rs.getInt("price")
+	                rs.getInt("price"),
+	                rs.getBoolean("status")
 	            );
 	            list.add(detailCart);
 	        }

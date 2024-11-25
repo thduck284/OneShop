@@ -53,7 +53,7 @@ public class AddCartController extends HttpServlet{
 		Cart cart = new Cart(id, userId, user.getFullName(), currentTotalCost, null);
 		cartService.addCart(cart);
 		
-		CartDetail cartDetail = new CartDetail(id, productId, product.getProductName(), currentQuantity, product.getPrice());
+		CartDetail cartDetail = new CartDetail(id, productId, product.getProductName(), currentQuantity, product.getPrice(), false);
 		cartDetailService.addCartDetail(cartDetail);
 		
 		response.setContentType("application/json");

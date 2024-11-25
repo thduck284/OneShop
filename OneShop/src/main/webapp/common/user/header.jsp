@@ -137,7 +137,7 @@
 			</div>
 		</div>
 		<div id="popupCartOverlay" class="popup-overlay">
-		    <div class="popup-content">
+		    <div class="popup-content" style="width: 900px;">
 		    	<span onclick="togglePopupCart()" class="close-btn">&times;</span>
 		        <div class="cart-table-container" style="max-height: 500px; overflow-y: auto;">
 			        <table class="table mt-2">
@@ -146,6 +146,7 @@
 		                        <th>Ảnh</th>
 		                        <th>Tên sản phẩm</th>
 		                        <th>Giá</th>
+		                        <th>Thanh toán</th>
 		                        <th></th>
 		                    </tr>
 		                </thead>
@@ -172,6 +173,13 @@
 		                        <td>
 		                            <fmt:formatNumber value="<%= product.getPrice() %>" type="number" pattern="#,##0" /> đ
 		                        </td>
+		                        <td>
+								    <form action="<%= request.getContextPath() %>/user/checkout" method="post">
+								        <input type="hidden" name="productId" value="<%= product.getProductId() %>">
+								        <input type="hidden" name="userId" value="<%= loggedInUser.getUserId() %>">
+								        <button type="submit" class="btn btn-success">Thanh toán</button>
+								    </form>
+								</td>
 		                        <td>
 		                        	<a href="<%= request.getContextPath() %>/user/view-detail-product?productId=<%= product.getProductId() %>&userId=<%= loggedInUser.getUserId() %>" 
    										class="btn btn-primary">Xem chi tiết</a>

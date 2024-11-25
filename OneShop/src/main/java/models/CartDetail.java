@@ -6,20 +6,22 @@ public class CartDetail {
     private String productName;
     private int quantity;
     private int price;
+    private boolean status;
     
     public CartDetail() {
 		// TODO Auto-generated constructor stub
 	}
 
-    public CartDetail(String cartId, String productId, String productName, int quantity, int price) {
+    public CartDetail(String cartId, String productId, String productName, int quantity, int price, boolean status) {
         this.cartId = cartId;
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
+        this.status = status;    
     }
 
-    public String getCartId() {
+	public String getCartId() {
         return cartId;
     }
 
@@ -58,4 +60,12 @@ public class CartDetail {
     public void setPrice(int price) {
         this.price = price;
     }
+    
+    public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 }
