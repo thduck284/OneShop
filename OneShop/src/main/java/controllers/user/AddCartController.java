@@ -2,6 +2,7 @@ package controllers.user;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.servlet.ServletException;
@@ -45,19 +46,46 @@ public class AddCartController extends HttpServlet{
 		Product product = new Product();
 		product = productService.getProductById(productId);
 		
-		String id = "CART" + UUID.randomUUID().toString().replace("-", "").substring(0, 5);
-		int totalCost = (cartService.getCartById(id) == null ? 0 : cartService.getCartById(id).getTotalPrice());
-		int currentTotalCost = product.getPrice()*quantity + totalCost;
-		int currentQuantity = (cartDetailService.getCartDetailById(id, productId) == null ? quantity : cartDetailService.getCartDetailById(id, productId).getQuantity() + quantity);
+		Cart currentCart = cartService.getCurrentCartByUserId(userId);
 		
-		Cart cart = new Cart(id, userId, user.getFullName(), currentTotalCost, null);
-		cartService.addCart(cart);
-		
-		CartDetail cartDetail = new CartDetail(id, productId, product.getProductName(), currentQuantity, product.getPrice(), false);
-		cartDetailService.addCartDetail(cartDetail);
+		if(currentCart == null)
+		{
+			String id = "CART" + UUID.randomUUID().toString().replace("-", "").substring(0, 5);
+			int totalCost = (cartService.getCartById(id) == null ? 0 : cartService.getCartById(id).getTotalPrice());
+			int currentTotalCost = product.getPrice()*quantity + totalCost;
+			int currentQuantity = (cartDetailService.getCartDetailById(id, productId) == null ? quantity : cartDetailService.getCartDetailById(id, productId).getQuantity() + quantity);	
+			
+			Cart cart = new Cart(id, userId, user.getFullName(), currentTotalCost, null, false);
+			cartService.addCart(cart);
+			
+			CartDetail cartDetail = new CartDetail(id, productId, product.getProductName(), currentQuantity, product.getPrice(), false);
+			cartDetailService.addCartDetail(cartDetail);
+		} else {
+			currentCart.setTotalPrice(currentCart.getTotalPrice() + quantity * product.getPrice());
+			cartService.updateCart(currentCart);
+			
+			List<CartDetail> cartDetails = cartDetailService.getCartDetailByCartId(currentCart.getCartId());	
+			
+			boolean flag = false;
+
+            for (CartDetail detail : cartDetails) {
+                if (detail.getProductId().equals(productId)) {
+                	int currentQuantity;
+                	if(detail.getStatus() == false) {
+                		currentQuantity = detail.getQuantity() + quantity;
+                		cartDetailService.updateCartDetail(new CartDetail(currentCart.getCartId(), productId, product.getProductName(), currentQuantity, product.getPrice(), false));
+                		flag = true;
+                	} 
+                }
+            }
+            
+            if(!flag) {
+        		cartDetailService.addCartDetail(new CartDetail(currentCart.getCartId(), productId, product.getProductName(), quantity, product.getPrice(), false));
+            }
+		}
 		
 		response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"success\": true, \"cartItemCount\": " + currentQuantity + "}");
+        response.getWriter().write("{\"success\": true}");
     }
 }

@@ -186,6 +186,39 @@ public class ProductDAOImpl implements ProductDAO{
 
 	    return product;
 	}
+	
+	@Override
+	public List<Product> getAllProductsByCategoryId(String categoryId) {
+		// TODO Auto-generated method stub
+		List<Product> productList = new ArrayList<>();
+	    String sql = "SELECT * FROM product WHERE categoryId = ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, categoryId);  
+	        ResultSet resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            Product product = new Product(
+	                resultSet.getString("productId"),
+	                resultSet.getString("categoryId"),
+	                resultSet.getString("shopId"),
+	                resultSet.getString("productName"),
+	                resultSet.getString("description"),
+	                resultSet.getInt("price"),
+	                resultSet.getInt("quantity"),
+	                resultSet.getBytes("image"),
+	                resultSet.getDate("createdDate")
+	            );
+	            productList.add(product);  // Thêm vào danh sách
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return productList;
+	}
 
 	@Override
 	public List<Product> getAllProductsByShopId(String shopId) {
@@ -248,6 +281,47 @@ public class ProductDAOImpl implements ProductDAO{
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	    return productList;
+	}
+
+	@Override
+	public List<Product> searchProductsByKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		List<Product> productList = new ArrayList<>();
+	    String sql = """
+	        SELECT p.*, c.categoryName 
+	        FROM product p 
+	        JOIN category c ON p.categoryId = c.categoryId 
+	        WHERE p.productName LIKE ? OR c.categoryName LIKE ?
+	    """;
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        String searchKeyword = "%" + keyword + "%";
+	        statement.setString(1, searchKeyword);
+	        statement.setString(2, searchKeyword);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Product product = new Product(
+	                    resultSet.getString("productId"),
+	                    resultSet.getString("categoryId"),
+	                    resultSet.getString("shopId"),
+	                    resultSet.getString("productName"),
+	                    resultSet.getString("description"),
+	                    resultSet.getInt("price"),
+	                    resultSet.getInt("quantity"),
+	                    resultSet.getBytes("image"),
+	                    resultSet.getDate("createdDate")
+	                );
+	                productList.add(product);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
 	    return productList;
 	}
 }

@@ -85,29 +85,6 @@ public class CategoryDAOImpl implements CategoryDAO{
         }
         return 0;
     }
-	
-	@Override
-	public List<Category> getAllCategories() {
-        String sql = "SELECT * FROM category";
-        List<Category> categories = new ArrayList<>();
-
-        try (Connection connection = ConnectDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-
-            while (resultSet.next()) {
-                String categoryId = resultSet.getString("categoryId");
-                String categoryName = resultSet.getString("categoryName");
-                String description = resultSet.getString("description");
-
-                Category category = new Category(categoryId, categoryName, description);
-                categories.add(category);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return categories;
-    }
 
 	@Override
 	public Category getCategoryById(String categoryId)  {
@@ -152,4 +129,27 @@ public class CategoryDAOImpl implements CategoryDAO{
 	    }
 	    return categoryIds;
 	}
+	
+	@Override
+	public List<Category> getAllCategories() {
+        String sql = "SELECT * FROM category";
+        List<Category> categories = new ArrayList<>();
+
+        try (Connection connection = ConnectDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String categoryId = resultSet.getString("categoryId");
+                String categoryName = resultSet.getString("categoryName");
+                String description = resultSet.getString("description");
+
+                Category category = new Category(categoryId, categoryName, description);
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
 }

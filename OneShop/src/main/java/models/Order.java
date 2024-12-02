@@ -8,14 +8,18 @@ public class Order {
     private String cartId;
     private String promoId;
     private String shippingId;
-    private String status;
+    private Boolean status;
     private String paymentMethod;
-    private String paymentStatus;
+    private Boolean paymentStatus;
     private Date paymentDate;
     private int totalCost;
 
+    public Order() {
+		// TODO Auto-generated constructor stub
+	}
+    
     public Order(String orderId, String userId, String cartId, String promoId, String shippingId, 
-                 String status, String paymentMethod, String paymentStatus, Date paymentDate, int totalCost) {
+                 Boolean status, String paymentMethod, Boolean paymentStatus, Date paymentDate, int totalCost) {
         this.orderId = orderId;
         this.userId = userId;
         this.cartId = cartId;
@@ -68,11 +72,11 @@ public class Order {
         this.shippingId = shippingId;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -84,11 +88,11 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    public String getPaymentStatus() {
+    public Boolean getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
+    public void setPaymentStatus(Boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

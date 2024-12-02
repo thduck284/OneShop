@@ -13,7 +13,7 @@ public class CartDAOImpl implements CartDAO{
 
 	@Override
 	public void addCart(Cart cart) {
-		String sql = "INSERT INTO cart (cartId, userId, fullName, totalPrice, createdDate) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO cart (cartId, userId, fullName, totalPrice, createdDate, status) VALUES (?, ?, ?, ?, ?, ?)";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	    		
@@ -24,6 +24,7 @@ public class CartDAOImpl implements CartDAO{
 	        statement.setInt(4, cart.getTotalPrice());
 	        java.sql.Timestamp currentTimestamp = java.sql.Timestamp.valueOf(java.time.LocalDateTime.now());
 	        statement.setTimestamp(5, currentTimestamp);
+	        statement.setBoolean(6, cart.getStatus());
 
 	        statement.executeUpdate();
 	    } catch (Exception e) {
@@ -35,7 +36,7 @@ public class CartDAOImpl implements CartDAO{
 	@Override
 	public void updateCart(Cart cart) {
 		
-		String sql = "UPDATE cart SET userId = ?, userName = ?, totalPrice = ?, createdDate = ? WHERE cartId = ?";
+		String sql = "UPDATE cart SET userId = ?, fullName = ?, totalPrice = ?, createdDate = ?, status = ? WHERE cartId = ?";
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -44,7 +45,8 @@ public class CartDAOImpl implements CartDAO{
 	        statement.setString(2, cart.getFullName());
 	        statement.setInt(3, cart.getTotalPrice());
 	        statement.setTimestamp(4, java.sql.Timestamp.valueOf(cart.getCreatedDate()));
-	        statement.setString(5, cart.getCartId());
+	        statement.setInt(5, (cart.getStatus() == true) ? 1 : 0);
+	        statement.setString(6, cart.getCartId());
 
 	        statement.executeUpdate();
 	    } catch (Exception e) {
@@ -70,7 +72,7 @@ public class CartDAOImpl implements CartDAO{
 	
 	@Override
 	public boolean isCartExistByUserId(String userId) {
-	    String sql = "SELECT COUNT(*) FROM cart WHERE userId = ?";
+	    String sql = "SELECT COUNT(*) FROM cart WHERE userId = ? and status = 0";
 	    boolean exists = false;
 
 	    try (Connection connection = ConnectDB.getConnection();
@@ -89,7 +91,6 @@ public class CartDAOImpl implements CartDAO{
 
 	    return exists;
 	}
-
 
 	@Override
 	public int countCarts() {
@@ -113,6 +114,37 @@ public class CartDAOImpl implements CartDAO{
 	}
 	
 	@Override
+	public Cart getCurrentCartByUserId(String userId) {
+	    String sql = "SELECT * FROM cart WHERE userId = ? AND status = ?"; 
+	    Cart cart = null;  
+	    
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, userId);
+	        statement.setBoolean(2, false);  
+
+	        ResultSet resultSet = statement.executeQuery();
+
+	        if (resultSet.next()) {
+	            cart = new Cart(
+	                resultSet.getString("cartId"),
+	                resultSet.getString("userId"),
+	                resultSet.getString("fullName"),
+	                resultSet.getInt("totalPrice"),
+	                resultSet.getTimestamp("createdDate").toLocalDateTime(),
+	                resultSet.getBoolean("status")
+	            );
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return cart;  
+	}
+
+	
+	@Override
 	public Cart getCartById(String cartId) {
 		
 		String sql = "SELECT * FROM cart WHERE cartId = ?";
@@ -130,7 +162,8 @@ public class CartDAOImpl implements CartDAO{
 	                resultSet.getString("userId"),
 	                resultSet.getString("fullName"),
 	                resultSet.getInt("totalPrice"),
-	                resultSet.getTimestamp("createdDate").toLocalDateTime()
+	                resultSet.getTimestamp("createdDate").toLocalDateTime(),
+	                resultSet.getBoolean("status")
 	            );
 	        }
 	    } catch (Exception e) {
@@ -158,7 +191,8 @@ public class CartDAOImpl implements CartDAO{
 	                resultSet.getString("userId"),
 	                resultSet.getString("fullName"),
 	                resultSet.getInt("totalPrice"),
-	                resultSet.getTimestamp("createdDate").toLocalDateTime()
+	                resultSet.getTimestamp("createdDate").toLocalDateTime(),
+	                resultSet.getBoolean("status")
 	            );
 	        }
 	    } catch (Exception e) {
@@ -185,7 +219,8 @@ public class CartDAOImpl implements CartDAO{
 	                resultSet.getString("userId"),
 	                resultSet.getString("fullName"),
 	                resultSet.getInt("totalPrice"),
-	                resultSet.getTimestamp("createdDate").toLocalDateTime()
+	                resultSet.getTimestamp("createdDate").toLocalDateTime(),
+	                resultSet.getBoolean("status")
 	            );
 	            carts.add(cart);
 	        }

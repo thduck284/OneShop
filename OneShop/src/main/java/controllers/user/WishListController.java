@@ -1,4 +1,4 @@
-package servlet;
+package controllers.user;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import serviceImpl.UserServiceImpl;
 import serviceImpl.WishListServiceImpl;
 
 @WebServlet(urlPatterns = {"/wish-list"})
-public class WishListServlet extends HttpServlet{
+public class WishListController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private WishListService wishListService = new WishListServiceImpl();

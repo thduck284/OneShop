@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- <meta http-equiv="refresh" content="10"> -->
 <title>Trang chủ</title>
 <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="../static/styles/user/viewDetail.css">

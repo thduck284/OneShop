@@ -3,12 +3,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="models.User" %> 
 <%@ page import="java.util.Base64" %>
+<%@ page import="javax.swing.table.DefaultTableModel" %>
 <%@ include file ="/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+<script type="text/javascript" src="../static/scripts/user/header.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -17,7 +19,8 @@
         	<path
 				d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
     	</svg>
-		<p>Hot line: 0123456789</p>
+		<p>Hot line: 10101110011111110011010101110</p>
+		<p style="margin-left: 420px;">Cái nết đánh chết cái đẹp, cái đẹp đánh dẹp cái túi  -  服饰是外壳，风格是灵魂</p>
 	</div>
 	<div class="header" style="background-color: #7ADAF5;">
 		<%
@@ -29,12 +32,15 @@
 		    }
 		%>
 		<img class="header-image" src="../static/images/logo.png" width=300 height=190>
-		<input class="search_input" type="text" placeholder="Nhập từ khóa tìm kiếm sản phẩm, danh mục">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  			<path
-				d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-		</svg>
-		<div class="dropdown" style="margin-left: -45px;">
+		<form action="<%=request.getContextPath()%>/user/search-product" method="GET">
+		    <input class="search_input" type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm sản phẩm, danh mục" required>
+		    <button type="submit" style="display: none;">
+		        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+		            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+		        </svg>
+		    </button>
+		</form>
+		<div class="dropdown" style="margin-left: 80px;">
 			<a class="login" href="<%= (loggedInUser == null) ? request.getContextPath() + "/login" : "http://localhost:8080/OneShop/user/home" %>">
 				<div class="account-info" style="display: flex; align-items: center;">
 		            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
@@ -60,15 +66,15 @@
 			<% } %>
 		</div>
 		<div class="wishlist" style="margin: 25px 20px 0 -50px;">
-		    <a href="javascript:void(0)" onclick="togglePopupWishList()" title="Yêu thích">
-		        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+		    <a href="javascript:void(0)" title="Yêu thích">
+		        <svg xmlns="http://www.w3.org/2000/svg" onclick="togglePopupWishList()" width="20" height="20" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
 		            <path d="M8 12s3-3.12 5-5.7C14.42 4.29 13.49 2 11.5 2 10.05 2 8 4.75 8 4.75S6 2 4.5 2C2.51 2 1.58 4.29 3 6.3C5 8.88 8 12 8 12z"/>
 		        </svg>
 		    </a>
 		</div>
 		<div id="popupOverlay" class="popup-overlay">
 		    <div class="popup-content">
-		        <span onclick="togglePopupWishList()" class="close-btn">&times;</span>
+		        <span onclick="closeButton()" class="close-btn">&times;</span>
 		        <h4 class="mt-3">Danh sách các sản phẩm yêu thích</h4>
 	        	<div class="wishlist-table-container" style="max-height: 500px; overflow-y: auto;">
 			        <table class="table mt-2">
@@ -137,31 +143,38 @@
 			</div>
 		</div>
 		<div id="popupCartOverlay" class="popup-overlay">
-		    <div class="popup-content" style="width: 900px;">
-		    	<span onclick="togglePopupCart()" class="close-btn">&times;</span>
-		        <div class="cart-table-container" style="max-height: 500px; overflow-y: auto;">
-			        <table class="table mt-2">
-		                <thead>
-		                    <tr>
-		                        <th>Ảnh</th>
-		                        <th>Tên sản phẩm</th>
-		                        <th>Giá</th>
-		                        <th>Thanh toán</th>
-		                        <th></th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <%
-			                    /* List<models.Product> products = (List<models.Product>) session.getAttribute("wishList"); */
-			                    if (products != null) {
-			                        for (models.Product product : products) {
-			                            String base64Image = "";
-			                            if (product.getImage() != null) {
-			                                base64Image = Base64.getEncoder().encodeToString(product.getImage());
-			                            }
-		                    %>
-		                    <tr>
-		                        <td>
+		    <div class="popup-content" style="width: 1100px;">
+		    	<span onclick="closeCartButton()" class="close-btn">&times;</span>
+		    	<h4 class="mt-3">Danh sách các sản phẩm trong giỏ hàng</h4>
+		        <div class="cart-table-container" style="max-height: 450px; overflow-y: auto;">
+				    <table class="table mt-2">
+				        <thead>
+				            <tr>
+				                <th>Ảnh</th>
+				                <th>Tên sản phẩm</th>
+				                <th>Giá</th>
+				                <th>Số lượng</th>
+				                <th>Tổng tiền</th>
+				                <th></th>
+				                <th>Trạng thái</th>
+				                <th></th>
+				            </tr>
+				        </thead>
+				        <tbody class="mt-5">
+				            <%
+				                DefaultTableModel cartTable = (DefaultTableModel) session.getAttribute("cartTable");
+				                if (cartTable != null && cartTable.getRowCount() > 0) {
+				                    for (int i = 0; i < cartTable.getRowCount(); i++) {
+				                        String base64Image = (String) cartTable.getValueAt(i, 0);
+				                        String productId = (String) cartTable.getValueAt(i,1);
+				                        String productName = (String) cartTable.getValueAt(i, 2);
+				                        int price = (int) cartTable.getValueAt(i, 3);
+				                        int quantity = (int) cartTable.getValueAt(i, 4);
+				                        int status = (int) cartTable.getValueAt(i, 5);
+				                        int totalPrice = price * quantity;
+				            %>
+				            <tr>
+				                <td>
 		                            <% if (!base64Image.isEmpty()) { %>
 		                                <img src="data:image/jpeg;base64,<%= base64Image %>" 
 		                                     alt="Product Image" style="width:100px; height:100px;" />
@@ -169,62 +182,81 @@
 		                                Không có ảnh
 		                            <% } %>
 		                        </td>
-		                        <td><%= product.getProductName() %></td>
-		                        <td>
-		                            <fmt:formatNumber value="<%= product.getPrice() %>" type="number" pattern="#,##0" /> đ
+				                <td><%= productName %></td>
+				                <td>
+				                    <fmt:formatNumber value="<%= price %>" type="number" pattern="#,##0" /> đ
+				                </td>
+				                <td><%= quantity %></td>
+				                <td>
+		                            <fmt:formatNumber value="<%= totalPrice %>" type="number" pattern="#,##0" /> đ
 		                        </td>
 		                        <td>
-								    <form action="<%= request.getContextPath() %>/user/checkout" method="post">
-								        <input type="hidden" name="productId" value="<%= product.getProductId() %>">
-								        <input type="hidden" name="userId" value="<%= loggedInUser.getUserId() %>">
-								        <button type="submit" class="btn btn-success">Thanh toán</button>
-								    </form>
+								    <a href="<%= request.getContextPath() %>/user/view-detail-product?productId=<%= productId %>&userId=<%= loggedInUser.getUserId() %>" 
+								       class="btn btn-primary">Xem chi tiết</a>
 								</td>
+				                <td>
+		                            <button id="payButton<%= i %>" class="btn btn-success"
+									        onclick="processPayment(<%= i %>, <%= status %>, '<%= productId %>', <%= quantity %>)"
+									        data-status="<%= status %>">
+									    <%= (status == 1) ? "Đang giao hàng" : "Thanh toán" %>
+									</button>
+		                        </td>
 		                        <td>
-		                        	<a href="<%= request.getContextPath() %>/user/view-detail-product?productId=<%= product.getProductId() %>&userId=<%= loggedInUser.getUserId() %>" 
-   										class="btn btn-primary">Xem chi tiết</a>
-								</td>
-		                    </tr>
-		                    <%
-		                            }
-		                        } else {
-		                    %>
-		                    <tr>
-		                        <td colspan="4">Không có sản phẩm nào trong giỏ hàng.</td>
-		                    </tr>
-		                    <%
-		                        }
-		                    %>
-		                </tbody>
-		           	</table> 
-				</div> 
+						            <button class="btn btn-danger" onclick="removeProduct('<%= productId %>')">Xóa</button>
+						        </td>
+				            </tr>
+				            <%
+				                    }
+				                } else {
+				            %>
+				            <tr>
+				                <td colspan="5">Không có sản phẩm nào trong giỏ hàng.</td>
+				            </tr>
+				            <%
+				                }
+				            %>
+				        </tbody>
+				    </table>
+				</div>
+				<div class="text-center mt-3">
+	                <button class="btn btn-success" onclick="processFinalPayment()">
+	                    Thanh toán tất cả
+	                </button>
+	            </div>
 			</div>
 		</div>
 		<div id="popupOrderOverlay" class="popup-overlay">
-		    <div class="popup-content">
-		    	<span onclick="togglePopupOrder()" class="close-btn">&times;</span>
-		        <div class="order-table-container" style="max-height: 500px; overflow-y: auto;">
+		    <div class="popup-content" style="width: 1100px;">
+		    	<span onclick="closeOrderButton()" class="close-btn">&times;</span>
+		    	<h4 class="mt-3">Danh sách các sản phẩm đã mua</h4>
+		        <div class="order-table-container" style="max-height: 450px; overflow-y: auto;">
 			        <table class="table mt-2">
 		                <thead>
-		                    <tr>
-		                        <th>Ảnh</th>
-		                        <th>Tên sản phẩm</th>
-		                        <th>Giá</th>
-		                        <th>Hàng động</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <%
-			                    /* List<models.Product> products = (List<models.Product>) session.getAttribute("wishList"); */
-			                    if (products != null) {
-			                        for (models.Product product : products) {
-			                            String base64Image = "";
-			                            if (product.getImage() != null) {
-			                                base64Image = Base64.getEncoder().encodeToString(product.getImage());
-			                            }
-		                    %>
-		                    <tr>
-		                        <td>
+				            <tr>
+				            	<th>Ảnh</th>
+				                <th>Tên sản phẩm</th>
+				                <th>Giá</th>
+				                <th>Số lượng</th>
+				                <th>Tổng tiền</th>
+				                <th>Phương thức TT</th>
+				                <th></th>
+				            </tr>
+				        </thead>
+				        <tbody class="mt-5">
+				            <%
+				                DefaultTableModel orderTable = (DefaultTableModel) session.getAttribute("tbOrder");
+				                if (orderTable != null && orderTable.getRowCount() > 0) {
+				                    for (int i = 0; i < orderTable.getRowCount(); i++) {
+				                    	String base64Image = (String) orderTable.getValueAt(i, 0);
+				                    	String productId = (String) orderTable.getValueAt(i,1);
+				                        String productName = (String) orderTable.getValueAt(i, 2);
+				                        int price = (int) orderTable.getValueAt(i, 3);
+				                        int quantity = (int) orderTable.getValueAt(i, 4);
+				                        int totalPrice = price * quantity;
+				                        String paymentMethod = (String) orderTable.getValueAt(i, 5);
+				            %>
+				            <tr>
+				            	<td>
 		                            <% if (!base64Image.isEmpty()) { %>
 		                                <img src="data:image/jpeg;base64,<%= base64Image %>" 
 		                                     alt="Product Image" style="width:100px; height:100px;" />
@@ -232,26 +264,31 @@
 		                                Không có ảnh
 		                            <% } %>
 		                        </td>
-		                        <td><%= product.getProductName() %></td>
-		                        <td>
-		                            <fmt:formatNumber value="<%= product.getPrice() %>" type="number" pattern="#,##0" /> đ
+				                <td><%= productName %></td>
+				                <td>
+				                    <fmt:formatNumber value="<%= price %>" type="number" pattern="#,##0" /> đ
+				                </td>
+				                <td><%= quantity %></td>
+				                <td>
+		                            <fmt:formatNumber value="<%= totalPrice %>" type="number" pattern="#,##0" /> đ
 		                        </td>
+		                        <td><%= paymentMethod %></td>
 		                        <td>
-		                        	<a href="<%= request.getContextPath() %>/user/view-detail-product?productId=<%= product.getProductId() %>&userId=<%= loggedInUser.getUserId() %>" 
-   										class="btn btn-primary">Xem chi tiết</a>
+								    <a href="<%= request.getContextPath() %>/user/view-detail-product?productId=<%= productId %>&userId=<%= loggedInUser.getUserId() %>" 
+								       class="btn btn-primary">Xem chi tiết</a>
 								</td>
-		                    </tr>
-		                    <%
-		                            }
-		                        } else {
-		                    %>
-		                    <tr>
-		                        <td colspan="4">Chưa từng mua sản phẩm nào.</td>
-		                    </tr>
-		                    <%
-		                        }
-		                    %>
-		                </tbody>
+				            </tr>
+				            <%
+				                    }
+				                } else {
+				            %>
+				            <tr>
+				                <td colspan="5">Không có sản phẩm nào đã thanh toán.</td>
+				            </tr>
+				            <%
+				                }
+				            %>
+				        </tbody>
 		           	</table> 
 				</div> 
 			</div>
@@ -259,174 +296,306 @@
 	</div>
 	<div class="under-header" style="background-color: #7ADAF5; margin: 20px 0 -35px 120px;">
 		<a class="product" href="http://localhost:8080/OneShop/user/home" style="margin-right: 30px;">Trang chủ</a>
+		<div class="dropdown"> 
+		    <a class="product" href="<%= request.getContextPath() %>/user/product-by-category?category=group1">Túi sách</a>
+		    <div class="dropdown-content">
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE1">Túi xách tay</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE2">Túi đeo chéo</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE3">Túi ba lô</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE4">Túi cầm tay</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE5">Túi đi du lịch</a>
+		    </div>
+		</div>    
 		<div class="dropdown">
-			<a class="product" href="#">Túi sách</a>
-			<div class="dropdown-content">
-				<a href="#">Túi xách tay</a> 
-				<a href="#">Túi đeo chéo</a> 
-				<a href="#">Túi ba lô</a> 
-				<a href="#">Túi cầm tay</a> 
-				<a href="#">Túi đi du lịch</a>
-			</div>
-		</div>
+		    <a class="product" href="<%= request.getContextPath() %>/user/product-by-category?category=group2">Nước hoa</a>
+		    <div class="dropdown-content">
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE6">Nước hoa Unisex</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE7">Nước hoa Niche</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE8">Nước hoa Mini</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE9">Nước hoa Intense</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE10">Nước hoa dạng xịt</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE11">Nước hoa lăn</a> 
+		    </div>
+		</div>    
 		<div class="dropdown">
-			<a class="product" href="#">Nước hoa</a>
-			<div class="dropdown-content">
-				<a href="#">Nước hoa Unisex</a> 
-				<a href="#">Nước hoa Niche</a> 
-				<a href="#">Nước hoa Mini</a> 
-				<a href="#">Nước hoa Intense</a> 
-				<a href="#">Nước hoa dạng xịt</a> 
-				<a href="#">Nước hoa lăn</a> 
-			</div>
-		</div>
+		    <a class="product" href="<%= request.getContextPath() %>/user/product-by-category?category=group3">Mỹ phẩm</a>
+		    <div class="dropdown-content">
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE12">Chăm sóc da mặt</a>
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE13">Tẩy tế bào chết</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE14">Kem chống nắng</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE15">Kem dưỡng da</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE16">Kem dưỡng ẩm</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE17">Serum dưỡng da</a>
+		    </div>
+		</div>    
 		<div class="dropdown">
-			<a class="product" href="#">Mỹ phẩm</a>
-			<div class="dropdown-content">
-				<a href="#">Chăm sóc da mặt</a>
-				<a href="#">Tẩy tế bào chết</a> 
-				<a href="#">Kem chống nắng</a> 
-				<a href="#">Kem dưỡng da</a> 
-				<a href="#">Kem dưỡng ẩm</a> 
-				<a href="#">Serum dưỡng da</a>
-			</div>
-		</div>
+		    <a class="product" href="<%= request.getContextPath() %>/user/product-by-category?category=group4">Son môi</a>
+		    <div class="dropdown-content">
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE18">Son li</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE19">Son kem</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE20">Son dưỡng</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE21">Son nước</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE22">Son tint</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE23">Son bóng</a> 
+		    </div>
+		</div>    
 		<div class="dropdown">
-			<a class="product" href="#">Son môi</a>
-			<div class="dropdown-content">
-				<a href="#">Son li</a> 
-				<a href="#">Son kem</a> 
-				<a href="#">Son dưỡng</a> 
-				<a href="#">Son nước</a> 
-				<a href="#">Son tint</a> 
-				<a href="#">Son bóng</a> 
-			</div>
-		</div>
+		    <a class="product" href="<%= request.getContextPath() %>/user/product-by-category?category=group5">Trang sức</a>
+		    <div class="dropdown-content">
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE24">Dây chuyền</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE25">Bông tai</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE26">Vòng tay</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE27">Khuyên tai</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE28">Nhẫn</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE29">Vòng đeo tay</a> 
+		    </div>
+		</div>        
 		<div class="dropdown">
-			<a class="product" href="#">Trang sức</a>
-			<div class="dropdown-content">
-				<a href="#">Dây chuyền</a> 
-				<a href="#">Bông tai</a> 
-				<a href="#">Vòng tay</a> 
-				<a href="#">Khuyên tai</a> 
-				<a href="#">Nhẫn</a> 
-				<a href="#">Vòng đeo tay</a> 
-			</div>
-		</div>
-		<div class="dropdown">
-			<a class="product" href="#">Thời trang</a>
-			<div class="dropdown-content">
-				<a href="#">Áo sơ mi</a> 
-				<a href="#">Áo thun</a> 
-				<a href="#">Áo polo</a> 
-				<a href="#">Áo phông</a>
-				<a href="#">Quần jeans</a> 
-				<a href="#">Quần short</a>
-			</div>
+		    <a class="product" href="<%= request.getContextPath() %>/user/product-by-category?category=group6">Thời trang</a>
+		    <div class="dropdown-content">
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE30">Áo sơ mi</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE31">Áo thun</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE32">Áo polo</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE33">Áo phông</a>
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE34">Quần jeans</a> 
+		        <a href="<%= request.getContextPath() %>/user/product-by-category?category=CATE35">Quần short</a>
+		    </div>
 		</div>
 		<div class="dropdown">
 			<a class="promotion" href="#">Khuyến mãi</a>
 		</div>
 	</div>
-	
 	<script>
-	    function togglePopupWishList() {
-	        const userId = "<%= loggedInUser != null ? loggedInUser.getUserId() : "" %>"; 
-            if (!userId) {
-                alert('Bạn cần đăng nhập để thêm vào danh sách yêu thích');
-                return; 
-            }
-            
-            var popup = document.getElementById("popupOverlay");
-	        if (popup.style.display === "none" || popup.style.display === "") {
-	            popup.style.display = "block";
-	        } else {
-	            popup.style.display = "none";
-	        }
+		const userId = "<%= loggedInUser != null ? loggedInUser.getUserId() : "" %>";
+		function togglePopup(popupId, localStorageKey, apiEndpoint) {
+		    const token = localStorage.getItem('customerToken');
+		    
+		    if (!userId) {
+		        alert('Bạn cần đăng nhập để thực hiện hành động này');
+		        return;
+		    }
+
+		    if (!token) {
+		        alert('Token không tồn tại. Vui lòng đăng nhập lại.');
+		        return;
+		    }
+
+		    const popup = document.getElementById(popupId);
+
+		    if (popup.style.display === "none" || popup.style.display === "") {
+		        popup.style.display = "block";
+		    } else {
+		        popup.style.display = "none";
+		    }
+
+		    if (apiEndpoint) {
+		        fetch(apiEndpoint, {
+		            method: 'POST',
+		            headers: {
+		                'Content-Type': 'application/x-www-form-urlencoded',
+		                'Authorization': 'Bearer ' + token
+		            },
+		            body: new URLSearchParams({
+		                userId: userId
+		            })
+		        })
+		        .then(response => {
+		            if (response.ok) {
+		                return response.json();
+		            } else if (response.status === 401) {
+		                alert('Token không hợp lệ hoặc hết hạn. Vui lòng đăng nhập lại.');
+		                localStorage.removeItem('customerToken');
+		                window.location.href = '/OneShop/login';
+		            } else {
+		                console.error('Lỗi khi gửi yêu cầu, mã lỗi: ' + response.status);
+		                alert('Có lỗi xảy ra khi kết nối với hệ thống. Vui lòng thử lại sau.');
+		            }
+		        })
+		        .catch(error => {
+		            console.error('Lỗi:', error);
+		        })
+		        .finally(() => {
+		            localStorage.setItem(localStorageKey, 'true');
+		            setTimeout(() => {
+		                location.reload();  
+		            }, 0);
+		        });
+		    }
+		}
+
+		function closePopup(popupId, localStorageKey) {
+		    var popup = document.getElementById(popupId);
+		    if (popup.style.display === "none" || popup.style.display === "") {
+		        popup.style.display = "block";
+		        localStorage.setItem(localStorageKey, 'false');
+		    } else {
+		        popup.style.display = "none";
+		    }
+		}
+
+		window.onload = function() {
+		    if (localStorage.getItem('showPopup') === 'true') {
+		        var popup = document.getElementById("popupOverlay");
+		        popup.style.display = "block";
+		        localStorage.setItem('showPopup', 'false');
+		    }
+		    if (localStorage.getItem('showCartPopup') === 'true') {
+		        var popupCart = document.getElementById("popupCartOverlay");
+		        popupCart.style.display = "block";
+		        localStorage.setItem('showCartPopup', 'false');
+		    }
+		    if (localStorage.getItem('showOrderPopup') === 'true') {
+		        var popupCart = document.getElementById("popupOrderOverlay");
+		        popupCart.style.display = "block";
+		        localStorage.setItem('showOrderPopup', 'false');
+		    }
+		};
+
+		function togglePopupWishList() {
+		    togglePopup("popupOverlay", "showPopup", "/OneShop/view-wish-list");
+		}
+
+		function togglePopupCart() {
+		    togglePopup("popupCartOverlay", "showCartPopup", "/OneShop/view-cart");
+		}
+		
+		function togglePopupOrder() {
+		    togglePopup("popupOrderOverlay", "showOrderPopup", "/OneShop/view-order");
+		}
+
+		function closeButton() {
+		    closePopup("popupOverlay", "showPopup");
+		}
+
+		function closeCartButton() {
+		    closePopup("popupCartOverlay", "showCartPopup");
+		}
+		
+		function closeOrderButton() {
+		    closePopup("popupOrderOverlay", "showOrderPopup");
+		}
+		
+		function processPayment(index, status, productId, quantity) {
+			const token = localStorage.getItem('customerToken');
+
+		    if (!userId) {
+		        alert('Bạn cần đăng nhập để thanh toán.');
+		        return;
+		    }
+
+		    if (!token) {
+		        alert('Token không tồn tại. Vui lòng đăng nhập lại.');
+		        window.location.href = '/OneShop/login';
+		        return;
+		    }
 			
-		    fetch('/OneShop/view-wish-list', {
+		    fetch('/OneShop/awaiting-payment', {
 		        method: 'POST',
 		        headers: {
-		            'Content-Type': 'application/x-www-form-urlencoded'
+		        	'Content-Type': 'application/x-www-form-urlencoded',
+		            'Authorization': 'Bearer ' + token
 		        },
 		        body: new URLSearchParams({
-                    userId: userId,
-                })
+		        	userId: userId,      
+		            productId: productId,
+		            quantity: quantity,
+		            status: status 
+		        })
 		    })
 		    .then(response => {
 		        if (response.ok) {
-		            console.log('User ID sent successfully and wishlist saved to session.');
+		        	window.location.href = '/OneShop/awaiting-payment';
+		        } else if (response.status === 401) {
+		            alert('Token không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại.');
+		            localStorage.removeItem('customerToken');
+		            window.location.href = '/OneShop/login';
 		        } else {
-		            console.error('Failed to send User ID.');
+		            console.error('Lỗi thanh toán: ' + response.status);
+		            alert('Có lỗi xảy ra khi thanh toán. Vui lòng thử lại sau.');
 		        }
 		    })
-		    .catch(error => console.error('Error:', error));
-	    }
-	    
-	    function togglePopupCart() {
-	        const userId = "<%= loggedInUser != null ? loggedInUser.getUserId() : "" %>"; 
-            if (!userId) {
-                alert('Bạn cần đăng nhập để xem giỏ hàng');
-                return; 
-            }
-            
-            var popup = document.getElementById("popupCartOverlay");
-	        if (popup.style.display === "none" || popup.style.display === "") {
-	            popup.style.display = "block";
-	        } else {
-	            popup.style.display = "none";
-	        }
+		    .catch(error => {
+		        console.error('Lỗi:', error);
+		        alert('Có lỗi xảy ra khi kết nối với hệ thống.');
+		    });
+		}
+		
+		function processFinalPayment() {
+			const token = localStorage.getItem('customerToken');
+
+		    if (!userId) {
+		        alert('Bạn cần đăng nhập để thanh toán.');
+		        return;
+		    }
+
+		    if (!token) {
+		        alert('Token không tồn tại. Vui lòng đăng nhập lại.');
+		        window.location.href = '/OneShop/login';
+		        return;
+		    }
 			
-		    /* fetch('/OneShop/view-cart', {
+		    fetch('/OneShop/awaiting-payment', {
 		        method: 'POST',
 		        headers: {
-		            'Content-Type': 'application/x-www-form-urlencoded'
+		        	'Content-Type': 'application/x-www-form-urlencoded',
+		            'Authorization': 'Bearer ' + token
 		        },
 		        body: new URLSearchParams({
-                    userId: userId,
-                })
+		        	userId: userId     
+		        })
 		    })
 		    .then(response => {
 		        if (response.ok) {
-		            console.log('User ID sent successfully and wishlist saved to session.');
+		        	window.location.href = '/OneShop/awaiting-payment';
+		        } else if (response.status === 401) {
+		            alert('Token không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại.');
+		            localStorage.removeItem('customerToken');
+		            window.location.href = '/OneShop/login';
 		        } else {
-		            console.error('Failed to send User ID.');
+		            console.error('Lỗi thanh toán: ' + response.status);
+		            alert('Có lỗi xảy ra khi thanh toán. Vui lòng thử lại sau.');
 		        }
 		    })
-		    .catch(error => console.error('Error:', error)); */
-	    }
-	    
-	    function togglePopupOrder() {
-	        const userId = "<%= loggedInUser != null ? loggedInUser.getUserId() : "" %>"; 
-            if (!userId) {
-                alert('Bạn cần đăng nhập để xem các sản phẩm đã thanh toán');
-                return; 
-            }
-            
-            var popup = document.getElementById("popupOrderOverlay");
-	        if (popup.style.display === "none" || popup.style.display === "") {
-	            popup.style.display = "block";
-	        } else {
-	            popup.style.display = "none";
+		    .catch(error => {
+		        console.error('Lỗi:', error);
+		        alert('Có lỗi xảy ra khi kết nối với hệ thống.');
+		    });
+		}
+		
+		function removeProduct(productId) {
+	        const token = localStorage.getItem('customerToken');
+	        
+	        if (!token) {
+	            alert('Bạn cần đăng nhập để xóa sản phẩm.');
+	            return;
 	        }
-			
-		    /* fetch('/OneShop/view-order', {
-		        method: 'POST',
-		        headers: {
-		            'Content-Type': 'application/x-www-form-urlencoded'
-		        },
-		        body: new URLSearchParams({
-                    userId: userId,
-                })
-		    })
-		    .then(response => {
-		        if (response.ok) {
-		            console.log('User ID sent successfully and wishlist saved to session.');
-		        } else {
-		            console.error('Failed to send User ID.');
-		        }
-		    })
-		    .catch(error => console.error('Error:', error)); */
+
+	        const confirmation = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+	        if (!confirmation) {
+	            return; 
+	        }
+
+	        fetch('/OneShop/remove-product', {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/x-www-form-urlencoded',
+	                'Authorization': 'Bearer ' + token
+	            },
+	            body: new URLSearchParams({
+	                productId: productId
+	            })
+	        })
+	        .then(response => {
+	            if (response.ok) {
+	                alert('Sản phẩm đã được xóa thành công.');
+	            } else {
+	                alert('Có lỗi xảy ra khi xóa sản phẩm. Vui lòng thử lại.');
+	            }
+	        })
+	        .catch(error => {
+	            console.error('Lỗi:', error);
+	            alert('Có lỗi xảy ra khi xóa sản phẩm. Vui lòng thử lại.');
+	        });
 	    }
 	</script>
 </body>

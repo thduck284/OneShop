@@ -28,8 +28,6 @@ public class EditUserController extends HttpServlet{
 		
 		userId = request.getParameter("userId");
 		user = userService.getUserById(userId);
-		
-		System.out.println(userId);
 
 		request.setAttribute("user", user);
 		

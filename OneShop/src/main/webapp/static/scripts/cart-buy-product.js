@@ -45,33 +45,44 @@ function addToCart(productId, quantity, userId) {
 
 //--------------------------------------------------------------
 function buyNow(productId, quantity, userId) {
-    if (!productId || !userId) {
-        alert("Vui lòng đăng nhập hoặc chọn sản phẩm hợp lệ.");
+	const token = localStorage.getItem('customerToken');
+
+    if (!userId) {
+        alert('Bạn cần đăng nhập để thanh toán.');
         return;
     }
 
-    fetch('/OneShop/user/buy-now', {
+    if (!token) {
+        alert('Token không tồn tại. Vui lòng đăng nhập lại.');
+        window.location.href = '/OneShop/login';
+        return;
+    }
+	
+    fetch('/OneShop/buy-now', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+        	'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token
         },
-        body: JSON.stringify({
-            productId: productId,
-            quantity: quantity,
-            userId: userId,
-        }),
+        body: new URLSearchParams({
+        	userId: userId,      
+            productId: productId
+        })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Chuyển hướng đến trang thanh toán
-            //window.location.href = '/OneShop/user/checkout';
+    .then(response => {
+        if (response.ok) {
+        	window.location.href = '/OneShop/awaiting-payment';
+        } else if (response.status === 401) {
+            alert('Token không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại.');
+            localStorage.removeItem('customerToken');
+            window.location.href = '/OneShop/login';
         } else {
-            alert(data.message || "Có lỗi xảy ra!");
+            console.error('Lỗi thanh toán: ' + response.status);
+            alert('Có lỗi xảy ra khi thanh toán. Vui lòng thử lại sau.');
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert("Không thể mua ngay. Vui lòng thử lại sau.");
+        console.error('Lỗi:', error);
+        alert('Có lỗi xảy ra khi kết nối với hệ thống.');
     });
 }

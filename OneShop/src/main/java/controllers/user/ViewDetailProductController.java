@@ -20,7 +20,7 @@ import serviceImpl.ShopServiceImpl;
 import serviceImpl.WishListServiceImpl;
 
 @WebServlet(urlPatterns = {"/user/view-detail-product"})
-public class ViewDetailProduct extends HttpServlet{
+public class ViewDetailProductController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private ProductService productService = new ProductServiceImpl();

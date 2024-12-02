@@ -28,7 +28,29 @@
     	           		request.setAttribute("userId", user.getUserId());
     	           	}
     	%>
-        <h1 class="text-center" style="margin: 20px 0 30px 0;">Danh sách sản phẩm</h1>
+        <h1 class="text-center" style="margin: 20px 0 30px 0;">Danh sách sản phẩm bán ế</h1>
+        <div class="row">
+            <c:forEach var="product" items="${products}">
+                <div class="col-md-2 container" style="margin: 50px 47px 20px 0;">
+                    <div class="text-center">
+						<a href="${pageContext.request.contextPath}/user/view-detail-product?productId=${product.productId}&userId=${userId}"
+							style="color: inherit; text-decoration: none;"> <c:if
+								test="${not empty product.image}">
+								<img
+									src="data:image/jpeg;base64,${fn:escapeXml(Base64.getEncoder().encodeToString(product.image))}"
+									style="width: 200px; height: 200px;" alt="Product Image"
+									class="product-image" />
+							</c:if>
+							<h5 class="card-title">${product.productName}</h5>
+							<p style="font-size: 20px;">
+								<fmt:formatNumber value="${product.price}" type="number" pattern="#,###" /> VND
+							</p>
+						</a>
+					</div>
+                </div>
+            </c:forEach>
+        </div>
+        <h1 class="text-center" style="margin: 20px 0 30px 0;">Danh sách sản phẩm bán chạy</h1>
         <div class="row">
             <c:forEach var="product" items="${products}">
                 <div class="col-md-2 container" style="margin: 50px 47px 20px 0;">

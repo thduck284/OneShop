@@ -2,6 +2,8 @@ package service;
 
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 import models.CartDetail;
 
 public interface CartDetailService {
@@ -13,4 +15,6 @@ public interface CartDetailService {
 	CartDetail getCartDetailById(String cartId, String productId);
 	public List<CartDetail> getCartDetailByCartId(String cartId);
 	List<CartDetail> getAllCartDetail();
+	DefaultTableModel getCartDetailsTable(String cartId);
+	DefaultTableModel getAllCartDetailByUserId(String userId);
 }

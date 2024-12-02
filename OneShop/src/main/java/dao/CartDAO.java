@@ -11,6 +11,7 @@ public interface CartDAO {
 	void deleteCart(String cartId);
 	public boolean isCartExistByUserId(String userId);
 	int countCarts();
+	Cart getCurrentCartByUserId(String userId);
 	Cart getCartById(String cartId);
 	Cart getCartByUserId(String userId);
 	List<Cart> getAllCarts();

@@ -9,18 +9,20 @@ public class Cart {
 	private String fullName;
 	private int totalPrice;
 	private LocalDateTime createdDate;
+	private boolean status;
 	
 	public Cart() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Cart(String cartId, String userId, String fullName, int totalPrice, LocalDateTime createdDate) {
+	public Cart(String cartId, String userId, String fullName, int totalPrice, LocalDateTime createdDate, boolean status) {
 		
 		this.cartId = cartId;
 		this.userId = userId;
 		this.fullName = fullName;
 		this.totalPrice = totalPrice;
 		this.createdDate = createdDate;
+		this.status = status;
 	}
 
 	public String getCartId() {
@@ -67,4 +69,12 @@ public class Cart {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         return createdDate.format(formatter);
     }
+	
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 }

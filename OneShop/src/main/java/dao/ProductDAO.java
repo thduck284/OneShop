@@ -12,7 +12,9 @@ public interface ProductDAO {
 	Product getProductById(String productId);
 	int countProducts();
 	byte[] getImageById(String productId);
+	List<Product> getAllProductsByCategoryId(String categoryId);
 	List<Product> getAllProducts();
 	List<Product> getAllProductsByShopId(String shopId);
 	List<Product> getAllProductsByUserId(String userId);
+	List<Product> searchProductsByKeyword(String keyword);
 }

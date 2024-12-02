@@ -2,6 +2,8 @@ package serviceImpl;
 
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 import dao.CartDetailDAO;
 import daoImpl.CartDetailDAOImpl;
 import models.CartDetail;
@@ -51,5 +53,17 @@ public class CartDetailServiceImpl implements CartDetailService{
 	public List<CartDetail> getAllCartDetail() {
 		// TODO Auto-generated method stub
 		return cartDetailDAO.getAllCartDetail();
+	}
+
+	@Override
+	public DefaultTableModel getCartDetailsTable(String cartId) {
+		// TODO Auto-generated method stub
+		return cartDetailDAO.getCartDetailsTable(cartId);
+	}
+
+	@Override
+	public DefaultTableModel getAllCartDetailByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return cartDetailDAO.getAllCartDetailByUserId(userId);
 	}
 }
