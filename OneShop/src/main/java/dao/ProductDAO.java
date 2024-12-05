@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import models.Product;
+import models.ProductFavorite;
 
 public interface ProductDAO {
 	
@@ -17,4 +18,16 @@ public interface ProductDAO {
 	List<Product> getAllProductsByShopId(String shopId);
 	List<Product> getAllProductsByUserId(String userId);
 	List<Product> searchProductsByKeyword(String keyword);
+
+	List<Product> getNewProducts(int page, int pageSize);
+	List<Product> getBestSellingProducts();
+	List<Product> getTopRatedProducts();
+	List<ProductFavorite> getProductsByCriteria(String criteria, int page, int pageSize);
+
+
+	List<ProductFavorite> getProductFavorites();
+	List<ProductFavorite> getPagedFavoriteProducts(int page, int pageSize);
+	int countFavoriteProducts();
+	int countNewProducts();
+
 }

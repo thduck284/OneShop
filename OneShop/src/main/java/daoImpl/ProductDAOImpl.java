@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import dao.ProductDAO;
 import models.Product;
+import models.ProductFavorite;
 
 public class ProductDAOImpl implements ProductDAO{
 	
@@ -97,9 +98,9 @@ public class ProductDAOImpl implements ProductDAO{
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-            	
+
             	byte[] image = resultSet.getBytes("image");
-            	
+
                 Product product = new Product(
                     resultSet.getString("productId"),
                     resultSet.getString("categoryId"),
@@ -323,5 +324,228 @@ public class ProductDAOImpl implements ProductDAO{
 	    }
 
 	    return productList;
+	}
+
+
+
+	@Override
+	public List<Product> getBestSellingProducts() {
+		return List.of();
+	}
+
+	@Override
+	public List<Product> getTopRatedProducts() {
+		return List.of();
+	}
+
+	@Override
+	public List<ProductFavorite> getProductsByCriteria(String criteria, int page, int pageSize) {
+		List<ProductFavorite> products = new ArrayList<>();
+		/*String sql = "";
+		int offset = (page - 1) * pageSize;
+		switch (criteria) {
+			case "new":
+				sql = "SELECT TOP 20 * FROM product ORDER BY createdDate DESC";
+				break;
+			case "favorite":
+				sql = """
+						SELECT p.*, COUNT(w.productId) AS favoriteCount
+						FROM product p
+						JOIN wishList w ON p.productId = w.productId
+						GROUP BY p.productId, p.productName, p.price, p.image, p.shopId
+						ORDER BY favoriteCount DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY""";
+				break;
+			default:
+				sql = "SELECT * FROM product ORDER BY createdDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+				break;
+		}
+		try (Connection connection = ConnectDB.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql);
+			 ResultSet resultSet = statement.executeQuery()) {
+
+			while (resultSet.next()) {
+
+				byte[] image = resultSet.getBytes("image");
+
+				Product product = new Product(
+						resultSet.getString("productId"),
+						resultSet.getString("categoryId"),
+						resultSet.getString("shopId"),
+						resultSet.getString("productName"),
+						resultSet.getString("description"),
+						resultSet.getInt("price"),
+						resultSet.getInt("quantity"),
+						image,
+						resultSet.getDate("createdDate")
+				);
+				product.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+		return products;
+	}
+
+	@Override
+	public List<ProductFavorite> getProductFavorites() {
+		List<ProductFavorite> productFavoriteList = new ArrayList<>();
+		String sql = "SELECT TOP 20 " +
+				"p.productId, " +
+				"p.productName, " +
+				"p.price, " +
+				"p.image, " +
+				"p.shopId, " +
+				"COUNT(w.productId) AS favoriteCount " +
+				"FROM wishList w " +
+				"JOIN product p ON w.productId = p.productId " +
+				"GROUP BY p.productId, p.productName, p.price, p.image, p.shopId " +
+				"ORDER BY favoriteCount DESC";
+
+		try (Connection connection = ConnectDB.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql);
+			 ResultSet resultSet = statement.executeQuery()) {
+
+			while (resultSet.next()) {
+
+				byte[] image = resultSet.getBytes("image");
+
+				ProductFavorite productFavorite = new ProductFavorite(
+						resultSet.getInt("favoriteCount"),
+						image,
+						resultSet.getInt("price"),
+						resultSet.getString("productId"),
+						resultSet.getString("productName"),
+						resultSet.getString("shopId")
+
+				);
+				productFavoriteList.add(productFavorite);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return productFavoriteList;
+	}
+
+	@Override
+	public List<ProductFavorite> getPagedFavoriteProducts(int page, int pageSize) {
+		List<ProductFavorite> productFavorites = new ArrayList<>();
+		String sql = "SELECT " +
+				"p.productId, p.productName, p.price, p.image, p.shopId, COUNT(w.productId) AS favoriteCount " +
+				"FROM wishList w " +
+				"JOIN product p ON w.productId = p.productId " +
+				"GROUP BY p.productId, p.productName, p.price, p.image, p.shopId " +
+				"ORDER BY p.productId ASC " +
+				"OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+		try (Connection connection = ConnectDB.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql)) {
+			int offset = (page - 1) * pageSize; // Tính toán OFFSET
+			statement.setInt(1, offset);
+			statement.setInt(2, pageSize);
+
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					byte[] image = resultSet.getBytes("image");
+
+					ProductFavorite productFavorite = new ProductFavorite(
+							resultSet.getInt("favoriteCount"),
+							image,
+							resultSet.getInt("price"),
+							resultSet.getString("productId"),
+							resultSet.getString("productName"),
+							resultSet.getString("shopId")
+
+					);
+					productFavorites.add(productFavorite);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return productFavorites;
+	}
+	@Override
+	public List<Product> getNewProducts(int page, int pageSize) {
+		List<Product> productList = new ArrayList<>();
+		String sql = "SELECT * FROM product ORDER BY createdDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+		try (Connection connection = ConnectDB.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)){
+			int offset = (page - 1) * pageSize; // Tính toán OFFSET
+			statement.setInt(1, offset);
+			statement.setInt(2, pageSize);
+			 try(ResultSet resultSet = statement.executeQuery()) {
+				 while (resultSet.next()) {
+
+					 byte[] image = resultSet.getBytes("image");
+
+					 Product product = new Product(
+							 resultSet.getString("productId"),
+							 resultSet.getString("categoryId"),
+							 resultSet.getString("shopId"),
+							 resultSet.getString("productName"),
+							 resultSet.getString("description"),
+							 resultSet.getInt("price"),
+							 resultSet.getInt("quantity"),
+							 image,
+							 resultSet.getDate("createdDate")
+					 );
+					 productList.add(product);
+			 }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return productList;
+	}
+
+	@Override
+	public int countFavoriteProducts() {
+		String sql = """
+        SELECT COUNT(*) AS totalRecords
+        FROM (
+            SELECT p.[productId]
+            FROM [OneShop].[dbo].[wishList] w
+            JOIN [OneShop].[dbo].[product] p ON w.[productId] = p.[productId]
+            GROUP BY p.[productId], p.[productName], p.[price], p.[image], p.[shopId]
+        ) AS groupedProducts
+    """;
+
+		try (Connection connection = ConnectDB.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
+			if (resultSet.next()) {
+				return resultSet.getInt("totalRecords");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0; // Trả về 0 nếu có lỗi
+	}
+
+	@Override
+	public int countNewProducts() {
+		int count = 0;
+		String sql = "SELECT COUNT(*) " +
+				"FROM ( " +
+				"    SELECT TOP 20 * " +
+				"    FROM product " +
+				"    ORDER BY createdDate DESC " +
+				") AS latestProducts";
+
+		try (Connection connection = ConnectDB.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql);
+			 ResultSet resultSet = statement.executeQuery()) {
+
+			if (resultSet.next()) {
+				count = resultSet.getInt(1);  // Lấy giá trị đếm từ cột đầu tiên
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return count;
 	}
 }
