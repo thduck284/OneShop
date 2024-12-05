@@ -141,19 +141,57 @@
 		   <p>- Chúng tôi chỉ chấp nhận đổi trả sản phẩm tại cửa hàng hoặc thông qua đơn vị vận chuyển mà chúng tôi chỉ định.</p>
 		   <p>Chúng tôi luôn nỗ lực để mang đến trải nghiệm mua sắm tuyệt vời cho khách hàng. Nếu có bất kỳ thắc mắc nào về chính sách đổi trả, đừng ngần ngại liên hệ với chúng tôi.</p>
         </div>
-        <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-            Nội dung bình luận.
-        </div>
+			<div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+
+				<div>
+					<% String userId = (String) request.getAttribute("userId"); %>
+					<% String productId = (String) request.getAttribute("productId"); %>
+
+					<h5>Viết bình luận</h5>
+					<form id="comment-form">
+						<input type="hidden" id="userId" value="<%= userId %>"> <!-- Lấy từ session -->
+						<input type="hidden" id="productId" value="<%= productId %>"> <!-- ID sản phẩm hiện tại -->
+
+						<!-- Thêm phần đánh giá điểm -->
+						<div class="mb-3">
+							<label for="point">Điểm đánh giá:</label>
+							<select id="point" name="point" class="form-control">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+
+						<!-- Thêm phần nội dung bình luận -->
+						<div class="mb-3">
+							<label for="comment">Nội dung bình luận:</label>
+							<textarea id="comment" name="comment" rows="3" class="form-control"></textarea>
+						</div>
+
+						<button type="submit" class="btn btn-primary">Gửi bình luận</button>
+					</form>
+
+					<h5 class="mt-4">Các bình luận</h5>
+					<div id="comment-list">
+
+					</div>
+				</div>
+
+			</div>
     </div>
 	<script>
         function toggleHeart(button, productId) {
+
+
             const heartIcon = button.querySelector('.heart-icon');
             const isFilled = heartIcon.getAttribute('fill') === 'red';
             heartIcon.setAttribute('fill', isFilled ? 'gray' : 'red');
             
             const action = isFilled ? 'delete' : 'add';
             
-            const userId = "<%= user != null ? user.getUserId() : "" %>"; 
+            const userId = "<%= user != null ? user.getUserId() : "" %>";
             if (!userId) {
                 alert('Bạn cần đăng nhập để thêm vào danh sách yêu thích');
                 return; 
@@ -184,7 +222,122 @@
             });
         } 
     </script>
-    <script type="text/javascript" src="../static/scripts/cart-buy-product.js"></script>
+	<template id="comment-template">
+		<div class="comment-item mb-3">
+			<strong class="user-id"></strong>
+			<span class="comment-date text-muted"></span>  <br><!-- Thêm ngày -->
+			<span class="review-point"></span>
+			<span class="review-comment"></span>
+		</div>
+	</template>
+	<script>
+		// Gọi hàm fetchReviews để tải bình luận khi trang được tải
+		const productId = "<%= product != null ? product.getProductId() : "" %>";  // Lấy productId
+		if (productId) {
+			loadReviews(productId);
+		}
+		// Hàm gửi bình luận mới
+		document.getElementById("comment-form").addEventListener("submit", function(event) {
+
+
+
+			event.preventDefault();  // Ngừng gửi form mặc định
+			const userId = "<%= user != null ? user.getUserId() : "" %>";
+			const productId = "<%= product != null ? product.getProductId() : "" %>"
+			const comment = document.getElementById("comment").value;
+			const point = document.getElementById("point").value;
+
+			// Gửi dữ liệu bình luận
+			fetch('/OneShop/review', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams({
+					userId: userId,
+					productId: productId,
+					comment: comment,
+					point: point
+				})
+			})
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							alert(data.message);  // Hiển thị thông báo thành công
+							loadReviews(productId);  // Tải lại danh sách bình luận
+						} else {
+							alert(data.message);  // Hiển thị thông báo lỗi
+						}
+					})
+					.catch(error => {
+						console.error('Lỗi khi gửi bình luận:', error);
+					});
+		});
+
+
+		function loadReviews(productId) {
+			const fragment = document.createDocumentFragment();
+			// Kiểm tra productId trước khi gọi API
+			if (!productId) {
+				alert("Không có productId được cung cấp.");
+				return;
+			}
+
+			// Gửi yêu cầu đến API
+			fetch(`/OneShop/review?productId=`+productId)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error("Failed to fetch reviews");
+						}
+						return response.json();
+					})
+					.then(reviews => {
+						const commentList = document.getElementById("comment-list");
+
+						// Xử lý khi không có bình luận
+						if (!reviews || reviews.length === 0) {
+							commentList.innerHTML = "<p>Chưa có bình luận nào.</p>";
+							return;
+						}
+
+						reviews.forEach(review => {
+							// Lấy template
+							const template = document.getElementById("comment-template").content;
+
+							// Xóa nội dung cũ
+							commentList.innerHTML = "";
+
+							// Lặp qua các review và thêm vào DOM
+							reviews.forEach(review => {
+								const clone = template.cloneNode(true);
+
+
+								// Gán dữ liệu cho các phần tử trong template
+								clone.querySelector(".user-id").textContent = "Khách hàng: " + review.userId +" Ngày đánh giá: "+ review.reviewDate;
+								clone.querySelector(".review-point").textContent = " Điểm :"+review.point + "---";
+								clone.querySelector(".review-comment").textContent = " Đánh giá: " + review.comment;
+								// Thêm phần tử vào danh sách
+								commentList.appendChild(clone);
+							});
+						});
+
+
+					})
+					.catch(error => {
+						console.error("Error:", error);
+						alert("Không thể tải các bình luận. Vui lòng thử lại sau.");
+					});
+		}
+
+
+
+
+
+
+	</script>
+
+
+	<script type="text/javascript" src="../static/scripts/cart-buy-product.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
