@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import models.Product;
+import models.ProductFavorite;
 
 public interface ProductService {
 	
@@ -17,4 +18,10 @@ public interface ProductService {
 	List<Product> getAllProductsByShopId(String shopId);
 	List<Product> getAllProductsByUserId(String userId);
 	List<Product> searchProductsByKeyword(String keyword);
+	List<ProductFavorite> getProductFavorites();
+	List<ProductFavorite> getPagedFavoriteProducts(int page, int pageSize);
+	List<Product> getNewProducts(int page, int pageSize);
+	List<Product> getProductsByCriteria(String criteria, int page, int pageSize);
+	int countFavoriteProducts();
+	int countNewProducts();
 }

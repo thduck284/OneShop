@@ -5,6 +5,7 @@ import java.util.List;
 import dao.ProductDAO;
 import daoImpl.ProductDAOImpl;
 import models.Product;
+import models.ProductFavorite;
 import service.ProductService;
 
 public class ProductServiceImpl implements ProductService{
@@ -70,4 +71,33 @@ public class ProductServiceImpl implements ProductService{
 		return productDAO.searchProductsByKeyword(keyword);
 	}
 
+	@Override
+	public List<ProductFavorite> getProductFavorites() {
+		return productDAO.getProductFavorites();
+	}
+
+	@Override
+	public List<ProductFavorite> getPagedFavoriteProducts(int page, int pageSize) {
+		return productDAO.getPagedFavoriteProducts(page, pageSize);
+	}
+
+	@Override
+	public List<Product> getProductsByCriteria(String criteria, int page, int pageSize) {
+		return List.of();
+	}
+
+	@Override
+	public int countFavoriteProducts() {
+		return productDAO.countFavoriteProducts();
+	}
+
+	@Override
+	public int countNewProducts() {
+		return productDAO.countNewProducts();
+	}
+
+	@Override
+	public List<Product> getNewProducts(int page, int pageSize) {
+		return productDAO.getNewProducts(page, pageSize);
+	}
 }
