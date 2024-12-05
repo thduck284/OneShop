@@ -10,14 +10,7 @@ public class Review {
     private String comment;
     private Date reviewDate;
 
-    public Review(String reviewId, String userId, String productId, int point, String comment, Date reviewDate) {
-        this.reviewId = reviewId;
-        this.userId = userId;
-        this.productId = productId;
-        this.point = point;
-        this.comment = comment;
-        this.reviewDate = reviewDate;
-    }
+
 
     public String getReviewId() {
         return reviewId;
