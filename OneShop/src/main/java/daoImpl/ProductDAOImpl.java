@@ -11,6 +11,7 @@ import java.util.UUID;
 import dao.ProductDAO;
 import models.Product;
 import models.ProductFavorite;
+import models.ProductReview;
 
 public class ProductDAOImpl implements ProductDAO{
 	
@@ -465,6 +466,57 @@ public class ProductDAOImpl implements ProductDAO{
 
 		return productFavorites;
 	}
+
+	@Override
+	public List<ProductReview> getProductsManyRated(int page, int pageSize) {
+		List<ProductReview> productReviews = new ArrayList<>();
+		String sql = """
+				SELECT 
+					p.productid, 
+					p.productName, 
+					p.price, 
+					p.image, 
+					p.shopId, 
+					COUNT(r.productid) AS review_count 
+				FROM 
+					review r 
+				JOIN 
+					product p ON r.productid = p.productid 
+				GROUP BY 
+					p.productid, p.productName, p.price, p.image, p.shopId 
+				ORDER BY 
+					review_count DESC
+				OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;""";
+
+		try (Connection connection = ConnectDB.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+			int offset = (page - 1) * pageSize; // Tính toán OFFSET
+			statement.setInt(1, offset);
+			statement.setInt(2, pageSize);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					byte[] image = resultSet.getBytes("image");
+
+					ProductReview productReview = new ProductReview(
+							image,
+							resultSet.getInt("price"),
+							resultSet.getString("productid"),
+							resultSet.getInt("review_count"),
+							resultSet.getString("productName"),
+							resultSet.getString("shopId")
+
+					);
+					productReviews.add(productReview);
+				}
+			}
+
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return productReviews;
+	}
+
 	@Override
 	public List<Product> getNewProducts(int page, int pageSize) {
 		List<Product> productList = new ArrayList<>();
@@ -547,5 +599,37 @@ public class ProductDAOImpl implements ProductDAO{
 		}
 
 		return count;
+	}
+
+	@Override
+	public int countProductsManyBuy() {
+		return 0;
+	}
+
+
+
+	@Override
+	public int countProductsManyRated() {
+		int count = 0;
+		String sql = "SELECT COUNT(DISTINCT productid) AS total_count FROM review;";
+
+		try (Connection connection = ConnectDB.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql);
+			 ResultSet resultSet = statement.executeQuery()) {
+
+			if (resultSet.next()) {
+				count = resultSet.getInt(1);  // Lấy giá trị đếm từ cột đầu tiên
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return count;
+	}
+
+	@Override
+	public List<Product> getProductManyBuy(int page, int pageSize) {
+		return List.of();
 	}
 }

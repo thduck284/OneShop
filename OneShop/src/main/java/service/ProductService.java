@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Product;
 import models.ProductFavorite;
+import models.ProductReview;
 
 public interface ProductService {
 	
@@ -24,4 +25,9 @@ public interface ProductService {
 	List<Product> getProductsByCriteria(String criteria, int page, int pageSize);
 	int countFavoriteProducts();
 	int countNewProducts();
+
+	List<ProductReview> getProductsManyRated(int page, int pageSize);
+	int countProductsManyRated();
+	List<Product> getProductManyBuy(int page, int pageSize);
+	int countProductsManyBuy();
 }

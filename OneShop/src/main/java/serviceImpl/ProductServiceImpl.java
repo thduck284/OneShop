@@ -6,6 +6,7 @@ import dao.ProductDAO;
 import daoImpl.ProductDAOImpl;
 import models.Product;
 import models.ProductFavorite;
+import models.ProductReview;
 import service.ProductService;
 
 public class ProductServiceImpl implements ProductService{
@@ -94,6 +95,26 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int countNewProducts() {
 		return productDAO.countNewProducts();
+	}
+
+	@Override
+	public List<ProductReview> getProductsManyRated(int page, int pageSize) {
+		return productDAO.getProductsManyRated(page, pageSize);
+	}
+
+	@Override
+	public int countProductsManyRated() {
+		return productDAO.countProductsManyRated();
+	}
+
+	@Override
+	public List<Product> getProductManyBuy(int page, int pageSize) {
+		return productDAO.getProductManyBuy(page, pageSize);
+	}
+
+	@Override
+	public int countProductsManyBuy() {
+		return productDAO.countProductsManyBuy();
 	}
 
 	@Override

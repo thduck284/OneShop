@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Product;
 import models.ProductFavorite;
+import models.ProductReview;
 
 public interface ProductDAO {
 	
@@ -29,5 +30,10 @@ public interface ProductDAO {
 	List<ProductFavorite> getPagedFavoriteProducts(int page, int pageSize);
 	int countFavoriteProducts();
 	int countNewProducts();
+
+	List<ProductReview> getProductsManyRated(int page, int pageSize);
+	int countProductsManyRated();
+	List<Product> getProductManyBuy(int page, int pageSize);
+	int countProductsManyBuy();
 
 }
