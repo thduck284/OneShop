@@ -308,7 +308,7 @@
 							commentList.innerHTML = "";
 
 							// Lặp qua các review và thêm vào DOM
-							reviews.forEach(review => {
+							reviews.slice(0, 3).forEach(review => {
 								const clone = template.cloneNode(true);
 
 
