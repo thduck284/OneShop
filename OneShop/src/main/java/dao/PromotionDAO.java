@@ -10,5 +10,6 @@ public interface PromotionDAO {
 	void updatePromotion(Promotion promotion);
 	void deletePromotion(String promotionId);
 	Promotion getPromotionById(String promotionId);
+	List<Promotion> getAllPromotion();
 	List<Promotion> getAllPromotion(String userId);
 }

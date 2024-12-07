@@ -12,7 +12,7 @@ public interface CartDetailDAO {
 	void updateCartDetail(CartDetail cartDetail);
 	void deleteCartDetail(String cartId, String productId);
 	int countCartDetail();
-	CartDetail getCartDetailById(String cartId, String productId);
+	CartDetail getCartDetailById(String cartId, String productId, boolean status);
 	List<CartDetail> getCartDetailByCartId(String cartId);
 	List<CartDetail> getAllCartDetail();
 	DefaultTableModel getAllCartDetailByUserId(String userId);

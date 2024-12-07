@@ -53,7 +53,7 @@ public class AddCartController extends HttpServlet{
 			String id = "CART" + UUID.randomUUID().toString().replace("-", "").substring(0, 5);
 			int totalCost = (cartService.getCartById(id) == null ? 0 : cartService.getCartById(id).getTotalPrice());
 			int currentTotalCost = product.getPrice()*quantity + totalCost;
-			int currentQuantity = (cartDetailService.getCartDetailById(id, productId) == null ? quantity : cartDetailService.getCartDetailById(id, productId).getQuantity() + quantity);	
+			int currentQuantity = (cartDetailService.getCartDetailById(id, productId, false) == null ? quantity : cartDetailService.getCartDetailById(id, productId, false).getQuantity() + quantity);	
 			
 			Cart cart = new Cart(id, userId, user.getFullName(), currentTotalCost, null, false);
 			cartService.addCart(cart);

@@ -13,4 +13,5 @@ public interface CategoryDAO {
 	Category getCategoryById(String categoryId);
 	List<Category> getAllCategories();
 	List<String> getAllCategoryIds();
+	List<Category> searchCategory(String searchQuery);
 }

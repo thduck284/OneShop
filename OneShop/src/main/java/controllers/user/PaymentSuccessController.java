@@ -84,7 +84,7 @@ public class PaymentSuccessController extends HttpServlet{
 				session.removeAttribute("lstCartDetails");
 			} else {
 				Cart cart = cartService.getCurrentCartByUserId(user.getUserId());
-				CartDetail cartDetail = cartDetailService.getCartDetailById(cart.getCartId(), product.getProductId());
+				CartDetail cartDetail = cartDetailService.getCartDetailById(cart.getCartId(), product.getProductId(), false);
 				
 				cartDetail.setStatus(true);
 				cartDetailService.updateCartDetail(cartDetail);
@@ -112,7 +112,7 @@ public class PaymentSuccessController extends HttpServlet{
 			if(promotion != null) {
 				promotion.setStatus(true);
 				promotionService.updatePromotion(promotion);
-				totalCost = totalCost * promotion.getPrice() / 100;
+				totalCost = totalCost * (100 - promotion.getPrice()) / 100;
 			}
 			
 			Order order = new Order(idList.get(0), idList.get(1), idList.get(2), promotionId, null, false, paymentMethod, status, null, totalCost);

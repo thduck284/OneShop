@@ -122,7 +122,7 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	}
 	
 	@Override
-	public CartDetail getCartDetailById(String cartId, String productId) {		
+	public CartDetail getCartDetailById(String cartId, String productId, boolean status) {		
 		// TODO Auto-generated method stub
 		String query = "SELECT * FROM cartDetail WHERE cartId = ? AND productId = ? AND status = ? ";
 	    CartDetail cartDetail = null;
@@ -130,7 +130,7 @@ public class CartDetailDAOImpl implements CartDetailDAO{
 	         PreparedStatement ps = conn.prepareStatement(query)) {
 	        ps.setString(1, cartId);
 	        ps.setString(2, productId);
-	        ps.setBoolean(3, false);
+	        ps.setBoolean(3, status);
 	        try (ResultSet rs = ps.executeQuery()) {
 	            if (rs.next()) {
 	                cartDetail = new CartDetail(

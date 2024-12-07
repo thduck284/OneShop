@@ -25,22 +25,31 @@ public class PromotionDAOImpl implements PromotionDAO{
 	        statement.setString(1, id);
 	        statement.setString(2, promotion.getUserId());
 	        
-	        if(promotion.getPrice() > 500000) {
-	        	statement.setInt(3, 10);
-	        } else if (promotion.getPrice() > 1000000){
-	        	statement.setInt(3, 15);
-	        } else if (promotion.getPrice() > 2000000){
-	        	statement.setInt(3, 20);
+	        if(promotion.getPrice() > 50) {
+	        	if(promotion.getPrice() > 500000) {
+		        	statement.setInt(3, 10);
+		        } else if (promotion.getPrice() > 1000000){
+		        	statement.setInt(3, 15);
+		        } else if (promotion.getPrice() > 2000000){
+		        	statement.setInt(3, 20);
+		        } else {
+		        	return;
+		        }
 	        } else {
-	        	return;
+	        	statement.setInt(3, promotion.getPrice());
 	        }
-
-	        java.util.Date currentDate = new java.util.Date();
-	        java.util.Calendar calendar = java.util.Calendar.getInstance();
-	        calendar.setTime(currentDate);
-	        calendar.add(java.util.Calendar.DAY_OF_MONTH, 30); 
-	        java.sql.Date expirationDate = new java.sql.Date(calendar.getTimeInMillis());
-
+	     
+	        java.sql.Date expirationDate = null;
+	        if (promotion.getExpirationDate() == null) {
+	            java.util.Date currentDate = new java.util.Date();
+	            java.util.Calendar calendar = java.util.Calendar.getInstance();
+	            calendar.setTime(currentDate);
+	            calendar.add(java.util.Calendar.DAY_OF_MONTH, 30); 
+	            expirationDate = new java.sql.Date(calendar.getTimeInMillis());
+	        } else {
+	            expirationDate = new java.sql.Date(promotion.getExpirationDate().getTime());
+	        }
+	        
 	        statement.setDate(4, expirationDate);
 	        statement.setBoolean(5, false);
 
@@ -120,6 +129,34 @@ public class PromotionDAOImpl implements PromotionDAO{
 	    }
 
 	    return promotion;
+	}
+	
+	@Override
+	public List<Promotion> getAllPromotion() {
+		// TODO Auto-generated method stub
+		List<Promotion> promotions = new ArrayList<>();
+	    String sql = "SELECT * FROM promotion";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+
+	            while (resultSet.next()) {
+	                String promoId = resultSet.getString("promoId");
+	                String userId = resultSet.getString("userId");
+	                int price = resultSet.getInt("price");
+	                Date expirationDate = resultSet.getDate("expirationDate");
+	                boolean status = resultSet.getBoolean("status");
+
+	                promotions.add(new Promotion(promoId, userId, price, expirationDate, status));
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return promotions;
 	}
 
 	@Override

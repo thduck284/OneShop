@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import dao.UserDAO;
 import models.User;
 
@@ -34,14 +36,16 @@ public class UserDAOImpl implements UserDAO{
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
-
+	    	
+	    	String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+	    	
 	        statement.setString(1, userId); 
 	        statement.setString(2, user.getFullName());
 	        statement.setString(3, user.getEmail());
 	        statement.setString(4, user.getPhoneNumber());
 	        statement.setString(5, user.getAddress());
 	        statement.setString(6, user.getUserName());
-	        statement.setString(7, user.getPassword());
+	        statement.setString(7, hashedPassword);
 	        statement.setString(8, user.getRole());
 	        statement.setDate(9, sqlDate);  
 
@@ -172,24 +176,27 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public boolean validUser(String userName, String password) {
 		// TODO Auto-generated method stub
-		String sql = "SELECT COUNT(*) FROM [dbo].[user] WHERE userName = ? AND password = ?";
+		String sql = "SELECT password FROM [dbo].[user] WHERE userName = ?";
 	    boolean isValid = false;
 
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 
 	        statement.setString(1, userName);
-	        statement.setString(2, password);
 
 	        try (ResultSet resultSet = statement.executeQuery()) {
 	            if (resultSet.next()) {
-	                isValid = resultSet.getInt(1) > 0; // Nếu có ít nhất một người dùng, isValid sẽ là true
+	                String hashedPassword = resultSet.getString("password"); 
+
+	                if (BCrypt.checkpw(password, hashedPassword)) {
+	                    isValid = true;  
+	                }
 	            }
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-
+	    
 	    return isValid;
 	}
 	
@@ -315,5 +322,81 @@ public class UserDAOImpl implements UserDAO{
 	    }
 
 	    return userIdList;
+	}
+
+	@Override
+	public List<User> getCustomerByUserId(String shopUserId) {
+		
+	    List<User> userList = new ArrayList<>();
+	    String sql = "SELECT u.userId, u.fullName, u.email, u.phone, u.address " +
+	                 "FROM shop s " +
+	                 "INNER JOIN product p ON s.shopId = p.shopId " +
+	                 "INNER JOIN cartDetail cd ON p.productId = cd.productId " +
+	                 "INNER JOIN [dbo].[order] o ON cd.cartId = o.cartId " +
+	                 "INNER JOIN [dbo].[user] u ON o.userId = u.userId " +
+	                 "WHERE s.userId = ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+	        
+	        statement.setString(1, shopUserId);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	            	User user = new User(
+	            		    resultSet.getString("userId"),
+	            		    null,
+	            		    resultSet.getString("email"),
+	            		    null,  
+	            		    resultSet.getString("fullName"),  
+	            		    resultSet.getString("phone"),
+	            		    resultSet.getString("address"),
+	            		    null,  
+	            		    null  
+	            		);
+
+	                userList.add(user);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return userList;
+	}
+
+	@Override
+	public List<User> searchUser(String keyword, String role) {
+	    String sql = "SELECT * FROM [dbo].[user] WHERE (userId LIKE ? OR fullName LIKE ?) AND role = ?";
+	    List<User> userList = new ArrayList<>();
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, "%" + keyword + "%");
+	        statement.setString(2, "%" + keyword + "%");
+	        statement.setString(3, role); 
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                String userID = resultSet.getString("userId");
+	                String fullName = resultSet.getString("fullName");
+	                String email = resultSet.getString("email");
+	                String phone = resultSet.getString("phone");
+	                String address = resultSet.getString("address");
+	                String userName = resultSet.getString("username");
+	                String password = resultSet.getString("password");
+	                String userRole = resultSet.getString("role");
+	                Date createdDate = resultSet.getDate("createdDate");
+
+	                User user = new User(userID, userName, email, password, fullName, phone, address, userRole, createdDate);
+	                userList.add(user);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return userList;
 	}
 }

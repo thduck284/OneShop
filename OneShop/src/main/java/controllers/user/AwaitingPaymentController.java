@@ -19,19 +19,23 @@ import models.Cart;
 import models.CartDetail;
 import models.Product;
 import models.Promotion;
+import models.User;
 import service.CartDetailService;
 import service.CartService;
 import service.ProductService;
 import service.PromotionService;
+import service.UserService;
 import serviceImpl.CartDetailServiceImpl;
 import serviceImpl.CartServiceImpl;
 import serviceImpl.ProductServiceImpl;
 import serviceImpl.PromotionServiceImpl;
+import serviceImpl.UserServiceImpl;
 
 @WebServlet(urlPatterns = {"/awaiting-payment"})
 public class AwaitingPaymentController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
+	private UserService userService = new UserServiceImpl();
 	private CartService cartService = new CartServiceImpl();
 	private CartDetailService cartDetailService = new CartDetailServiceImpl();
 	private ProductService productService = new ProductServiceImpl();
@@ -69,7 +73,14 @@ public class AwaitingPaymentController extends HttpServlet{
             String productId = request.getParameter("productId");
             
             Cart cart = cartService.getCurrentCartByUserId(userId);
-			String cartId = cart.getCartId();
+			String cartId = null;
+			
+			if(cart == null) {	
+				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				addToCart(userId, productId, quantity);
+				cart = cartService.getCurrentCartByUserId(userId);
+				cartId = cart.getCartId();
+			} 
 			
 			List<Promotion> promotion = promotionService.getAllPromotion(userId);
 			
@@ -121,4 +132,51 @@ public class AwaitingPaymentController extends HttpServlet{
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Session does not exist or has expired.");
 		}
     }	
+	
+	private void addToCart (String userId, String productId, int quantity){
+		
+		User user = new User();
+		user = userService.getUserById(userId);
+		
+		Product product = new Product();
+		product = productService.getProductById(productId);
+		
+		Cart currentCart = cartService.getCurrentCartByUserId(userId);
+		
+		if(currentCart == null)
+		{
+			String id = "CART" + UUID.randomUUID().toString().replace("-", "").substring(0, 5);
+			int totalCost = (cartService.getCartById(id) == null ? 0 : cartService.getCartById(id).getTotalPrice());
+			int currentTotalCost = product.getPrice()*quantity + totalCost;
+			int currentQuantity = (cartDetailService.getCartDetailById(id, productId, false) == null ? quantity : cartDetailService.getCartDetailById(id, productId, false).getQuantity() + quantity);	
+			
+			Cart cart = new Cart(id, userId, user.getFullName(), currentTotalCost, null, false);
+			cartService.addCart(cart);
+			
+			CartDetail cartDetail = new CartDetail(id, productId, product.getProductName(), currentQuantity, product.getPrice(), false);
+			cartDetailService.addCartDetail(cartDetail);
+		} else {
+			currentCart.setTotalPrice(currentCart.getTotalPrice() + quantity * product.getPrice());
+			cartService.updateCart(currentCart);
+			
+			List<CartDetail> cartDetails = cartDetailService.getCartDetailByCartId(currentCart.getCartId());	
+			
+			boolean flag = false;
+
+            for (CartDetail detail : cartDetails) {
+                if (detail.getProductId().equals(productId)) {
+                	int currentQuantity;
+                	if(detail.getStatus() == false) {
+                		currentQuantity = detail.getQuantity() + quantity;
+                		cartDetailService.updateCartDetail(new CartDetail(currentCart.getCartId(), productId, product.getProductName(), currentQuantity, product.getPrice(), false));
+                		flag = true;
+                	} 
+                }
+            }
+            
+            if(!flag) {
+        		cartDetailService.addCartDetail(new CartDetail(currentCart.getCartId(), productId, product.getProductName(), quantity, product.getPrice(), false));
+            }
+		}
+	}
 }

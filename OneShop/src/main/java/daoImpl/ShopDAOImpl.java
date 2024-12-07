@@ -206,4 +206,37 @@ public class ShopDAOImpl implements ShopDAO{
 	    }
 	    return shopList;
 	}
+
+	@Override
+	public List<Shop> searchShop(String keyword) {
+		// TODO Auto-generated method stub
+		List<Shop> shopList = new ArrayList<>();
+	    String sql = "SELECT * FROM shop WHERE shopId LIKE ? OR userId LIKE ? OR shopName LIKE ?";
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        String searchKeyword = "%" + keyword + "%";
+	        statement.setString(1, searchKeyword);
+	        statement.setString(2, searchKeyword);
+	        statement.setString(3, searchKeyword);
+
+	        ResultSet resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            Shop shop = new Shop(
+	                resultSet.getString("shopId"),
+	                resultSet.getString("userId"),
+	                resultSet.getString("shopName"),
+	                resultSet.getString("description"),
+	                resultSet.getString("status"),
+	                resultSet.getTimestamp("createdDate").toLocalDateTime()
+	            );
+	            shopList.add(shop);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return shopList;
+	}
 }

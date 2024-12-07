@@ -15,4 +15,5 @@ public interface ShopDAO {
 	List<String> getAllShopIdByUserId(String userId);
 	List<Shop> getAllShops();
 	List<Shop> getAllShopsByUserId(String userId);
+	List<Shop> searchShop(String keyword);
 }

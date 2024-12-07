@@ -152,4 +152,33 @@ public class CategoryDAOImpl implements CategoryDAO{
         }
         return categories;
     }
+
+	@Override
+	public List<Category> searchCategory(String searchQuery) {
+	    String sql = "SELECT * FROM category WHERE categoryId LIKE ? OR categoryName LIKE ?";
+	    List<Category> categories = new ArrayList<>();
+
+	    try (Connection connection = ConnectDB.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        String likeQuery = "%" + searchQuery + "%";
+	        statement.setString(1, likeQuery);
+	        statement.setString(2, likeQuery);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                String categoryId = resultSet.getString("categoryId");
+	                String categoryName = resultSet.getString("categoryName");
+	                String description = resultSet.getString("description");
+
+	                Category category = new Category(categoryId, categoryName, description);
+	                categories.add(category);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return categories;
+	}
+
 }
