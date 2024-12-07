@@ -20,3 +20,4 @@ public interface UserService {
 	List<User> getCustomerByUserId(String userId);
 	List<User> searchUser(String searchQuery, String role);
 }
+

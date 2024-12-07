@@ -133,38 +133,38 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg" role="document" style="width: 650px; margin-top: 40px;">
 	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa thông tin Admin</h5>
+	            <div class="modal-header" style="background-color: #0C6478;">
+	                <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Chỉnh sửa thông tin Admin</h5>
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	                    <span aria-hidden="true">&times;</span>
 	                </button>
 	            </div>
-	            <div class="modal-body">
-	                <h3 style="text-align: center;">Thông tin Admin</h3>
+	            <div class="modal-body" style="background-color: #15919B;">
+	                <h3 style="text-align: center; color: white;">Thông tin Admin</h3>
 	                <form id="adminForm">
 	                    <div class="form-group">
-	                        <label for="userName">Tên tài khoản:</label>
+	                        <label for="userName" style="color: white;">Tên tài khoản:</label>
 	                        <input type="text" class="form-control" id="userName">
 	                    </div>
 	                    <div class="form-group">
-	                        <label for="email">Email:</label>
+	                        <label for="email" style="color: white;">Email:</label>
 	                        <input type="email" class="form-control" id="email">
 	                    </div>
 	                    <div class="form-group">
-	                        <label for="fullName">Họ và tên:</label>
+	                        <label for="fullName" style="color: white;">Họ và tên:</label>
 	                        <input type="text" class="form-control" id="fullName">
 	                    </div>
 	                    <div class="form-group">
-	                        <label for="phoneNumber">Số điện thoại:</label>
+	                        <label for="phoneNumber" style="color: white;">Số điện thoại:</label>
 	                        <input type="text" class="form-control" id="phoneNumber">
 	                    </div>
 	                    <div class="form-group">
-	                        <label for="address">Địa chỉ:</label>
+	                        <label for="address" style="color: white;">Địa chỉ:</label>
 	                        <input type="text" class="form-control" id="address">
 	                    </div>
 	                </form>
 	            </div>
-	            <div class="modal-footer">
+	            <div class="modal-footer" style="background-color: #0C6478;">
 	                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
 	                <button type="button" class="btn btn-primary" id="saveChangesButton">Lưu thay đổi</button>
 	            </div>
