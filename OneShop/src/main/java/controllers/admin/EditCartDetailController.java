@@ -17,20 +17,22 @@ import serviceImpl.CartDetailServiceImpl;
 public class EditCartDetailController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
-	CartDetailService cartDetailService = new CartDetailServiceImpl();
-	CartDetail cartDetail = new CartDetail();
-	String cartId;
-	String productId;
+	private CartDetailService cartDetailService = new CartDetailServiceImpl();
+	private CartDetail cartDetail = new CartDetail();
+	private String cartId;
+	private String productId;
+	private Boolean status;
 	
 	protected void doGet (HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 		
 		cartId = request.getParameter("cartId");
 		productId = request.getParameter("productId");
+		status = Boolean.parseBoolean(request.getParameter("status"));
 		
-		cartDetail = cartDetailService.getCartDetailById(cartId, productId);
+		cartDetail = cartDetailService.getCartDetailById(cartId, productId, status);
+		
 		request.setAttribute("cartDetail", cartDetail);
-		
 		request.getRequestDispatcher("/views/admin/editCartDetail.jsp").forward(request, response);
 	}
 	
@@ -42,6 +44,6 @@ public class EditCartDetailController extends HttpServlet{
 		cartDetail.setPrice((int)((request.getParameter("price") == null) ? cartDetail.getPrice() : request.getParameter("price")));
 		
 		cartDetailService.updateCartDetail(cartDetail); 
-		response.sendRedirect(request.getContextPath() + "/admin/cart");
+		response.sendRedirect(request.getContextPath() + "/admin/edit-cart-detail");
     }
 }
