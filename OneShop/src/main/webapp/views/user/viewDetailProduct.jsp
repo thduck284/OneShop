@@ -328,6 +328,51 @@
 						alert("Không thể tải các bình luận. Vui lòng thử lại sau.");
 					});
 		}
+		function processPayment(productId) {
+			const token = localStorage.getItem('customerToken');
+			const quantity = document.getElementById('quantity') ? document.getElementById('quantity').value : 1;
+			const userId = '<%= session.getAttribute("userInfor") != null ? ((User) session.getAttribute("userInfor")).getUserId() : "" %>';
+
+			if (!userId) {
+				alert('Bạn cần đăng nhập để thanh toán.');
+				return;
+			}
+
+			if (!token) {
+				alert('Token không tồn tại. Vui lòng đăng nhập lại.');
+				window.location.href = '/OneShop/login';
+				return;
+			}
+
+			fetch('/OneShop/awaiting-payment', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Authorization': 'Bearer ' + token
+				},
+				body: new URLSearchParams({
+					userId: userId,
+					productId: productId,
+					quantity: quantity
+				})
+			})
+					.then(response => {
+						if (response.ok) {
+							window.location.href = '/OneShop/awaiting-payment';
+						} else if (response.status === 401) {
+							alert('Token không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại.');
+							localStorage.removeItem('customerToken');
+							window.location.href = '/OneShop/login';
+						} else {
+							console.error('Lỗi thanh toán: ' + response.status);
+							alert('Có lỗi xảy ra khi thanh toán. Vui lòng thử lại sau.');
+						}
+					})
+					.catch(error => {
+						console.error('Lỗi:', error);
+						alert('Có lỗi xảy ra khi kết nối với hệ thống.');
+					});
+		}
 
 
 
