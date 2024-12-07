@@ -2,6 +2,8 @@ package serviceImpl;
 
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 import dao.OrderDAO;
 import daoImpl.OrderDAOImpl;
 import models.Order;
@@ -40,6 +42,12 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderDAO.countOrders();
 	}
+	
+	@Override
+	public int getVenueByDayMonthYear(String userId, String paymentDate, String timePeriod) {
+		// TODO Auto-generated method stub
+		return orderDAO.getVenueByDayMonthYear(userId, paymentDate, timePeriod);
+	}
 
 	@Override
 	public List<Order> getAllOrders() {
@@ -47,4 +55,21 @@ public class OrderServiceImpl implements OrderService{
 		return orderDAO.getAllOrders();
 	}
 
+	@Override
+	public List<Order> getAllOrdersByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return orderDAO.getAllOrdersByUserId(userId);
+	}
+	
+	@Override
+	public List<Order> searchOrder(String searchQuery) {
+		// TODO Auto-generated method stub
+		return orderDAO.searchOrder(searchQuery);
+	}
+	
+	@Override
+	public DefaultTableModel getAllDetailOrdersByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return orderDAO.getAllDetailOrdersByUserId(userId);
+	}
 }

@@ -22,8 +22,8 @@ public class DeleteCartDetailServlet extends HttpServlet{
 		String productId = request.getParameter("productId");
 		  
 		cartDetailService.deleteCartDetail(cartId, productId); 
-		request.setAttribute("message", "Xóa chi tiết giỏ hàng thành công!");
 		
+		request.setAttribute("message", "Xóa chi tiết giỏ hàng thành công!");
 		response.sendRedirect(request.getContextPath() + "/admin/cart-detail");
     }
 }

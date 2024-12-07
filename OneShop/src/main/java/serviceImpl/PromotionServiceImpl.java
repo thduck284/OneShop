@@ -34,6 +34,12 @@ public class PromotionServiceImpl implements PromotionService{
 		// TODO Auto-generated method stub
 		return promotionDAO.getPromotionById(promotionId);
 	}
+	
+	@Override
+	public List<Promotion> getAllPromotion() {
+		// TODO Auto-generated method stub
+		return promotionDAO.getAllPromotion();
+	}
 
 	@Override
 	public List<Promotion> getAllPromotion(String userId) {

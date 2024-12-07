@@ -12,6 +12,7 @@ public class Product {
 	private int quantity;
 	private byte[] image;
 	private Date createdDate;
+	private String formattedCreatedDate;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -104,5 +105,13 @@ public class Product {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}	
+	}
+	
+	public String getFormattedCreatedDate() {
+        return formattedCreatedDate;
+    }
+
+    public void setFormattedCreatedDate(String formattedCreatedDate) {
+        this.formattedCreatedDate = formattedCreatedDate;
+    }
 }

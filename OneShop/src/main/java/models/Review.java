@@ -9,6 +9,10 @@ public class Review {
     private int point;
     private String comment;
     private Date reviewDate;
+    
+    public Review() {
+		// TODO Auto-generated constructor stub
+	}
 
     public Review(String reviewId, String userId, String productId, int point, String comment, Date reviewDate) {
         this.reviewId = reviewId;

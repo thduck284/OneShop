@@ -63,4 +63,10 @@ public class CartServiceImpl implements CartService{
 		// TODO Auto-generated method stub
 		return cartDAO.getAllCarts();
 	}
+
+	@Override
+	public List<Cart> searchCart(String searchQuery) {
+		// TODO Auto-generated method stub
+		return cartDAO.searchCart(searchQuery);
+	}
 }

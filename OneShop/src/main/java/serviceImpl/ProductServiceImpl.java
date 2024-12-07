@@ -5,6 +5,8 @@ import java.util.List;
 import dao.ProductDAO;
 import daoImpl.ProductDAOImpl;
 import models.Product;
+import models.ProductFavorite;
+import models.ProductReview;
 import service.ProductService;
 
 public class ProductServiceImpl implements ProductService{
@@ -68,6 +70,78 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> searchProductsByKeyword(String keyword) {
 		// TODO Auto-generated method stub
 		return productDAO.searchProductsByKeyword(keyword);
+	}
+
+	@Override
+	public List<Product> getNewProducts(int page, int pageSize) {
+		// TODO Auto-generated method stub
+		return productDAO.getNewProducts(page, pageSize);
+	}
+
+	@Override
+	public List<Product> getBestSellingProducts() {
+		// TODO Auto-generated method stub
+		return productDAO.getBestSellingProducts();
+	}
+
+	@Override
+	public List<Product> getTopRatedProducts() {
+		// TODO Auto-generated method stub
+		return productDAO.getTopRatedProducts();
+	}
+
+	@Override
+	public List<ProductFavorite> getProductsByCriteria(String criteria, int page, int pageSize) {
+		// TODO Auto-generated method stub
+		return productDAO.getProductsByCriteria(criteria, page, pageSize);
+	}
+
+	@Override
+	public List<ProductFavorite> getProductFavorites() {
+		// TODO Auto-generated method stub
+		return productDAO.getProductFavorites();
+	}
+
+	@Override
+	public List<ProductFavorite> getPagedFavoriteProducts(int page, int pageSize) {
+		// TODO Auto-generated method stub
+		return productDAO.getPagedFavoriteProducts(page, pageSize);
+	}
+
+	@Override
+	public int countFavoriteProducts() {
+		// TODO Auto-generated method stub
+		return productDAO.countFavoriteProducts();
+	}
+
+	@Override
+	public int countNewProducts() {
+		// TODO Auto-generated method stub
+		return productDAO.countNewProducts();
+	}
+
+	@Override
+	public List<ProductReview> getProductsManyRated(int page, int pageSize) {
+		// TODO Auto-generated method stub
+		return productDAO.getProductsManyRated(page, pageSize);
+	}
+
+	@Override
+	public int countProductsManyRated() {
+		// TODO Auto-generated method stub
+		return productDAO.countProductsManyRated();
+	}
+
+	@Override
+	public List<Product> getProductManyBuy(int page, int pageSize) {
+		// TODO Auto-generated method stub
+		return productDAO.getProductManyBuy(page, pageSize);
+	}
+
+	@Override
+	public int countProductsManyBuy() {
+		// TODO Auto-generated method stub
+		return productDAO.countProductsManyBuy();
 	}
 
 }

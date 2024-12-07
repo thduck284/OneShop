@@ -8,8 +8,13 @@ public class Promotion {
     private int price;
     private Date expirationDate;
     private boolean status;
+    private String expirationString;
 
-    public Promotion() {
+    public String getExpirationString() {
+		return expirationString;
+	}
+
+	public Promotion() {
 		// TODO Auto-generated constructor stub
 	}
     
@@ -59,5 +64,13 @@ public class Promotion {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	
+	public void setExpirationString(String expirationString) {
+		this.expirationString = expirationString;
+	}
+
+	public void setPromotionId(String promotionId) {
+		this.promotionId = promotionId;
 	}
 }

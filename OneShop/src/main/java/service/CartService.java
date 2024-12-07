@@ -15,4 +15,5 @@ public interface CartService {
 	Cart getCartById(String cartId);
 	Cart getCartByUserId(String userId);
 	List<Cart> getAllCarts();
+	List<Cart> searchCart(String searchQuery);
 }

@@ -38,9 +38,9 @@ public class CartDetailServiceImpl implements CartDetailService{
 	}
 	
 	@Override
-	public CartDetail getCartDetailById(String cartId, String productId) {
+	public CartDetail getCartDetailById(String cartId, String productId, boolean status) {
 		// TODO Auto-generated method stub
-		return cartDetailDAO.getCartDetailById(cartId, productId);
+		return cartDetailDAO.getCartDetailById(cartId, productId, status);
 	}
 	
 	@Override

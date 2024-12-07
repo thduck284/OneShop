@@ -73,4 +73,16 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDAO.getAllUserIdsByRole(role);
 	}
+
+	@Override
+	public List<User> getCustomerByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return userDAO.getCustomerByUserId(userId);
+	}
+
+	@Override
+	public List<User> searchUser(String searchQuery, String role) {
+		// TODO Auto-generated method stub
+		return userDAO.searchUser(searchQuery, role);
+	}
 }

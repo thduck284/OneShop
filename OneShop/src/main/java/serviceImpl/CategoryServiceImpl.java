@@ -47,4 +47,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDAO.getAllCategoryIds();
 	}
 
+	@Override
+	public List<Category> searchCategory(String searchQuery) {
+		// TODO Auto-generated method stub
+		return categoryDAO.searchCategory(searchQuery);
+	}
+
 }

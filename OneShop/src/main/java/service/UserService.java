@@ -17,5 +17,6 @@ public interface UserService {
 	User getUserById(String userId);
 	List<User> getAllUserByRole(String role);
 	List<String> getAllUserIdsByRole(String role);
+	List<User> getCustomerByUserId(String userId);
+	List<User> searchUser(String searchQuery, String role);
 }
-

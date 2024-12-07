@@ -64,4 +64,10 @@ public class ShopServiceImpl implements ShopService{
 		// TODO Auto-generated method stub
 		return shopDAO.getAllShopsByUserId(userId);
 	}
+
+	@Override
+	public List<Shop> searchShop(String keyword) {
+		// TODO Auto-generated method stub
+		return shopDAO.searchShop(keyword);
+	}
 }
