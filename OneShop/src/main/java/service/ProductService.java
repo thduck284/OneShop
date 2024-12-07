@@ -19,14 +19,13 @@ public interface ProductService {
 	List<Product> getAllProductsByShopId(String shopId);
 	List<Product> getAllProductsByUserId(String userId);
 	List<Product> searchProductsByKeyword(String keyword);
-	List<Product> getNewProducts(int page, int pageSize);
-	List<Product> getBestSellingProducts();
-	List<Product> getTopRatedProducts();
-	List<ProductFavorite> getProductsByCriteria(String criteria, int page, int pageSize);
 	List<ProductFavorite> getProductFavorites();
 	List<ProductFavorite> getPagedFavoriteProducts(int page, int pageSize);
+	List<Product> getNewProducts(int page, int pageSize);
+	List<Product> getProductsByCriteria(String criteria, int page, int pageSize);
 	int countFavoriteProducts();
 	int countNewProducts();
+
 	List<ProductReview> getProductsManyRated(int page, int pageSize);
 	int countProductsManyRated();
 	List<Product> getProductManyBuy(int page, int pageSize);

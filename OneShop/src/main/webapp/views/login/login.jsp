@@ -41,7 +41,7 @@
 		        success: function (data) { 
 		            if (data.role === 'customer') {
 		            	localStorage.setItem('customerToken', data.token);
-		                window.location.href = '/OneShop/user/product';
+		                window.location.href = '/OneShop/user/home';
 		            } else if (data.role === 'vendor') {
 		            	localStorage.setItem('vendorToken', data.token);
 		                window.location.href = '/OneShop/vendor/home';
