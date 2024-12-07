@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="models.Order" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,56 +10,75 @@
 </head>
 <body>
 	<div class="container mt-4 d-flex justify-content-center" style="margin: 0 0 0 -80px;">
-		<div style="width: 90%; max-width: 900px;">
-			<h3 class="mb-4 text-center">Thông tin cửa hàng</h3>
-			<form>
-				<div class="row mb-5">
-					<div class="col-md-6">
-						<label for="shopName" class="form-label">Tên cửa hàng:</label> <input
-							type="text" class="form-control" id="shopName" name="shopName"
-							placeholder="Nhập tên cửa hàng" required style="width: 100%;">
-					</div>
-					<div class="col-md-6">
-						<label for="description" class="form-label">Mô tả:</label>
-						<textarea class="form-control" id="description" name="description"
-							rows="1" placeholder="Nhập mô tả cửa hàng" required
-							style="width: 100%;"></textarea>
-					</div>
-				</div>
-				<div class="row mb-5">
-					<div class="col-md-6">
-						<label for="status" class="form-label">Trạng thái:</label> <select
-							class="form-select" id="status" name="status" required
-							style="width: 100%;">
-							<option selected disabled>Chọn trạng thái</option>
-							<option value="active">Hoạt động</option>
-							<option value="inactive">Không hoạt động</option>
-						</select>
-					</div>
-					<div class="col-md-6">
-						<label for="createdAt" class="form-label">Ngày tạo:</label> <input
-							type="date" class="form-control" id="createdAt" name="createdAt"
-							required style="width: 100%;">
-					</div>
-				</div>
-				<div class="row mb-5">
-					<div class="col-md-6">
-						<label for="bankAccount" class="form-label">Tài khoản ngân
-							hàng:</label> <input type="text" class="form-control" id="bankAccount"
-							name="bankAccount" placeholder="Nhập tài khoản ngân hàng"
-							required style="width: 100%;">
-					</div>
-					<div class="col-md-6">
-						<label for="bankName" class="form-label">Tên ngân hàng:</label> <input
-							type="text" class="form-control" id="bankName" name="bankName"
-							placeholder="Nhập tên ngân hàng" required style="width: 100%;">
-					</div>
-				</div>
-				<div class="d-flex justify-content-end" style="transform: translateX(-370px);">
-					<button type="submit" class="btn btn-primary mt-3" style=" background-color: #3498db;">Lưu
-						thông tin</button>
-				</div>
-			</form>
+		<div style="width: 90%; max-width: 900px; margin-left: -70px;">
+			<div class="row mb-4 text-center">
+		        <div class="col-md-3">
+		            <div class="card text-white bg-info mb-3">
+		                <div class="card-body">
+		                    <h5 class="card-title">Khách hàng</h5>
+		                    <p class="card-text"><%= session.getAttribute("customerCount") %></p>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="col-md-3">
+		            <div class="card text-white bg-success mb-3">
+		                <div class="card-body">
+		                    <h5 class="card-title">Đơn hàng</h5>
+		                    <p class="card-text"><%= session.getAttribute("orderCount") %></p>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="col-md-3">
+		            <div class="card text-white bg-primary mb-3">
+		                <div class="card-body">
+		                    <h5 class="card-title">Sản phẩm</h5>
+		                    <p class="card-text"><%= session.getAttribute("productCount") %></p>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="col-md-3">
+		            <div class="card text-white bg-warning mb-3">
+		                <div class="card-body">
+		                    <h5 class="card-title">Doanh thu</h5>
+		                    <p class="card-text"><%= session.getAttribute("venue") %></p>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    <h4 class="mt-5">Top 3 đơn hàng gần đây</h4>
+		    <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Tên Khách Hàng</th>
+                    <th>Ngày</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                    List<Order> top3Orders = (List<Order>) session.getAttribute("top3Orders");
+                    if (top3Orders != null) {
+                        int count = 1;
+                        for (Order order : top3Orders) {
+                            if (count > 3) break;
+                %>
+                    <tr>
+                        <td><%= count %></td>
+                        <td><%= order.getUserId() %></td>
+                        <td><%= order.getPaymentDate() != null ? order.getPaymentDate().toString() : "N/A" %></td>
+                        <td><%= order.getTotalCost() %></td>
+                        <td><span class="badge <%= order.getPaymentStatus() ? "bg-success" : "bg-warning" %>">
+                            <%= order.getPaymentStatus() ? "Đã thanh toán" : "Chưa thanh toán" %></span></td>
+                    </tr>
+                <%
+                            count++;
+                        }
+                    }
+                %>
+            </tbody>
+        </table>
 		</div>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7VVf0SzP+UlwzwyFw4klZ+khcAhmGn8So7rH2yKD5nMjNA2" crossorigin="anonymous"></script>

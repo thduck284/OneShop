@@ -19,30 +19,30 @@
 			<div class="footer-section" style="margin-top: 20px;">
             	<h2>Về One Shop</h2>
             	<ul>
-          	      <li><a href="http://localhost:8080/OneShop/footer-review">Giới thiệu</a></li>
-              	  <li><a href="http://localhost:8080/OneShop/footer-recruitment">Tuyển dụng</a></li>
-                	<li><a href="#">Liên hệ</a></li>
-            	    <li><a href="#">Tin tức / Blog</a></li>
-                	<li><a href="#">Hệ thống cửa hàng</a></li>
+          	    	<li><a href="http://localhost:8080/OneShop/footer-review">Giới thiệu</a></li>
+              	  	<li><a href="http://localhost:8080/OneShop/footer-recruitment">Tuyển dụng</a></li>
+                  	<li><a href="http://localhost:8080/OneShop/footer-order-guide">Liên hệ</a></li>
+            	  	<li><a href="http://localhost:8080/OneShop/footer-blog">Tin tức / Blog</a></li>
+                 	<li><a href="http://localhost:8080/OneShop/footer-shop-system">Hệ thống cửa hàng</a></li>
             	</ul>
         	</div>
         	<div class="footer-section" style="margin-top: 20px;">
             	<h2>Hỗ trợ khách hàng</h2>
             	<ul>
-          	      	<li><a href="#">Các câu hỏi thường gặp</a></li>
-              	  	<li><a href="#">Hướng dẫn đặt hàng</a></li>
-                	<li><a href="#">Phương thức vận chuyển</a></li>
-                	<li><a href="#">Phương thức thanh toán</a></li>
+          	      	<li><a href="http://localhost:8080/OneShop/footer-frequently-question">Các câu hỏi thường gặp</a></li>
+              	  	<li><a href="http://localhost:8080/OneShop/footer-order-guide">Hướng dẫn đặt hàng</a></li>
+                	<li><a href="http://localhost:8080/OneShop/footer-shipping-method">Phương thức vận chuyển</a></li>
+                	<li><a href="http://localhost:8080/OneShop/footer-payment-method">Phương thức thanh toán</a></li>
             	</ul>
         	</div>
         	<div class="footer-section" style="margin-top: 20px;">
             	<h2>Chính sách và Điều khoản</h2>
             	<ul>
-          	      	<li><a href="#">Chính sách đổi hàng</a></li>
-              	  	<li><a href="#">Chính sách bảo mật thanh toán</a></li>
-                  	<li><a href="#">Chính sách bảo mật thông tin cá nhân</a></li>
-                  	<li><a href="#">Chính sách giải quyết khiếu nại</a></li>
-                  	<li><a href="#">Điều khoản sử dụng</a></li>
+          	      	<li><a href="http://localhost:8080/OneShop/footer-exchange-policy">Chính sách đổi hàng</a></li>
+              	  	<li><a href="http://localhost:8080/OneShop/footer-payment-policy">Chính sách bảo mật thanh toán</a></li>
+                  	<li><a href="http://localhost:8080/OneShop/footer-personal-infor-privacy-policy">Chính sách bảo mật thông tin cá nhân</a></li>
+                  	<li><a href="http://localhost:8080/OneShop/footer-complaint-policy">Chính sách giải quyết khiếu nại</a></li>
+                  	<li><a href="http://localhost:8080/OneShop/footer-term-use">Điều khoản sử dụng</a></li>
             	</ul>
         	</div>
 		</div>

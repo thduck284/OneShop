@@ -12,7 +12,7 @@
 <body>
     <div class="container mt-4 d-flex justify-content-center" style="margin: 0 0 0 -80px;">
         <div style="width: 90%; max-width: 900px;">
-            <h3 class="mb-4 text-center">Thông tin cửa hàng</h3>
+            <h3 class="mb-4 text-center" style="font-weight: bold;">Thông tin cửa hàng</h3>
 
             <%
                 Shop shop = (Shop) request.getAttribute("shop");

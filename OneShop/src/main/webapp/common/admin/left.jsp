@@ -13,7 +13,7 @@
 			<a class="navigation-brand d-none d-md-block d-lg-block d-xl-block"
 				href="index.html"><img class="brand-logo"
 				alt="CryptoDash admin logo"
-				src="../static/styles/admin/app-assets/images/logo/icon.jpg" width="200px"></a>
+				src="../static/styles/admin/app-assets/images/logo/icon.jpg" width="200px" style="z-index: 0;"></a>
 			<ul class="navigation navigation-main" id="main-menu-navigation"
 				data-menu="menu-navigation">
 				<li class="active"><a
@@ -43,18 +43,18 @@
 						class="icon-user-following"></i><span class="menu-title"
 						data-i18n="">Tài khoản</span></a>
 					<ul class="menu-content">
-						<li><a class="menu-item" href="account-profile.html">Profile</a>
+						<li><a class="menu-item" href="#">Profile</a>
 						</li>
-						<li><a class="menu-item" href="account-login-history.html">Lịch sử đăng nhập</a></li>
+						<li><a class="menu-item" href="#">Lịch sử đăng nhập</a></li>
 						<li class="navigation-divider"></li>
 						<li><a class="menu-item" href="#">Misc</a>
 							<ul class="menu-content">
-								<li><a class="menu-item" href="account-login.html">Login</a>
-								</li>
-								<li><a class="menu-item" href="account-register.html">Register</a>
-								</li>
-							</ul></li>
-					</ul></li>
+								<li><a class="menu-item" href="#">Login</a></li>
+								<li><a class="menu-item" href="#">Register</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>

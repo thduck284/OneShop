@@ -39,11 +39,60 @@
 			</a>
 			<% if (loggedInUser != null) { %>
 			<div class="dropdown-content" style="margin-left: -5px;">
-				<a class="login-content" href="http://localhost:8080/OneShop/vendor/vendor-info">Tài khoản của tôi</a> 
+				<a class="login-content" data-toggle="modal" data-target="#exampleModal" id="openModalButton">
+				    <i class="ft-user"></i> Tài khoản của tôi
+				</a>
 				<a class="login-content" href="<%=request.getContextPath()%>/logout?role=vendor">Đăng xuất</a>
 			</div>
 			<% } else { %>
 			<% } %>
+		</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg" role="document" style="width: 650px; margin-top: 50px;">
+		        <div class="modal-content">
+		            <div class="modal-header" style="background-color: #0C6478;">
+		                <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Chỉnh sửa thông tin người bán</h5>
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                    <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <div class="modal-body" style="background-color: #15919B;">
+		                <h3 style="text-align: center; color: white;">Thông tin người bán</h3>
+		                <form id="vendorForm">
+		                	<div class="form-group">
+					            <label for="userId" style="color: white;">Mã người bán:</label>
+					            <strong id="userId" class="form-control"><%= loggedInUser.getUserId() %></strong>
+					        </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="userName" style="color: white;">Tên tài khoản:</label>
+		                        <input type="text" class="form-control" id="userName">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="email" style="color: white;">Email:</label>
+		                        <input type="email" class="form-control" id="email">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="fullName" style="color: white;">Họ và tên:</label>
+		                        <input type="text" class="form-control" id="fullName">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="phoneNumber" style="color: white;">Số điện thoại:</label>
+		                        <input type="text" class="form-control" id="phoneNumber">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="address" style="color: white;">Địa chỉ:</label>
+		                        <input type="text" class="form-control" id="address">
+		                    </div>
+		                </form>
+		            </div>
+		            <div class="modal-footer" style="background-color: #0C6478;">
+		                <button type="button" class="btn-primary" style="padding: 5px 25px;" data-dismiss="modal" aria-label="Close">
+		                	<span aria-hidden="true">Đóng</span>
+		                </button>
+		                <button type="button" class="btn-primary" id="saveChangesButton" style="padding: 5px 25px; background-color: #20c997;">Lưu thay đổi</button>
+		            </div>
+		        </div>
+		    </div>
 		</div>
 		<div class="box-cart" style="margin-top: -30px;">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-cart" viewBox="0 0 16 16">
@@ -53,7 +102,7 @@
 			<p class="cart" style="margin: 55px 0 0 5px; color: black;">Giỏ hàng</p>
 		</div>
 	</div>
-	<div class="under-header" style="background-color: #7ADAF5; margin: 0 0 -35px 380px;">
+	<div class="under-header" style="background-color: #7ADAF5; margin: 20px 0 -35px 380px;">
 		<div class="dropdown">
 			<a class="product" href="#">Túi sách</a>
 			<div class="dropdown-content">
@@ -123,5 +172,70 @@
 			<a class="promotion" href="#">Khuyến mãi</a>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+	<script>
+	    function fetchVendorInfo() {
+	        $.ajax({
+	            url: '/OneShop/vendor/infor-vendor', 
+	            type: 'GET',
+	            dataType: 'json',
+	            success: function(data) {
+	            	$('#userId').val(data.userId);
+	                $('#userName').val(data.userName);
+	                $('#email').val(data.email);
+	                $('#fullName').val(data.fullName);
+	                $('#phoneNumber').val(data.phoneNumber);
+	                $('#address').val(data.address);
+	                $('#exampleModal').modal('show');
+	            },
+	            error: function(xhr, status, error) {
+	                alert("Có lỗi xảy ra khi lấy dữ liệu.");
+	            }
+	        });
+	    }
+	    
+	    function saveVendorInfo() {
+	        var vendorData = {
+	            userName: $('#userName').val(),
+	            email: $('#email').val(),
+	            fullName: $('#fullName').val(),
+	            phoneNumber: $('#phoneNumber').val(),
+	            address: $('#address').val(),
+	        };   
+	        $.ajax({
+	            url: '/OneShop/vendor/infor-vendor',  
+	            type: 'POST',
+	            dataType: 'json',
+	            data: vendorData,  
+	            success: function(response) {
+	                if (response.success) {
+	                    alert("Cập nhật thông tin thành công!");
+	                    $('#exampleModal').modal('hide');
+	                } else {
+	                    alert("Có lỗi xảy ra khi cập nhật thông tin.");
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                alert("Có lỗi xảy ra khi gửi dữ liệu.");
+	            }
+	        });
+	    }
+	    
+	    $(document).ready(function() {	    	
+	    	$('#exampleModal').on('hidden.bs.modal', function () {
+	    	    $('.modal-backdrop').remove(); 
+	    	    $('body').removeClass('modal-open'); 
+	    	});
+	    	
+	        $('#openModalButton').on('click', function() {
+	            fetchVendorInfo();
+	        });
+	        
+	        $('#saveChangesButton').on('click', function() {
+	            saveVendorInfo();
+	        });
+	    });
+	</script>
 </body>
 </html>

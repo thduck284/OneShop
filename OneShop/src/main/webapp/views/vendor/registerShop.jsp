@@ -13,12 +13,12 @@
 <body>
 	<div class="container mt-4 d-flex justify-content-center" style="margin: 0 0 0 -80px;">
 		<div style="width: 90%; max-width: 900px;">
-			<h3 class="mb-4 text-center">Thông tin cửa hàng</h3>
+			<h3 class="mb-4 text-center" style="font-weight: bold;">Thông tin cửa hàng</h3>
 			<%
-			User user = (User) session.getAttribute("vendorInfor");
+					User user = (User) session.getAttribute("vendorInfor");
 					String userId = user != null ? user.getUserId() : "";
 			%>
-			<form action="${pageContext.request.contextPath}/vendor/register-shop" method="post" enctype="multipart/form-data">
+			<form action="${pageContext.request.contextPath}/vendor/add-promotion" method="post" enctype="multipart/form-data">
 				<div class="row mb-5">	
 					<div class="col-md-6">
 						<label for="shopName" class="form-label">Mã chủ cửa hàng:</label> 

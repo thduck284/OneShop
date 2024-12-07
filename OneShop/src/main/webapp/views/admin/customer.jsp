@@ -30,75 +30,70 @@
         								<%= message %>
     								</div>
 							<% } %>	
-							<h6 class="my-2">Các khách hàng</h6>
-							<div style="margin: -60px 0 20px 1100px;">
+							<form action="${pageContext.request.contextPath}/admin/search-customer" method="GET" style="margin: 20px 0;">
+							    <input type="text" name="searchQuery" placeholder="Tìm khách hàng..." class="form-control" style="margin: 15px 0 0 100px; width: 800px; display: inline-block;">
+							    <button type="submit" class="btn btn-success" style="font-size: 15px; color: black; margin-top: -5px; display: inline-block;">Tìm kiếm</button>
+							</form>	
+							<div style="margin: -62px 0 20px 1050px;">
 								<div class="btn-group me-2">
 									<a class="btn btn-primary btn-sm"
 										href="http://localhost:8080/OneShop/admin/add-customer"
-										style="font-size: 15px; padding: 8px 16px;">Thêm</a>
+										style="font-size: 15px; padding: 12px 22px;">Thêm</a>
 								</div>
 								<div class="btn-group">
 									<a href="http://localhost:8080/OneShop/admin/customer"
 										class="btn btn-warning btn-sm"
-										style="font-size: 15px; padding: 8px 22px;">Lọc</a>
+										style="font-size: 15px; padding: 12px 28px;">Lọc</a>
 								</div>
 							</div>
-							<div class="card">
-								<div class="card-content">
-									<div class="table-responsive">
-										<div class="table-wrapper">
-											<table id="recent-orders"
-												class="table table-hover table-xl mb-0">
-												<thead>
-													<tr>
-														<th class="border-top-0">ID</th>
-														<th class="border-top-0">Tên khách hàng</th>
-														<th class="border-top-0">Số điện thoại</th>
-														<th class="border-top-0">Email</th>
-														<th class="border-top-0">Tên tài khoản</th>
-														<th class="border-top-0">Mật khẩu</th>
-														<th class="border-top-0">Địa chỉ</th>
-														<th class="border-top-0">Ngày tạo</th>
-														<th class="border-top-0">Hàng động</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach var="customer" items="${users}">
-														<tr>
-															<td><a class="border-top-1">${customer.userId}</a></td>
-															<td><a>${customer.fullName}</a></td>
-															<td><a>${customer.phoneNumber}</a></td>
-															<td><a>${customer.email}</a></td>
-															<td><a>${customer.userName}</a></td>
-															<td><a>${customer.password}</a></td>
-															<td style="max-width: 300px; word-wrap: break-word;">
-																<a>${customer.address}</a>
-															</td>
-															<td><a>${customer.createdDate}</a></td>
-															<td class="d-flex flex-column gap-0"><a
-																href="${pageContext.request.contextPath}/admin/edit-customer?userId=${customer.userId}"
-																class="btn btn-warning btn-sm"
-																style="margin: 15px 0 25px 0;">Sửa</a>
-																<form
-																	action="${pageContext.request.contextPath}/admin/delete-customer"
-																	method="POST" style="display: inline;"
-																	onsubmit="return confirmDelete();">
-																	<input type="hidden" name="userId"
-																		value="${customer.userId}">
-																	<button type="submit" class="btn btn-danger btn-sm"
-																		style="padding: 10px 30px;">Xóa</button>
-																</form> <script>
-																	function confirmDelete() {
-																		return confirm("Bạn có chắc chắn muốn xóa người dùng này không?");
-																	}
-																</script></td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
+							<div class="table-responsive" style="max-height: 500px; overflow-y: auto;  max-width: 1300px;">
+								<table id="recent-orders"
+									class="table table-striped table-bordered table-hover align-middle text-center">
+									<thead style="background-color: black; color: white;">
+										<tr>
+											<th style="width: 20px;">ID</th>
+											<th>Tên khách hàng</th>
+											<th>Số điện thoại</th>
+											<th>Email</th>
+											<th>Tên tài khoản</th>
+											<th style="width: 200px;">Địa chỉ</th>
+											<th>Ngày tạo</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="customer" items="${users}">
+											<tr>
+												<td style="border: 2px solid gray;">${customer.userId}</td>
+												<td style="border: 2px solid gray;">${customer.fullName}</td>
+												<td style="border: 2px solid gray;">${customer.phoneNumber}</td>
+												<td style="border: 2px solid gray;">${customer.email}</td>
+												<td style="border: 2px solid gray;">${customer.userName}</td>
+												<td style="border: 2px solid gray; word-wrap: break-word;">${customer.address}</td>
+												<td style="border: 2px solid gray;">${customer.createdDate}</td>
+												<td class="d-flex flex-column gap-0" ><a
+													href="${pageContext.request.contextPath}/admin/edit-customer?userId=${customer.userId}"
+													class="btn btn-warning btn-sm"
+													style="margin: 15px 0 25px 0;">Sửa</a>
+													<form
+														action="${pageContext.request.contextPath}/admin/delete-customer"
+														method="POST" style="display: inline;"
+														onsubmit="return confirmDelete();">
+														<input type="hidden" name="userId"
+															value="${customer.userId}">
+														<button type="submit" class="btn btn-danger btn-sm"
+															style="padding: 10px 25px;">Xóa</button>
+													</form> 
+													<script>
+														function confirmDelete() {
+															return confirm("Bạn có chắc chắn muốn xóa người dùng này không?");
+														}
+													</script>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -106,5 +101,68 @@
 			</div>
 		</div>
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+	    $(document).ready(function(){
+	        $("form").submit(function(event){
+	            event.preventDefault();
+	            var searchQuery = $("input[name='searchQuery']").val(); 
+	            $.ajax({
+	                url: '${pageContext.request.contextPath}/admin/search-customer',
+	                method: 'GET',
+	                data: { searchQuery: searchQuery },
+	                success: function(response) {
+	                    console.log(response);  
+	                    var tbody = $("#recent-orders tbody");
+	                    tbody.empty();
+	                    if (Array.isArray(response) && response.length > 0) {
+	                    	$.each(response, function(index, customer) {
+	                    	    var row = $("<tr>");
+	                    	    row.append($("<td>").text(customer.userId).css({
+	                                "border": "2px solid gray",
+	                                "padding": "8px"
+	                            }));
+	                    	    row.append($("<td>").text(customer.fullName).css({
+	                                "border": "2px solid gray",
+	                                "padding": "8px"
+	                            }));
+	                    	    row.append($("<td>").text(customer.phoneNumber).css({
+	                                "border": "2px solid gray",
+	                                "padding": "8px"
+	                            }));
+	                    	    row.append($("<td>").text(customer.email).css({
+	                                "border": "2px solid gray",
+	                                "padding": "8px"
+	                            }));
+	                    	    row.append($("<td>").text(customer.userName).css({
+	                                "border": "2px solid gray",
+	                                "padding": "8px"
+	                            }));
+	                    	    row.append($("<td>").text(customer.address).css({
+	                                "border": "2px solid gray",
+	                                "padding": "8px"
+	                            }));
+	                    	    row.append($("<td>").text(new Date(customer.createdDate).toLocaleDateString()).css({
+	                                "border": "2px solid gray",
+	                                "padding": "8px"
+	                            }));
+	                    	    var actions = $("<td>").addClass("d-flex flex-column gap-0");
+	                    	    actions.append('<a href="${pageContext.request.contextPath}/admin/edit-customer?userId=' + customer.userId + '" class="btn btn-warning btn-sm" style="margin: 15px 0 25px 0;">Sửa</a>');
+	                    	    actions.append('<form action="${pageContext.request.contextPath}/admin/delete-customer" method="POST" style="display: inline;" onsubmit="return confirmDelete();"><input type="hidden" name="userId" value="' + customer.userId + '"><button type="submit" class="btn btn-danger btn-sm" style="padding: 7px 50px;">Xóa</button></form>');
+	                    	    row.append(actions);
+	                    	    $("#recent-orders tbody").append(row);
+	                    	});
+	                    } else {
+	                        tbody.append("<tr><td colspan='8'>Không tìm thấy khách hàng nào.</td></tr>");
+	                    }
+	                },
+	                error: function(xhr, status, error) {
+	                    console.error("Lỗi AJAX: ", error);  
+	                    alert('Có lỗi xảy ra khi tìm kiếm.');
+	                }
+	            });
+	        });
+	    });
+	</script>
 </body>
 </html>

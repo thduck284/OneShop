@@ -59,11 +59,60 @@
 			</a>
 			<% if (loggedInUser != null) { %>
 			<div class="dropdown-content" style="margin-left: -5px; min-width: 140px;">
-				<a class="login-content" href="http://localhost:8080/OneShop/customer/customer-info">Tài khoản của tôi</a> 
+				<a class="login-content" data-toggle="modal" data-target="#exampleModal" id="openModalButton">
+				    <i class="ft-user"></i> Tài khoản của tôi
+				</a>
 				<a class="login-content" href="<%=request.getContextPath()%>/logout?role=customer">Đăng xuất</a>
 			</div>
 			<% } else { %>
 			<% } %>
+		</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg" role="document" style="width: 650px; margin-top: 50px;">
+		        <div class="modal-content">
+		            <div class="modal-header" style="background-color: #0C6478;">
+		                <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Chỉnh sửa thông tin khách hàng</h5>
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                    <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <div class="modal-body" style="background-color: #15919B;">
+		                <h3 style="text-align: center; color: white;">Thông tin khách hàng</h3>
+		                <form id="vendorForm">
+		                	<div class="form-group">
+					            <label for="userId" style="color: white;">Mã khách hàng:</label>
+					            <strong id="userId" class="form-control"><%= loggedInUser.getUserId() %></strong>
+					        </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="userName" style="color: white;">Tên tài khoản:</label>
+		                        <input type="text" class="form-control" id="userName">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="email" style="color: white;">Email:</label>
+		                        <input type="email" class="form-control" id="email">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="fullName" style="color: white;">Họ và tên:</label>
+		                        <input type="text" class="form-control" id="fullName">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="phoneNumber" style="color: white;">Số điện thoại:</label>
+		                        <input type="text" class="form-control" id="phoneNumber">
+		                    </div>
+		                    <div class="form-group" style="margin-top: 15px;">
+		                        <label for="address" style="color: white;">Địa chỉ:</label>
+		                        <input type="text" class="form-control" id="address">
+		                    </div>
+		                </form>
+		            </div>
+		            <div class="modal-footer" style="background-color: #0C6478;">
+		                <button type="button" class="btn-primary" style="padding: 5px 25px;" data-dismiss="modal" aria-label="Close">
+		                	<span aria-hidden="true">Đóng</span>
+		                </button>
+		                <button type="button" class="btn-primary" id="saveChangesButton" style="padding: 5px 25px; background-color: #20c997;">Lưu thay đổi</button>
+		            </div>
+		        </div>
+		    </div>
 		</div>
 		<div class="wishlist" style="margin: 25px 20px 0 -50px;">
 		    <a href="javascript:void(0)" title="Yêu thích">
@@ -295,7 +344,7 @@
 		</div>  
 	</div>
 	<div class="under-header" style="background-color: #7ADAF5; margin: 20px 0 -35px 120px;">
-		<a class="product" href="http://localhost:8080/OneShop/user/home" style="margin-right: 30px;">Trang chủ</a>
+		<a class="product" href="http://localhost:8080/OneShop/user/product" style="margin-right: 30px;">Trang chủ</a>
 		<div class="dropdown"> 
 		    <a class="product" href="<%= request.getContextPath() %>/user/product-by-category?category=group1">Túi sách</a>
 		    <div class="dropdown-content">
@@ -365,6 +414,71 @@
 			<a class="promotion" href="#">Khuyến mãi</a>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+	<script>
+	    function fetchCustomerInfo() {
+	        $.ajax({
+	            url: '/OneShop/user/infor-customer', 
+	            type: 'GET',
+	            dataType: 'json',
+	            success: function(data) {
+	            	$('#userId').val(data.userId);
+	                $('#userName').val(data.userName);
+	                $('#email').val(data.email);
+	                $('#fullName').val(data.fullName);
+	                $('#phoneNumber').val(data.phoneNumber);
+	                $('#address').val(data.address);
+	                $('#exampleModal').modal('show');
+	            },
+	            error: function(xhr, status, error) {
+	                alert("Có lỗi xảy ra khi lấy dữ liệu.");
+	            }
+	        });
+	    }
+	    
+	    function saveCustomerInfo() {
+	        var customerData = {
+	            userName: $('#userName').val(),
+	            email: $('#email').val(),
+	            fullName: $('#fullName').val(),
+	            phoneNumber: $('#phoneNumber').val(),
+	            address: $('#address').val(),
+	        };   
+	        $.ajax({
+	            url: '/OneShop/user/infor-customer',  
+	            type: 'POST',
+	            dataType: 'json',
+	            data: customerData,  
+	            success: function(response) {
+	                if (response.success) {
+	                    alert("Cập nhật thông tin thành công!");
+	                    $('#exampleModal').modal('hide');
+	                } else {
+	                    alert("Có lỗi xảy ra khi cập nhật thông tin.");
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                alert("Có lỗi xảy ra khi gửi dữ liệu.");
+	            }
+	        });
+	    }
+	    
+	    $(document).ready(function() {	    	
+	    	$('#exampleModal').on('hidden.bs.modal', function () {
+	    	    $('.modal-backdrop').remove(); 
+	    	    $('body').removeClass('modal-open'); 
+	    	});
+	    	
+	        $('#openModalButton').on('click', function() {
+	            fetchCustomerInfo();
+	        });
+	        
+	        $('#saveChangesButton').on('click', function() {
+	            saveCustomerInfo();
+	        });
+	    });
+	</script>
 	<script>
 		const userId = "<%= loggedInUser != null ? loggedInUser.getUserId() : "" %>";
 		function togglePopup(popupId, localStorageKey, apiEndpoint) {

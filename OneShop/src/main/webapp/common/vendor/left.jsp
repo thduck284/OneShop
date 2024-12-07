@@ -53,23 +53,28 @@
                         </a>
                         <ul id="order" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/vendor/view-order" class="sidebar-link">Đơn hàng</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Chi tiết đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/vendor/view-detail-order" class="sidebar-link">Chi tiết đơn hàng</a>
                             </li>
                         </ul>
                     </li>
                     <li class="sidebar-item">
-    					<a href="#" class="sidebar-link"><i class="fa-solid fa-users pe-2" style="margin-right: 1px;"></i>Khách hàng</a>
+    					<a href="${pageContext.request.contextPath}/vendor/customer-of-shop" class="sidebar-link"><i class="fa-solid fa-users pe-2" style="margin-right: 1px;"></i>Khách hàng</a>
 					</li>
 					<li class="sidebar-item">
-    					<a href="#" class="sidebar-link">
+    					<a href="${pageContext.request.contextPath}/vendor/review-product" class="sidebar-link">
+        					<i class="fas fa-star pe-2" style="margin-right: 6px;"></i>Đánh giá
+    					</a>
+					</li>
+					<li class="sidebar-item">
+    					<a href="${pageContext.request.contextPath}/vendor/promotion-of-shop" class="sidebar-link">
         					<i class="fas fa-tags pe-2" style="margin-right: 6px;"></i>Khuyến mãi
     					</a>
 					</li>
 					<li class="sidebar-item">
-    					<a href="#" class="sidebar-link">
+    					<a href="${pageContext.request.contextPath}/vendor/venue" class="sidebar-link">
         					<i class="fas fa-dollar-sign pe-2"></i>Doanh thu
     					</a>
 					</li>
@@ -93,7 +98,7 @@
         </aside>
         <div class="main">
     		<nav class="navbar navbar-expand px-3 border-bottom">
-        		<button class="btn" type="button" data-bs-theme="dark" style="margin: 0 0 10px 5px;">
+        		<button class="btn" type="button" data-bs-theme="dark" ">
             		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-list" viewBox="0 0 16 16">
                 		<path fill-rule="evenodd" d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5z"/>
             		</svg>
