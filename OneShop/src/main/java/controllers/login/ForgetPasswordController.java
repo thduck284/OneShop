@@ -24,23 +24,35 @@ public class ForgetPasswordController extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	String email = request.getParameter("email");
-    	String password = request.getParameter("pw");
-
-        boolean isValidEmail = false;
-
-        if (email != null && !email.isEmpty()) {
-            isValidEmail = userService.checkDuplicate("email", email); 
-        }
-        
-        response.setContentType("application/json");
+		response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"isValidEmail\": " + isValidEmail + "}");
-        
-        if(isValidEmail)
-        {
-        	userService.resetPassword(email, password);
-        	request.getRequestDispatcher("/views/login/resetPasswordSuccess.jsp").forward(request, response);
+
+        String email = request.getParameter("email");
+        String newPassword = request.getParameter("pw");
+        String confirmPassword = request.getParameter("confirmPw");
+        StringBuilder jsonResponse = new StringBuilder();
+ 
+        if (email == null || email.isEmpty() || newPassword == null || newPassword.isEmpty() || confirmPassword == null || confirmPassword.isEmpty()) {
+            jsonResponse.append("{\"success\":false,\"message\":\"Điền tất cả thông tin.\"}");
+            response.getWriter().write(jsonResponse.toString());
+            return;
         }
+
+        if (!newPassword.equals(confirmPassword)) {
+            jsonResponse.append("{\"success\":false,\"message\":\"Xác nhận mật khẩu không trùng khớp.\"}");
+            response.getWriter().write(jsonResponse.toString());
+            return;
+        }
+
+        boolean isEmailValid = userService.checkDuplicate("email", email);
+
+        if (isEmailValid) {
+            userService.resetPassword(email, newPassword);
+            jsonResponse.append("{\"success\":true,\"message\":\"Thay đổi mật khẩu thành công.\"}");
+        } else {
+            jsonResponse.append("{\"success\":false,\"message\":\"Email không tồn tại.\"}");
+        }
+
+        response.getWriter().write(jsonResponse.toString());
     }
 }

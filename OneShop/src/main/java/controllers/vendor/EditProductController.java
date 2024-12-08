@@ -79,7 +79,7 @@ public class EditProductController extends HttpServlet {
 		product.setImage(imageData);  
 		productService.updateProduct(product);
 		
-		request.setAttribute("message", "Cập nhật thông tin cửa hàng thành công!");
+		request.setAttribute("message", "Cập nhật thông tin sản phẩm thành công!");
 		request.getRequestDispatcher("/views/vendor/editProduct.jsp").forward(request, response);
 	}
 }

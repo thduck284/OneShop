@@ -80,7 +80,9 @@ public class AwaitingPaymentController extends HttpServlet{
 				addToCart(userId, productId, quantity);
 				cart = cartService.getCurrentCartByUserId(userId);
 				cartId = cart.getCartId();
-			} 
+			} else {
+				cartId = cart.getCartId();
+			}
 			
 			List<Promotion> promotion = promotionService.getAllPromotion(userId);
 			
@@ -96,7 +98,7 @@ public class AwaitingPaymentController extends HttpServlet{
             
             if(productId != null) {
             	int quantity = Integer.parseInt(request.getParameter("quantity"));
-            	 
+            	 System.out.println(productId);
     			if(userId == null || productId == null)
     			{
     				return;
@@ -110,8 +112,7 @@ public class AwaitingPaymentController extends HttpServlet{
     			session.setAttribute("productOrder", product);
     			
             } else {
-            	DefaultTableModel tableModel = null;
-            	tableModel = (cartId == null) ? null : cartDetailService.getCartDetailsTable(cartId);
+            	DefaultTableModel tableModel = (cartId == null) ? null : cartDetailService.getCartDetailsTable(cartId);;
     			List<CartDetail> lstCartDetails = new ArrayList<>();;
     		    for (int i = 0; i < tableModel.getRowCount(); i++) {
     		        CartDetail cartDetail = new CartDetail();

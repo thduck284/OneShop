@@ -72,8 +72,11 @@ public class PaymentSuccessController extends HttpServlet{
 			if(product == null) {
 				List<CartDetail> lstCartDetails = (List<CartDetail>) session.getAttribute("lstCartDetails");
 				Cart cart = cartService.getCurrentCartByUserId(user.getUserId());
-				cart.setStatus(true);
-				cartService.updateCart(cart);
+				List<CartDetail> cDetail = cartDetailService.getCartDetailByCartId(cart.getCartId());
+				if(cDetail.size() == 1) {
+					cart.setStatus(true);
+					cartService.updateCart(cart);
+				}
 				
 				if (lstCartDetails != null) {
 			        for (CartDetail cartDetail : lstCartDetails) {

@@ -60,8 +60,8 @@ public class ViewCartController extends HttpServlet{
 				cartTable = cartDetailService.getCartDetailsTable(cart.getCartId());
 			} 
 			
-			session.removeAttribute("cartTable");
-			session.setAttribute("cartTable", cartTable);
+			session.removeAttribute("cartTableModel");
+			session.setAttribute("cartTableModel", cartTable);
 		} else {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Session does not exist or has expired.");
 		}

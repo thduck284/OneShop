@@ -22,8 +22,6 @@ public class CheckUserServlet extends HttpServlet {
     	String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        
-        System.out.println(username);
 
         boolean isUsernameTaken = false;
         boolean isEmailTaken = false;

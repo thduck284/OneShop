@@ -30,7 +30,6 @@ public class RegisterShopController extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
 		shop.setUserId(request.getParameter("userId"));
-		System.out.println(request.getParameter("userId"));
 		shop.setShopName(request.getParameter("shopName")); 	
 		shop.setDescription(request.getParameter("description"));
 		shop.setStatus(request.getParameter("status")); 

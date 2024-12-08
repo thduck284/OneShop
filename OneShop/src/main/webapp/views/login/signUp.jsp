@@ -17,9 +17,9 @@
 			<h2>Thông tin khách hàng</h2>
 			<div class="customer-name">			
 				<label> Họ, tên đệm: </label> 
-				<input type="text" name="firstname" placeholder="Nhập họ và tên đệm" class="name-field" required /> 
+				<input type="text" name="firstName" placeholder="Nhập họ và tên đệm" class="name-field" required /> 
 				<label> Tên: </label> 
-				<input type="text" name="lastname" placeholder="Nhập tên" class="name-field" required />
+				<input type="text" name="lastName" placeholder="Nhập tên" class="name-field" required />
 			</div>
 			<div class="infor">
                 <label class="email"> Email: </label> 

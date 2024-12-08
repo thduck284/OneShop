@@ -13,7 +13,7 @@
 	<div class="container" style="margin: 0 0 0 -120px;">
         <h3 class="text-center mb-4" style="font-weight: bold;">Danh sách các đơn hàng</h3>
         <form action="${pageContext.request.contextPath}/vendor/search-review" method="GET" style="margin: 20px 0;">
-		    <input type="text" name="searchQuery" placeholder="Tìm kiếm cửa hàng (theo mã ĐG, mã KH và mã SP)..." class="form-control" style="margin: 15px 0 0 100px; width: 700px; display: inline-block;">
+		    <input type="text" name="searchQuery" placeholder="Tìm kiếm đánh giá (theo mã ĐG, mã KH và mã SP)..." class="form-control" style="margin: 15px 0 0 100px; width: 700px; display: inline-block;">
 		    <button type="submit" class="btn btn-success" style="background-color: #1EC481; font-size: 15px; color: black; margin-top: -5px; display: inline-block;">Tìm kiếm</button>
 		</form>
         <div class="table-responsive">

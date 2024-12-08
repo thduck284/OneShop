@@ -29,8 +29,6 @@
         }
     %>
     <h1 class="text-left" style="margin: 20px 0 30px 0;">Tổng Sản Phẩm</h1>
-
-    <!-- Thanh điều hướng -->
     <div class="btn-group" style="margin-bottom: 20px;">
         <a href="?filter=new&page=1&pageSize=5" class="btn btn-primary ${filter == 'new' ? 'active' : ''}">Sản phẩm mới</a>
         <a href="?filter=best-selling&page=1&pageSize=5" class="btn btn-success ${filter == 'best-selling' ? 'active' : ''}">Bán chạy</a>
@@ -59,10 +57,8 @@
             </div>
         </c:forEach>
     </div>
-
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            <!-- Nút Previous -->
             <c:if test="${currentPage > 1}">
                 <li class="page-item">
                     <a class="page-link"
@@ -72,8 +68,6 @@
                     </a>
                 </li>
             </c:if>
-
-            <!-- Hiển thị danh sách số trang -->
             <c:forEach begin="${startPage}" end="${endPage}" var="i">
                 <li class="page-item ${i == currentPage ? 'active' : ''}">
                     <a class="page-link"
@@ -82,8 +76,6 @@
                     </a>
                 </li>
             </c:forEach>
-
-            <!-- Nút Next -->
             <c:if test="${currentPage < totalPages}">
                 <li class="page-item">
                     <a class="page-link"
@@ -95,8 +87,6 @@
             </c:if>
         </ul>
     </nav>
-
-
 </div>
 </body>
 </html>

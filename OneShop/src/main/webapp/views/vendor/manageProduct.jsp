@@ -55,7 +55,7 @@
                         <td>
                             <% if (!base64Image.isEmpty()) { %>
                                 <img src="data:image/jpeg;base64,<%= base64Image %>" 
-                                     alt="Product Image" class="img-thumbnail" style="width: 130px; height: 100px;">
+                                     alt="Product Image" class="img-thumbnail" style="width: 300px; height: 100px;">
                             <% } else { %>
                                 Không có ảnh
                             <% } %>

@@ -64,7 +64,7 @@
         <ul>
             <li>Sản phẩm đã qua sử dụng hoặc có dấu hiệu hư hỏng do người dùng.</li>
             <li>Không cung cấp được hóa đơn hoặc biên lai mua hàng.</li>
-            <li>Sản phẩm thuộc danh mục không áp dụng đổi hàng (ví dụ: đồ lót, mỹ phẩm đã mở nắp).</li>
+            <li>Sản phẩm thuộc danh mục không áp dụng đổi hàng (ví dụ: nón, mỹ phẩm đã mở nắp).</li>
         </ul>
 
         <h2>Quy trình đổi hàng</h2>

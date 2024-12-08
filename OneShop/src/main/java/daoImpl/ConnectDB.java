@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class ConnectDB {
 	
-	private static final String URL = "jdbc:sqlserver://NGHIATRAN:1433;databaseName=OneShop;encrypt=false;trustServerCertificate=true;";
+	private static final String URL = "jdbc:sqlserver://DESKTOP-0Q6FFSV:1433;databaseName=OneShop;encrypt=false;trustServerCertificate=true;";
     
     public static Connection getConnection() throws SQLException {
     	try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection(URL, "sa", "123");
+            return DriverManager.getConnection(URL, "shop", "1234567891011");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             throw new SQLException("SQL Server Driver not found");

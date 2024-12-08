@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.sound.midi.Soundbank;
 import javax.swing.table.DefaultTableModel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -208,7 +209,7 @@ public class SearchController extends HttpServlet{
         	List<Promotion> listPromotion = promotionService.getAllPromotion();
         	List<Promotion> promotionSearch = new ArrayList<>();
         	String lowerCaseKeyword = searchQuery.toLowerCase();
-        	
+        	System.out.println(lowerCaseKeyword);
         	for (Promotion promotion : listPromotion) {
                 if (promotion.getUserId().toLowerCase().contains(lowerCaseKeyword) ||
                     promotion.getPromotionId().toLowerCase().contains(lowerCaseKeyword)) {

@@ -35,16 +35,16 @@
 							    <input type="text" name="searchQuery" placeholder="Tìm kiếm giỏ hàng..." class="form-control" style="margin: 15px 0 0 100px; width: 700px; display: inline-block;">
 							    <button type="submit" class="btn btn-success" style="font-size: 15px; color: black; margin-top: -5px; display: inline-block;">Tìm kiếm</button>
 							</form>	
-							<div style="margin: -62px 0 20px 930px;">
+							<div style="margin: -62px 0 20px 1000px;">
 								<div class="btn-group me-2"> 
     								<a href="http://localhost:8080/OneShop/admin/cart-detail" class="btn btn-success btn-sm" 
         								style="font-size: 15px; padding: 12px 22px;">Xem chi tiết</a>
 								</div>
-								<div class="btn-group me-2">
+								<!-- <div class="btn-group me-2">
 									<a class="btn btn-primary btn-sm"
 										href="http://localhost:8080/OneShop/admin/add-cart"
 										style="font-size: 15px; padding: 12px 22px;">Thêm</a>
-								</div>
+								</div> -->
 								<div class="btn-group">
 									<a href="http://localhost:8080/OneShop/admin/cart" class="btn btn-warning btn-sm" 
 										style="font-size: 15px; padding: 12px 28px;">Lọc</a>

@@ -28,7 +28,7 @@ public class UserDAOImpl implements UserDAO{
 	    {
 	    	userId = "KH" + UUID.randomUUID().toString().replace("-", "").substring(0, 7);
 	    } else {
-	    	userId = "KH" + UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+	    	userId = "V" + UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 	    }
 
 	    LocalDate now = LocalDate.now();
@@ -63,12 +63,14 @@ public class UserDAOImpl implements UserDAO{
 	    try (Connection connection = ConnectDB.getConnection();
 	         PreparedStatement statement = connection.prepareStatement(sql)) {
 
+	    	String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+	    	
 	        statement.setString(1, user.getFullName());
 	        statement.setString(2, user.getEmail());
 	        statement.setString(3, user.getPhoneNumber());
 	        statement.setString(4, user.getAddress());
 	        statement.setString(5, user.getUserName());
-	        statement.setString(6, user.getPassword());
+	        statement.setString(6, hashedPassword);
 	        statement.setString(7, user.getRole());
 	        statement.setString(8, user.getUserId());
 
@@ -115,8 +117,10 @@ public class UserDAOImpl implements UserDAO{
 
 		    try (Connection connection = ConnectDB.getConnection();
 		         PreparedStatement statement = connection.prepareStatement(sql)) {
+		    	
+		    	String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-		        statement.setString(1, password); 
+		        statement.setString(1, hashedPassword); 
 		        statement.setString(2, email);  
 
 		        int rowsUpdated = statement.executeUpdate();

@@ -12,6 +12,12 @@
 <body>
     <div class="container mt-4 d-flex justify-content-center" style="margin: 0 0 0 -80px;">
         <div style="width: 90%; max-width: 900px;">
+        	<% String message = (String) request.getAttribute("message"); %>
+	        <% if (message != null) { %>
+	            <div class="alert alert-success" role="alert">
+	                <%= message %>
+	            </div>
+	        <% } %>
             <h3 class="mb-4 text-center" style="font-weight: bold;">Thông tin cửa hàng</h3>
 
             <%

@@ -618,7 +618,7 @@ public class ProductDAOImpl implements ProductDAO{
 			 ResultSet resultSet = statement.executeQuery()) {
 
 			if (resultSet.next()) {
-				count = resultSet.getInt(1);  // Lấy giá trị đếm từ cột đầu tiên
+				count = resultSet.getInt(1);  
 			}
 
 		} catch (SQLException e) {

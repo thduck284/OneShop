@@ -9,9 +9,9 @@
 </head>
 <body>
 	<% if (request.getAttribute("success") != null) { %>
-		    <div class="alert alert-success" style="margin-left: -100px;">
-		        <%= request.getAttribute("success") %>
-		    </div>
+	    <div class="alert alert-success" style="margin-left: -100px;">
+	        <%= request.getAttribute("success") %>
+	    </div>
 	<% } %>
 	<div class="container mt-4 d-flex justify-content-center" style="margin: 0 0 0 -80px;">
 		<div style="width: 90%; max-width: 900px;">

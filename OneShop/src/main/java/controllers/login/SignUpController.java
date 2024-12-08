@@ -25,14 +25,14 @@ public class SignUpController extends HttpServlet{
 	
 	protected void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    
-		user.setFullName(request.getParameter("firstname") + " " + request.getParameter("lastname"));
+		user.setFullName(request.getParameter("firstName") + " " + request.getParameter("lastName")); 
 		user.setPhoneNumber(request.getParameter("phone")); 
 		user.setAddress(request.getParameter("address")); 
 		user.setEmail(request.getParameter("email")); 
 		user.setUserName(request.getParameter("username")); 
 		user.setPassword(request.getParameter("pw"));
 		user.setRole("customer");     
-        
+        System.out.println(user.getFullName());
         boolean isUsernameTaken = false;
 		boolean isEmailTaken = false;
 		boolean isPhoneTaken = false;
