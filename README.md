@@ -1,5 +1,5 @@
--------- UTESHOP - Online Fashion Store --------
-~~~~ UTESHOP is an e-commerce platform designed to provide a seamless online shopping experience for fashion enthusiasts. Built using Servlet, JSP/JSTL, Bootstrap, JDBC, and SQLServer/MySQL/PostgreSQL, this project aims to deliver a responsive, modern, and secure online store for buying fashion products. The platform also utilizes Decorator Sitemesh for consistent page layout and JWT (JSON Web Token) for secure user authentication.
+-------- OneShop - Online Fashion Store --------
+~~~~ OneShop is an e-commerce platform designed to provide a seamless online shopping experience for fashion enthusiasts. Built using Servlet, JSP/JSTL, Bootstrap, JDBC, and SQLServer, this project aims to deliver a responsive, modern, and secure online store for buying fashion products. The platform also utilizes Decorator Sitemesh for consistent page layout and JWT (JSON Web Token) for secure user authentication.
   
 ****** Technologies Used ******
 ~ Servlet: Java-based web application framework for handling HTTP requests and responses.
@@ -23,7 +23,7 @@
 ****** Setup Instructions ******
   1. Clone the repository
 Clone this repository to your local machine:
-  git clone https://github.com/aMrnoob/ltWeb.git
+  git clone https://github.com/aMrnoob/CuoiKyLapTrinhWeb
   2. Set up the database
 Choose and set up SQLServer for the database.
 Configure the database connection settings in the web.xml or the database configuration files within the project (DBConnection.java or similar).
@@ -31,10 +31,10 @@ Import the database schema provided in the database folder of this project.
   3. Set up the web server
 The project is built using Servlets. You can use any Java web server like Apache Tomcat to run the application.
 Download and install Apache Tomcat.
-Deploy the UTESHOP.war file in the webapps folder of your Tomcat server or deploy the project as a Maven web application.
-Start the Tomcat server and navigate to http://localhost:8080/UTESHOP
+Deploy the OneShop.war file in the webapps folder of your Tomcat server or deploy the project as a Maven web application.
+Start the Tomcat server and navigate to http://localhost:8080/OneShop
   4. Configure JWT
 Ensure the JWT settings are correctly configured to enable user authentication and secure session management:
 You may need to adjust JWT secret keys or token expiration times in the project’s configuration.
   5. Access the website
-Once the server is running, you can access the website at http://localhost:8080/UTESHOP
+Once the server is running, you can access the website at http://localhost:8080/OneShop
