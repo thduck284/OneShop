@@ -162,7 +162,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 👤 Author
 
 **aMrnoob**
-- GitHub: [@aMrnoob](https://github.com/aMrnoob)
+- GitHub: [@thduck284](https://github.com/thduck284)
 
 ---
 
