@@ -1,40 +1,175 @@
--------- OneShop - Online Fashion Store --------
-~~~~ OneShop is an e-commerce platform designed to provide a seamless online shopping experience for fashion enthusiasts. Built using Servlet, JSP/JSTL, Bootstrap, JDBC, and SQLServer, this project aims to deliver a responsive, modern, and secure online store for buying fashion products. The platform also utilizes Decorator Sitemesh for consistent page layout and JWT (JSON Web Token) for secure user authentication.
-  
-****** Technologies Used ******
-~ Servlet: Java-based web application framework for handling HTTP requests and responses.
-~ JSP (JavaServer Pages) / JSTL (JavaServer Pages Standard Tag Library): For dynamic web page rendering and efficient presentation logic.
-~ Bootstrap: A responsive front-end framework for designing mobile-first websites and web applications.
-~ JDBC: Java Database Connectivity for interacting with the database (supports SQLServer, MySQL, or PostgreSQL).
-~ SQLServer: Database systems used to store and manage the website’s data.
-~ Sitemesh: A page layout and decoration framework, applied with the Decorator Design Pattern, for a consistent, templated look across all pages.
-~ JWT (JSON Web Token): For secure user authentication, ensuring safe access to the system.
+# 🛍️ OneShop - E-Commerce Platform
 
-****** Features ******
-~ User Management: Customers can register, log in, and manage their profiles. Admin users can manage customer accounts, orders, and products.
-~ Product Catalog: Browse and filter products based on various categories (clothes, accessories, etc.), with detailed product pages.
-~ Shopping Cart: Add products to the shopping cart, update quantities, and proceed to checkout.
-~ Order Management: Users can place orders and view their order history. Admin can manage and track customer orders.
-~ Responsive Design: The website is fully responsive, ensuring a smooth experience across all devices (desktop, tablet, mobile).
-~ Secure Authentication: The website uses JWT for secure login and session management.
-~ Payment Integration: Seamless integration for processing payments (this section can be further elaborated if payment methods like PayPal, Stripe, etc., are integrated).
-~ Admin Dashboard: Admin users have a separate dashboard for managing the product inventory, viewing orders, and managing the website content.
+A full-featured e-commerce web application built with Java Servlet technology, offering a seamless shopping experience with robust admin management capabilities.
 
-****** Setup Instructions ******
-  1. Clone the repository
-Clone this repository to your local machine:
-  git clone https://github.com/aMrnoob/CuoiKyLapTrinhWeb
-  2. Set up the database
-Choose and set up SQLServer for the database.
-Configure the database connection settings in the web.xml or the database configuration files within the project (DBConnection.java or similar).
-Import the database schema provided in the database folder of this project.
-  3. Set up the web server
-The project is built using Servlets. You can use any Java web server like Apache Tomcat to run the application.
-Download and install Apache Tomcat.
-Deploy the OneShop.war file in the webapps folder of your Tomcat server or deploy the project as a Maven web application.
-Start the Tomcat server and navigate to http://localhost:8080/OneShop
-  4. Configure JWT
-Ensure the JWT settings are correctly configured to enable user authentication and secure session management:
-You may need to adjust JWT secret keys or token expiration times in the project’s configuration.
-  5. Access the website
-Once the server is running, you can access the website at http://localhost:8080/OneShop
+---
+
+## 🚀 Technologies Stack
+
+### Backend
+- **Servlet** - Java-based web application framework for handling HTTP requests and responses
+- **JSP/JSTL** - JavaServer Pages with Standard Tag Library for dynamic web page rendering
+- **JDBC** - Java Database Connectivity for database interactions
+- **JWT** - JSON Web Token for secure authentication and session management
+
+### Frontend
+- **Bootstrap** - Responsive, mobile-first design framework
+- **Sitemesh** - Page layout and decoration framework using Decorator Design Pattern
+
+### Database
+- **SQL Server** - Primary database system (also supports MySQL and PostgreSQL)
+
+---
+
+## ✨ Key Features
+
+### 👥 User Management
+- Customer registration and login
+- Profile management
+- Admin dashboard for user account management
+
+### 🛒 Shopping Experience
+- **Product Catalog** - Browse and filter products by categories (clothes, accessories, etc.)
+- **Detailed Product Pages** - Comprehensive product information
+- **Shopping Cart** - Add, update, and manage cart items
+- **Checkout Process** - Streamlined ordering experience
+
+### 📦 Order Management
+- Order placement and tracking
+- Order history for customers
+- Admin order management and tracking system
+
+### 🔐 Security
+- JWT-based authentication
+- Secure session management
+- Protected admin routes
+
+### 💳 Payment Integration
+- Seamless payment processing
+- Multiple payment method support (expandable)
+
+### 📱 Responsive Design
+- Fully responsive across all devices
+- Optimized for desktop, tablet, and mobile
+
+### 🎛️ Admin Dashboard
+- Product inventory management
+- Order tracking and management
+- Content management system
+
+---
+
+## 🛠️ Setup Instructions
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/aMrnoob/CuoiKyLapTrinhWeb
+cd CuoiKyLapTrinhWeb
+```
+
+### 2️⃣ Database Configuration
+
+1. **Install SQL Server** (or MySQL/PostgreSQL if preferred)
+
+2. **Import Database Schema**
+   - Locate the database schema file in the `/database` folder
+   - Execute the SQL scripts to create tables and initial data
+
+3. **Configure Database Connection**
+   - Update database settings in `web.xml` or `DBConnection.java`
+   - Set your database credentials:
+     ```java
+     DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=OneShop"
+     DB_USER = "your_username"
+     DB_PASSWORD = "your_password"
+     ```
+
+### 3️⃣ Web Server Setup
+
+1. **Download and Install Apache Tomcat**
+   - Visit [Apache Tomcat](https://tomcat.apache.org/)
+   - Download version 9.0 or higher
+
+2. **Deploy the Application**
+   - **Option A**: Copy `OneShop.war` to Tomcat's `webapps` folder
+   - **Option B**: Deploy as a Maven project directly to Tomcat
+
+3. **Start Tomcat Server**
+   ```bash
+   # Navigate to Tomcat bin directory
+   cd apache-tomcat-x.x.x/bin
+   
+   # Start server (Windows)
+   startup.bat
+   
+   # Start server (Linux/Mac)
+   ./startup.sh
+   ```
+
+### 4️⃣ JWT Configuration
+
+Configure JWT settings for authentication:
+- Adjust JWT secret key in configuration files
+- Set token expiration time as needed
+- Default configuration can be found in authentication filter classes
+
+### 5️⃣ Access the Application
+
+Once the server is running, access the application at:
+
+```
+http://localhost:8080/OneShop
+```
+
+**Default Admin Credentials** (if applicable):
+```
+Username: admin
+Password: admin123
+```
+*Note: Change default credentials immediately after first login*
+
+---
+
+## 📁 Project Structure
+
+```
+OneShop/
+├── src/
+│   ├── main/
+│   │   ├── java/          # Java source files
+│   │   ├── webapp/        # Web resources (JSP, CSS, JS)
+│   │   └── resources/     # Configuration files
+├── database/              # Database schemas and scripts
+├── docs/                  # Documentation
+└── pom.xml               # Maven configuration
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 👤 Author
+
+**aMrnoob**
+- GitHub: [@aMrnoob](https://github.com/aMrnoob)
+
+---
+
+## 📞 Support
+
+For issues and questions, please open an issue on the GitHub repository.
+
+---
+
+**Happy Shopping! 🛒✨**
